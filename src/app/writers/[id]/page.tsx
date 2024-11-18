@@ -1,29 +1,20 @@
-
-import prisma from "../../../../prisma/client";
+import axios from "axios";
 
 interface Props {
   params: { id: string };
-
 }
 
-export const revalidate = 0; // Disables caching if the data changes frequently
-
 const WriterProfile = async ({ params }: Props) => {
-  const writer = await prisma.writer.findUnique({
-    where:{id:parseInt(params.id)}
-  })
-  console.log(writer);
-  
+  const response = await axios.get(
+    `${process.env.Base_URL}/api/writers/${params.id}`
+  );
+  const writer = response.data;
 
   if (!writer) {
-    return <div>Writer not found</div>;
+    return <p>Writer not found</p>;
   }
 
-  return (
-    <div>
-      'The writer is' {writer.name}
-    </div>
-  );
+  return <p>The writer is {writer.name}.</p>;
 };
 
 export default WriterProfile;
