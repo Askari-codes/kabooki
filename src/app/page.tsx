@@ -1,5 +1,6 @@
 import { Button } from "@radix-ui/themes";
-import ContentSection from "./components/ContentSection";
+import WriterSection from "./writers/WriterSection";
+import BookSection from "./books/BookSection";
 
 export default function Home() {
   return (
@@ -7,7 +8,8 @@ export default function Home() {
       <h1>
       hello wold
       </h1>
-      <ContentSection/>
+      <WriterSection/>
+      <BookSection/>
     </main>
   );
 }

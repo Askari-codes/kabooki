@@ -1,19 +1,18 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import {
-  Section,
-  Box,
-  Card,
-  Inset,
-  Strong,
-  Text,
-} from "@radix-ui/themes";
-import { MySectionProps } from "../../../models/models";
+import { Section, Box, Card, Inset, Strong, Text } from "@radix-ui/themes";
+import { Book } from "@prisma/client";
 
-const MySection = ({ writers }: MySectionProps) => {
+
+interface BookCarouselProps {
+  books: Book[];
+}
+
+const BookCarousel = ({ books }: BookCarouselProps) => {
   return (
     <Section style={{ padding: "20px 0" }}>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>Books</h2>
       <Swiper
         spaceBetween={20}
         slidesPerView={4}
@@ -23,10 +22,8 @@ const MySection = ({ writers }: MySectionProps) => {
           1024: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
       >
-        {writers.map(({ id, name, last_name, description }) => (
+        {books.map(({ id, title, picture_url, }) => (
           <SwiperSlide key={id}>
             <Box
               style={{
@@ -39,7 +36,7 @@ const MySection = ({ writers }: MySectionProps) => {
                 size="2"
                 style={{
                   maxWidth: "300px",
-                  height:'250px',
+                  height: "350px",
                   textAlign: "center",
                   border: "1px solid var(--gray-300)",
                   padding: "20px",
@@ -56,14 +53,14 @@ const MySection = ({ writers }: MySectionProps) => {
                   }}
                 >
                   <img
-                    src="default-image.jpg"
-                    alt={`${name} ${last_name}`}
+                    src={picture_url || "default-cover.jpg"}
+                    alt={title}
                     style={{
                       objectFit: "cover",
-                      height: "120px",
+                      height: "160px",
                       width: "120px",
-                      borderRadius: "50%",
-                      border: "2px solid var(--gray-300)",
+                      borderRadius: "8px",
+                      border: "1px solid var(--gray-300)",
                     }}
                   />
                 </Inset>
@@ -75,7 +72,7 @@ const MySection = ({ writers }: MySectionProps) => {
                     margin: "10px 0",
                   }}
                 >
-                  {name} {last_name}
+                  {title}
                 </Text>
                 <Text
                   as="p"
@@ -86,7 +83,22 @@ const MySection = ({ writers }: MySectionProps) => {
                     lineHeight: "1.4",
                   }}
                 >
-                  {description}
+                  by {''}
+                </Text>
+                <Text
+                  as="p"
+                  size="2"
+                  style={{
+                    color: "var(--gray-500)",
+                    fontSize: "0.8rem",
+                    marginTop: "10px",
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 3, // Limit to 3 lines
+                  }}
+                >
+                  {''}
                 </Text>
               </Card>
             </Box>
@@ -97,4 +109,4 @@ const MySection = ({ writers }: MySectionProps) => {
   );
 };
 
-export default MySection;
+export default BookCarousel;

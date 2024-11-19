@@ -1,10 +1,10 @@
-import MySection from "./Section"
+import MySection from "./WriterCarousel"
 import axios from "axios";
 import { Writer } from "@prisma/client";
 
 
 
-const ContentSection = async() => {
+const WriterSection = async() => {
     console.log(`${process.env.BASE_URL}/apir/writers`);
 
     const response = await axios.get<Writer[]>(`${process.env.BASE_URL}/api/writers`)
@@ -14,4 +14,4 @@ const ContentSection = async() => {
   )
 }
 
-export default ContentSection
+export default WriterSection

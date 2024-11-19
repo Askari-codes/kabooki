@@ -10,6 +10,12 @@ export interface WriterWithBooks {
     books: Book[]; 
 }
 
-export interface MySectionProps {
+  export interface BookCarousel{
+
+  }
+  
+
+
+export interface WriterCaouselProps {
   writers: Writer[];
 }
