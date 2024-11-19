@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { Button } from "@radix-ui/themes";
+import ContentSection from "./components/ContentSection";
 
 export default function Home() {
   return (
@@ -6,6 +7,7 @@ export default function Home() {
       <h1>
       hello wold
       </h1>
+      <ContentSection/>
     </main>
   );
 }

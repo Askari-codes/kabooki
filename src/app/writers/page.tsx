@@ -18,7 +18,7 @@ const Writers = async () => {
     <div>
       <div>{writers.map((writer)=>(
         <div>
-          {writer.name} {writer.last_name}
+          {writer.name} {writer.last_name} 
         </div>
       ))}</div>
     </div>
