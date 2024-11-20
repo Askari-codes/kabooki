@@ -10,8 +10,18 @@ export interface WriterWithBooks {
     books: Book[]; 
 }
 
-  export interface BookCarousel{
-
+  export interface BookCarouselProps{
+    books: BookWithWriter[];
+  }
+  export interface BookWithWriter {
+    id: number;
+    title: string;
+    picture_url: string | null;
+    writer: {
+      id: number;
+      name: string;
+      last_name: string;
+    } | null;
   }
   
 

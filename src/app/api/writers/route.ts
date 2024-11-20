@@ -6,6 +6,7 @@ export async function GET() {
   try {
     const writers: Writer[] = await prisma.writer.findMany(
       {
+        take:5,
         include:{
           books:true
         }

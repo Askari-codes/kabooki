@@ -12,6 +12,7 @@ import {
 import { WriterCaouselProps } from "../../../models/models";
 
 const WriterCarousel = ({ writers }: WriterCaouselProps) => {
+
   return (
     <Section style={{ padding: "20px 0" }}>
       <Swiper
@@ -26,7 +27,7 @@ const WriterCarousel = ({ writers }: WriterCaouselProps) => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        {writers.map(({ id, name, last_name, description }) => (
+        {writers.map(({ id, name, last_name, description,picture_url }) => (
           <SwiperSlide key={id}>
             <Box
               style={{
@@ -56,8 +57,8 @@ const WriterCarousel = ({ writers }: WriterCaouselProps) => {
                   }}
                 >
                   <img
-                    src="default-image.jpg"
-                    alt={`${name} ${last_name}`}
+                    src={'writers/'+picture_url+".jpg"||'writers/'+picture_url+'jpeg'||undefined}
+                    alt={` ${last_name}`}
                     style={{
                       objectFit: "cover",
                       height: "120px",

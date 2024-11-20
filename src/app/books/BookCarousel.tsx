@@ -3,11 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Section, Box, Card, Inset, Strong, Text } from "@radix-ui/themes";
 import { Book } from "@prisma/client";
+import { BookCarouselProps } from "../../../models/models";
 
 
-interface BookCarouselProps {
-  books: Book[];
-}
+
 
 const BookCarousel = ({ books }: BookCarouselProps) => {
   return (
@@ -23,7 +22,7 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
           1280: { slidesPerView: 4 },
         }}
       >
-        {books.map(({ id, title, picture_url, }) => (
+        {books.map(({ id, title, picture_url,writer }) => (
           <SwiperSlide key={id}>
             <Box
               style={{
@@ -53,7 +52,7 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                   }}
                 >
                   <img
-                    src={picture_url || "default-cover.jpg"}
+                  src={picture_url+".jpg"||undefined}
                     alt={title}
                     style={{
                       objectFit: "cover",
@@ -83,7 +82,7 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                     lineHeight: "1.4",
                   }}
                 >
-                  by {''}
+                  by {writer?.name } {writer?.last_name}
                 </Text>
                 <Text
                   as="p"
@@ -98,7 +97,7 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                     WebkitLineClamp: 3, // Limit to 3 lines
                   }}
                 >
-                  {''}
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio deleniti laborum at qui nulla autem blanditiis maxime officia accusamus rerum, temporibus error placeat unde reiciendis eveniet dignissimos aliquid neque sit?
                 </Text>
               </Card>
             </Box>

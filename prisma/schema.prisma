@@ -19,16 +19,35 @@ model Writer {
   last_name   String  @db.VarChar(255)
   country     String
   description String? @db.Text
-  picture_url  String?  @db.VarChar(255)
+  picture_url String? @db.VarChar(255)
   books       Book[]
 }
 
 model Book {
   id          Int       @id @default(autoincrement())
   title       String    @db.VarChar(255)
-  genre       String?   @db.VarChar(100)
   publishedAt DateTime?
   picture_url String?
   writerId    Int
   writer      Writer    @relation(fields: [writerId], references: [id])
+  genreId     String
+  genre       Genre     @relation(fields: [genreId], references: [id])
+}
+
+model Genre {
+  id             String  @id @default(uuid())
+  name           GenreType  @unique
+  description    String?
+  popularityRank Int?
+  isFiction      Boolean @default(true)
+  iconUrl        String?
+  books          Book[] 
+}
+
+enum GenreType {
+  DETECTIVE
+  HISTORICAL
+  ROMANTIC
+  COMEDY
+  WAR
 }
