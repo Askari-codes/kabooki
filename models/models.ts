@@ -31,3 +31,6 @@ export interface WriterCaouselProps {
 export interface GenreCraouselProps {
   genres: Genre[];
 }
+export interface SelectedBooksProps {
+  writer: WriterWithBooks;
+}

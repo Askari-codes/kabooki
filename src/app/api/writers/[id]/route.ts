@@ -1,17 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 
+interface Props{
+  params:{id:string}
+}
+
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  {params}:Props
 ) {
-  const id = parseInt(params.id);
-  if (isNaN(id)) {
+  const id= await params.id
+   const Intid = parseInt(id);
+  if (isNaN(Intid)) {
     throw new Error("wrong writer id");
   }
   try {
     const writer = await prisma.writer.findUnique({
-      where: { id },
+      where: {id:Intid },
+      include:{books:true}
     });
     return NextResponse.json(writer);
   } catch (error) {

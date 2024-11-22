@@ -1,6 +1,5 @@
 import BookCarousel from "./BookCarousel";
 import axios from "axios";
-import { Book } from "@prisma/client";
 import {BookWithWriter} from '../../../models/models'
 
 

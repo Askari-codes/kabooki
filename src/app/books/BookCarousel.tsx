@@ -1,9 +1,9 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Box, Card, Inset, Section, Text } from "@radix-ui/themes";
 import "swiper/css";
-import { Section, Box, Card, Inset, Strong, Text } from "@radix-ui/themes";
-import { Book } from "@prisma/client";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { BookCarouselProps } from "../../../models/models";
+import Image from 'next/image'
 
 
 
@@ -51,8 +51,8 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <img
-                  src={picture_url+".jpg"||undefined}
+                  <Image
+                  src={picture_url+".jpg"}
                     alt={title}
                     style={{
                       objectFit: "cover",

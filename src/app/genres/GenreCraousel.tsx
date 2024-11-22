@@ -6,15 +6,16 @@ import {
   Box,
   Card,
   Inset,
-  Strong,
   Text,
 } from "@radix-ui/themes";
 import { GenreCraouselProps } from "../../../models/models";
+import Image from "next/image";
 
 const WriterCarousel = ({ genres }: GenreCraouselProps) => {
 
   return (
     <Section style={{ padding: "20px 0" }}>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>Genres</h2>
       <Swiper
         spaceBetween={20}
         slidesPerView={4}
@@ -56,8 +57,8 @@ const WriterCarousel = ({ genres }: GenreCraouselProps) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <img
-                   src={'genres/'+iconUrl+".jpg"||'genres/'+iconUrl+'jpeg'||undefined}
+                  <Image
+                   src={'genres/'+iconUrl+".jpg"||'genres/'+iconUrl+'jpeg'}
                     alt={` ${iconUrl}`}
                     style={{
                       objectFit: "cover",

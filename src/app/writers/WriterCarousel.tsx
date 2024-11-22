@@ -6,15 +6,16 @@ import {
   Box,
   Card,
   Inset,
-  Strong,
   Text,
 } from "@radix-ui/themes";
 import { WriterCaouselProps } from "../../../models/models";
+import Image from "next/image";
 
 const WriterCarousel = ({ writers }: WriterCaouselProps) => {
 
   return (
     <Section style={{ padding: "20px 0" }}>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>Writers</h2>
       <Swiper
         spaceBetween={20}
         slidesPerView={4}
@@ -56,8 +57,8 @@ const WriterCarousel = ({ writers }: WriterCaouselProps) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <img
-                    src={'writers/'+picture_url+".jpg"||'writers/'+picture_url+'jpeg'||undefined}
+                  <Image
+                    src={'writers/'+picture_url+".jpg"||'writers/'+picture_url+'jpeg'}
                     alt={` ${last_name}`}
                     style={{
                       objectFit: "cover",

@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Card, Inset, Strong,Text } from "@radix-ui/themes";
 import { Writer } from "@prisma/client";
+import Image from "next/image";
+
 
 
 interface WriterCardProps {
@@ -12,7 +14,7 @@ const WriterCard: React.FC<WriterCardProps> = ({writer}) => {
     <Box width='20%'>
 	<Card className="w-[300px]"  >
 		<Inset clip="padding-box" side="top" pb="current">
-			<img
+			<Image
 				src={'default-image.jpg'}
 				alt="Bold typography"
 				style={{

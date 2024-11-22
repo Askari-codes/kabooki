@@ -1,6 +1,7 @@
 import { Writer } from "@prisma/client";
 import axios from "axios";
 
+
 const Writers = async () => {
   let writers:Writer[]=[]
   try {
@@ -9,15 +10,10 @@ const Writers = async () => {
   } catch (error) {
     console.error("Error fetching writers:", error);
   }
-  
-  
-
-
-
   return (
     <div>
       <div>{writers.map((writer)=>(
-        <div>
+        <div key={writer.id}>
           {writer.name} {writer.last_name} 
         </div>
       ))}</div>
