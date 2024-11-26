@@ -15,7 +15,7 @@ const WriterCard: React.FC<WriterCardProps> = ({writer}) => {
 	<Card className="w-[300px]"  >
 		<Inset clip="padding-box" side="top" pb="current">
 			<Image
-				src={'default-image.jpg'}
+				src={'/default-image.jpg'}
 				alt="Bold typography"
 				style={{
 					display: "block",

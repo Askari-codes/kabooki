@@ -3,6 +3,8 @@ import prisma from "../../../../prisma/client";
 import { Writer } from "@prisma/client";
 
 export async function GET() {
+
+  
   try {
     const writers: Writer[] = await prisma.writer.findMany(
       {

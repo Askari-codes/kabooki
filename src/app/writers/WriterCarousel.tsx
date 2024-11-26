@@ -58,8 +58,10 @@ const WriterCarousel = ({ writers }: WriterCaouselProps) => {
                   }}
                 >
                   <Image
-                    src={'writers/'+picture_url+".jpg"||'writers/'+picture_url+'jpeg'}
+                    src={'/writers/'+picture_url+".jpg"||'/writers/'+picture_url+'jpeg'}
                     alt={` ${last_name}`}
+                    width={300}
+                    height={200}
                     style={{
                       objectFit: "cover",
                       height: "120px",

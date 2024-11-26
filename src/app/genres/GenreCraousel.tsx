@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import {
@@ -11,7 +11,12 @@ import {
 import { GenreCraouselProps } from "../../../models/models";
 import Image from "next/image";
 
+
+
+
+
 const WriterCarousel = ({ genres }: GenreCraouselProps) => {
+
 
   return (
     <Section style={{ padding: "20px 0" }}>
@@ -28,7 +33,7 @@ const WriterCarousel = ({ genres }: GenreCraouselProps) => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        {genres.map(({ id, name,iconUrl }) => (
+        {genres?.map(({ id, name,iconUrl }) => (
           <SwiperSlide key={id}>
             <Box
               style={{
@@ -58,8 +63,10 @@ const WriterCarousel = ({ genres }: GenreCraouselProps) => {
                   }}
                 >
                   <Image
-                   src={'genres/'+iconUrl+".jpg"||'genres/'+iconUrl+'jpeg'}
+                   src={'/genres/'+iconUrl+".jpg"||'/genres/'+iconUrl+'jpeg'}
                     alt={` ${iconUrl}`}
+                    width={300}
+                    height={300}
                     style={{
                       objectFit: "cover",
                       height: "120px",

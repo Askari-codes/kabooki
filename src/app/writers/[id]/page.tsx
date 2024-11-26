@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import * as Separator from "@radix-ui/react-separator";
-import SelectedBooks from "./SelectedBooks";
+import prisma from "../../../../prisma/client";
+
 
 
 interface Props {
@@ -10,10 +11,10 @@ interface Props {
 
 
 const WriterProfile = async ({ params }: Props) => {
-  const response = await axios.get(
-    `${process.env.Base_URL}/api/writers/${params.id}`
-  );
-  const writer = response.data;
+  const writer = await prisma.writer.findUnique({
+    where:{id:parseInt(params.id)}
+  })
+  
 
   if (!writer) {
     return <p>Writer not found</p>;
@@ -48,7 +49,7 @@ const WriterProfile = async ({ params }: Props) => {
           height: "1px",
         }}
       />
-      <SelectedBooks writer={writer}/>
+      
     </div>
   );
 };

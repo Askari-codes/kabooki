@@ -1,17 +1,14 @@
-import React from 'react'
-import { Genre } from '@prisma/client';
-import axios from 'axios';
-import GenreCraousel from './GenreCraousel';
+import { Genre } from "@prisma/client";
+import GenreCraousel from "./GenreCraousel";
 
-const GenresSection = async() => {
-    const response = await axios.get<Genre[]>(`${process.env.BASE_URL}/api/genres`);
-  
-    const genres: Genre[] = response.data;
-    console.log(genres);
-    
-    
-  
-    return <GenreCraousel genres={genres} />;
-}
+const GenresSection = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`
+  );
+  const genres: Genre[] = await response.json();
+  if (!genres) return <div>loading ...</div>;
 
-export default GenresSection
+  return <GenreCraousel genres={genres} />;
+};
+
+export default GenresSection;

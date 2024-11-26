@@ -52,12 +52,14 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                   }}
                 >
                   <Image
-                  src={picture_url+".jpg"}
+                  src={"/"+picture_url+".jpg"}
                     alt={title}
+                    width={300}
+                    height={300}
                     style={{
                       objectFit: "cover",
-                      height: "160px",
                       width: "120px",
+                      height: "160px",
                       borderRadius: "8px",
                       border: "1px solid var(--gray-300)",
                     }}

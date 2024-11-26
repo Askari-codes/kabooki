@@ -1,16 +1,16 @@
-import MySection from "./WriterCarousel"
-import axios from "axios";
+import WriterCarousel from "./WriterCarousel"
 import { Writer } from "@prisma/client";
 
 
 
-const WriterSection = async() => {
-    console.log(`${process.env.BASE_URL}/apir/writers`);
 
-    const response = await axios.get<Writer[]>(`${process.env.BASE_URL}/api/writers`)
-    const writers:Writer[] = response.data
+const WriterSection = async() => {
+   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers`);
+   const writers:Writer[] = await response.json()
   return (
-  <MySection writers={writers}/>
+  
+    <WriterCarousel writers={writers}/>
+  
   )
 }
 
