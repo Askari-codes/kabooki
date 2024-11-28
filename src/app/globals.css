@@ -5,6 +5,8 @@
 :root {
   --background: #ededed ; 
   --foreground: #0a0a0a; 
+  --base-card-border-width: 0
+  
 }
 
 
@@ -12,6 +14,7 @@
   :root {
     --background: #ffffff; 
     --foreground: #171717;
+    --base-card-border-width: 0
   }
 }
 
@@ -21,4 +24,6 @@
 body {
   color: var(--foreground);
   padding: 1;
+
 }
+

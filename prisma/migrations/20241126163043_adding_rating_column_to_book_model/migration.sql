@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `book` ADD COLUMN `rating` INTEGER NOT NULL DEFAULT 1;

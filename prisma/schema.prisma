@@ -28,6 +28,7 @@ model Book {
   title       String    @db.VarChar(255)
   publishedAt DateTime?
   picture_url String?
+  rating      Int       @default(1) @db.Int // Add validations and default
   writerId    Int
   writer      Writer    @relation(fields: [writerId], references: [id])
   genreId     String
@@ -35,13 +36,13 @@ model Book {
 }
 
 model Genre {
-  id             String  @id @default(uuid())
-  name           GenreType  @unique
+  id             String    @id @default(uuid())
+  name           GenreType @unique
   description    String?
   popularityRank Int?
-  isFiction      Boolean @default(true)
+  isFiction      Boolean   @default(true)
   iconUrl        String?
-  books          Book[] 
+  books          Book[]
 }
 
 enum GenreType {

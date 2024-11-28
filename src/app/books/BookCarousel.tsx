@@ -4,11 +4,13 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BookCarouselProps } from "../../../models/models";
 import Image from 'next/image'
+import Link from "next/link";
 
 
 
 
 const BookCarousel = ({ books }: BookCarouselProps) => {
+  
   return (
     <Section style={{ padding: "20px 0" }}>
       <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>Books</h2>
@@ -73,7 +75,9 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                     margin: "10px 0",
                   }}
                 >
+                  <Link href={`/books/${id}`}>
                   {title}
+                  </Link>
                 </Text>
                 <Text
                   as="p"
@@ -84,7 +88,9 @@ const BookCarousel = ({ books }: BookCarouselProps) => {
                     lineHeight: "1.4",
                   }}
                 >
-                  by {writer?.name } {writer?.last_name}
+                 <Link href={`/writers/${writer?.id}`}>
+                 by {writer?.name } {writer?.last_name}
+                 </Link>
                 </Text>
                 <Text
                   as="p"
