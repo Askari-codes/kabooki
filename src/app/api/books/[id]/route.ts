@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
-import { error } from "console";
+
 
 
 
@@ -18,7 +18,7 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
             return NextResponse.json('there is no such a book')
     
         return NextResponse.json(book)
-    } catch (error) {
+    } catch (error) {        
        return NextResponse.json(error)
     }
 
