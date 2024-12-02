@@ -23,6 +23,7 @@ const WriterProfile = async ({ params }: Props) => {
   const bestBooks:BookWithWriter[]= writer.books.filter((book)=>{
    return book.rating===5
   })
+ console.log('best books are',bestBooks);
  
   
   
@@ -70,7 +71,7 @@ const WriterProfile = async ({ params }: Props) => {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
           {
-            bestBooks.map(({id,title,genre,rating})=>(
+            bestBooks.map(({id,title,genre,rating,picture_url})=>(
               <div
             key={id}
             style={{
@@ -83,7 +84,7 @@ const WriterProfile = async ({ params }: Props) => {
           >
             {/* Book Image */}
             <Image
-              src={'/books/Dora Bruder.jpg'}
+              src={`/books/${picture_url}.jpg`||`/books/${picture_url}.jpeg`}
               alt={title}
               width={150}
               height={200}
