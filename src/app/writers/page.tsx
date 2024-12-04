@@ -1,7 +1,7 @@
 import { Writer } from "@prisma/client";
 
 const Writers = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/`);
     const writers:Writer[] = await response.json();
   
   return (
