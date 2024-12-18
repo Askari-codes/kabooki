@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,42 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Writer {
+model book {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  genre       String   @db.VarChar(100) // Changed from relation to String
+  publishedAt DateTime
+  summary     String?  @db.Text
+  cover_url   String?  @db.VarChar(255)
+  writerId    Int
+  writer      writer   @relation(fields: [writerId], references: [id])
+}
+
+
+
+model writer {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(255)
   last_name   String  @db.VarChar(255)
-  country     String
   description String? @db.Text
   picture_url String? @db.VarChar(255)
-  books       Book[]
+  country     String
+  slug        String @unique(map: "Writer_slug_key") @db.VarChar(255)
+  book        book[]
 }
 
-model Book {
-  id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(255)
-  publishedAt DateTime?
-  picture_url String?
-  rating      Int       @default(1) @db.Int // Add validations and default
-  writerId    Int
-  writer      Writer    @relation(fields: [writerId], references: [id])
-  genreId     String
-  genre       Genre     @relation(fields: [genreId], references: [id])
-}
 
-model Genre {
-  id             String    @id @default(uuid())
-  name           GenreType @unique
-  description    String?
-  popularityRank Int?
-  isFiction      Boolean   @default(true)
-  iconUrl        String?
-  books          Book[]
-}
-
-enum GenreType {
-  DETECTIVE
-  HISTORICAL
-  ROMANTIC
-  COMEDY
-  WAR
-}

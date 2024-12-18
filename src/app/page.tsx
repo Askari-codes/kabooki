@@ -8,7 +8,7 @@ export default function Home() {
     <main >
       <WriterSection/>
       <BookSection/>
-      <GenresSection/>
+      {/* <GenresSection/> */}
     </main>
   );
 }
