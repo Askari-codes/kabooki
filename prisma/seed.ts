@@ -21,7 +21,8 @@ async function main() {
           publishedAt: new Date("1600-01-01"),
           summary: "A prince of Denmark seeks revenge on his uncle for murdering his father.",
           cover_url: "Hamlet",
-          slug:'Hamlet'
+          slug:'Hamlet',
+          rating:5
         },
         {
           title: "Macbeth",
@@ -29,7 +30,8 @@ async function main() {
           publishedAt: new Date("1606-01-01"),
           summary: "A Scottish general becomes consumed by ambition and guilt.",
           cover_url: "Macbeth",
-          slug:'Macbeth'
+          slug:'Macbeth',
+          rating:5
         },
       ],
     },
@@ -47,7 +49,8 @@ async function main() {
           publishedAt: new Date("1813-01-28"),
           summary: "The story follows Elizabeth Bennet as she navigates issues of manners, morality, and marriage in 19th-century England.",
           cover_url: "Pride and Prejudice",
-          slug:'Pride and Prejudice'
+          slug:'Pride and Prejudice',
+          rating:5
         },
         {
           title: "Emma",
@@ -55,7 +58,8 @@ async function main() {
           publishedAt: new Date("1815-12-23"),
           summary: "Emma Woodhouse, a young woman with a penchant for matchmaking, learns important lessons about love and relationships.",
           cover_url: "Emma",
-          slug:'Emma'
+          slug:'Emma',
+          rating:5
         },
       ],
     },

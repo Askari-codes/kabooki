@@ -7,22 +7,24 @@ import Image from "next/image";
 import { BookWithWriter, WriterWithBooks } from "../../../../models/models";
 
 interface Props {
-  params: { id: string };
+  params: { slug: string };
 }
 
 
 const WriterProfile = async ({ params }: Props) => {
   
-  const id = parseInt(params.id)
+  const slug = params.slug
   
   
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${id}`)
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${slug}`)
   const writer:WriterWithBooks=response.data
  
+  console.log(writer);
   
-  const bestBooks:BookWithWriter[]= writer.books.filter((book)=>{
+  const bestBooks:BookWithWriter[]= writer.books?.filter((book)=>{
    return book.rating===5
   })
+ console.log(bestBooks);
  
   
   
@@ -70,7 +72,7 @@ const WriterProfile = async ({ params }: Props) => {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
           {
-            bestBooks.map(({id,title,rating,picture_url})=>(
+            bestBooks?.map(({id,title,rating,picture_url})=>(
               <div
             key={id}
             style={{

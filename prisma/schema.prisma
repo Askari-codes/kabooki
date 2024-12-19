@@ -17,6 +17,7 @@ model book {
   writerId    Int
   writer      writer   @relation(fields: [writerId], references: [id])
   slug        String @unique(map: "Book_slug_key") @db.VarChar(255)
+  rating      Int 
 }
 
 
@@ -29,7 +30,7 @@ model writer {
   picture_url String? @db.VarChar(255)
   country     String
   slug        String @unique(map: "Writer_slug_key") @db.VarChar(255)
-  book        book[]
+  books        book[]
 }
 
 
