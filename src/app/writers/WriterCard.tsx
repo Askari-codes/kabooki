@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Card, Inset, Strong,Text } from "@radix-ui/themes";
-import { Writer } from "@prisma/client";
+import { writer } from "@prisma/client";
 import Image from "next/image";
 
 
 
 interface WriterCardProps {
-  writer:Writer
+  writer:writer
 }
 
 const WriterCard: React.FC<WriterCardProps> = ({writer}) => {

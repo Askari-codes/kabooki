@@ -1,4 +1,4 @@
-import { Writer, Genre } from "@prisma/client";
+import { writer } from "@prisma/client";
 
 export interface WriterWithBooks {
   id: number;
@@ -15,7 +15,7 @@ export interface BookWithWriter {
   title: string;
   picture_url: string | null;
   rating:number;
-  genre:Genre;
+  genre:string;
   writer: {
     id: number;
     name: string;
@@ -30,9 +30,7 @@ export interface BookCarouselProps {
 export interface WriterCaouselProps {
   writers: WriterWithBooks[];
 }
-export interface GenreCraouselProps {
-  genres: Genre[];
-}
+
 export interface SelectedBooksProps {
   writer: WriterWithBooks;
 }

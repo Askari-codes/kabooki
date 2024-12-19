@@ -1,8 +1,8 @@
 'use client'
-import { Book } from '@prisma/client'
+import { book } from '@prisma/client'
 
 interface Props{
-    book:Book
+    book:book
 }
 
 const TopBook = ({book}:Props) => {

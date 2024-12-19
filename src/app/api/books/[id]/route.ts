@@ -12,7 +12,7 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
     try {
         const book = await prisma.book.findUnique({
             where:{id},
-            include:{genre:true}
+            
         })
         if(!book)
             return NextResponse.json('there is no such a book')

@@ -31,7 +31,7 @@ const SwiperContent = ({ book, writer }: CustomerSwiperSlideProps) => {
           }}
         />
         <h3 style={{ margin: "0.5rem 0", fontSize: "1.2rem" }}><Link href={`/books/${book.id}`}>{book?.title}</Link></h3>
-        <p style={{ margin: "0.5rem 0", color: "gray" }}>{book?.genre?.name}</p>
+        <p style={{ margin: "0.5rem 0", color: "gray" }}>{book?.genre}</p>
         <p style={{ fontSize: "0.9rem", color: "#555", marginBottom: "0.5rem" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </p>

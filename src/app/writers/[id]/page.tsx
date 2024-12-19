@@ -23,7 +23,6 @@ const WriterProfile = async ({ params }: Props) => {
   const bestBooks:BookWithWriter[]= writer.books.filter((book)=>{
    return book.rating===5
   })
- console.log('best books are',bestBooks);
  
   
   
@@ -71,7 +70,7 @@ const WriterProfile = async ({ params }: Props) => {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
           {
-            bestBooks.map(({id,title,genre,rating,picture_url})=>(
+            bestBooks.map(({id,title,rating,picture_url})=>(
               <div
             key={id}
             style={{
@@ -95,7 +94,7 @@ const WriterProfile = async ({ params }: Props) => {
               {title}
             </h3>
             {/* Book Genre */}
-            <p style={{ margin: "0.5rem 0", color: "gray" }}>{genre.name}</p>
+            {/* <p style={{ margin: "0.5rem 0", color: "gray" }}>{genre.name}</p> */}
             {/* Book Description */}
             <p style={{ fontSize: "0.9rem", color: "#555", marginBottom: "0.5rem" }}>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis, et aut rerum doloremque sed dolore aliquam incidunt, exercitationem doloribus velit dolor nemo.

@@ -6,7 +6,6 @@ interface Props {
 }
 
 export async function GET(req: NextRequest, { params }: Props) {
-  console.log('this is params',params.id);
   
   const id = parseInt(params.id);
   
@@ -18,11 +17,7 @@ export async function GET(req: NextRequest, { params }: Props) {
     const writer = await prisma.writer.findUnique({
       where: { id },
       include:{
-        books:{
-          include:{
-            genre:true
-          }
-        }
+       book:true
         
       }
     });

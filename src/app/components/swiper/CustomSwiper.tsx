@@ -18,7 +18,6 @@ const CustomSwiper = ({ books, writers }: CustomSwiperProps) => {
   const isBooks = !!books; 
   const items = books || writers || []; 
   const chunkedItems = chunkArray(items, 5);
-  console.log(chunkedItems);
   
   
   return (

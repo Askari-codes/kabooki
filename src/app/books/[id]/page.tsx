@@ -56,9 +56,9 @@ const BookProfile =async ({params}:{params:{id:string}}) => {
             </Text>
           )}
 
-          <Text as="p" size="2" style={{ color: "var(--gray-600)" }}>
+          {/* <Text as="p" size="2" style={{ color: "var(--gray-600)" }}>
             Genre: {book.genre.name}
-          </Text>
+          </Text> */}
 
           <Text as="p" size="2" style={{ color: "var(--gray-600)" }}>
             Published: {book.rating}
