@@ -10,7 +10,7 @@ export async function GET() {
       {
         take:5,
         include:{
-          book:true
+          books:true
         }
       }
     );

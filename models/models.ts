@@ -7,13 +7,14 @@ export interface WriterWithBooks {
   country: string;
   description: string | null;
   picture_url: string | null;
+  slug:string;
   books: BookWithWriter[];
 }
 
 export interface BookWithWriter {
   id: number;
   title: string;
-  picture_url: string | null;
+  cover_url: string | null;
   rating:number;
   genre:string;
   writer: {

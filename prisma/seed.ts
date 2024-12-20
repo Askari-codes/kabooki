@@ -63,6 +63,65 @@ async function main() {
         },
       ],
     },
+    {
+      name: "William",
+      last_name: "Thackeray",
+      description: "William Makepeace Thackeray was an English novelist and author best known for his satirical works, particularly 'Vanity Fair', a panoramic portrait of English society.",
+      picture_url: "william-thackeray",
+      country: "United Kingdom",
+      slug: "william-thackeray",
+      books: [
+        {
+          title: "Vanity Fair",
+          genre: "Satire",
+          publishedAt: "1848-01-01T00:00:00Z",
+          summary: "A novel that satirizes society in early 19th-century Britain.",
+          cover_url: "vanity-fair",
+          slug: "vanity-fair",
+          rating: 5
+        },
+        {
+          title: "The Luck of Barry Lyndon",
+          genre: "Historical Novel",
+          publishedAt: "1844-01-01T00:00:00Z",
+          summary: "A picaresque novel that follows the fortunes of an Irish rogue on his quest to become a gentleman.",
+          cover_url: "barry-lyndon",
+          slug: "barry-lyndon",
+          rating: 5
+        }
+      ]
+    },
+    {
+      name: "Charles",
+      last_name: "Dickens",
+      description: "Charles Dickens was a British novelist, journalist, editor, illustrator, and social critic who is considered one of the greatest novelists of the Victorian era. Known for his rich storytelling and memorable characters, his major novels include 'A Tale of Two Cities' and 'Great Expectations'.",
+      picture_url: "charles-dickens",
+      country: "United Kingdom",
+      slug: "charles-dickens",
+      books: [
+        {
+          title: "A Tale of Two Cities",
+          genre: "Historical Fiction",
+          publishedAt: "1859-01-01T00:00:00Z",
+          summary: "A novel set in London and Paris before and during the French Revolution.",
+          cover_url: "a-tale-of-two-cities",
+          slug: "a-tale-of-two-cities",
+          rating: 5
+        },
+        {
+          title: "Great Expectations",
+          genre: "Coming-of-Age",
+          publishedAt: "1861-01-01T00:00:00Z",
+          summary: "The story of a young orphan boy and his struggles and triumphs in 19th-century England.",
+          cover_url: "great-expectations",
+          slug: "great-expectations",
+          rating: 5
+        }
+      ]
+    },
+    
+    
+    
   ];
  
 

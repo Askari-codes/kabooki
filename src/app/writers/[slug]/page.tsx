@@ -18,15 +18,9 @@ const WriterProfile = async ({ params }: Props) => {
   
   const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${slug}`)
   const writer:WriterWithBooks=response.data
- 
-  console.log(writer);
-  
   const bestBooks:BookWithWriter[]= writer.books?.filter((book)=>{
    return book.rating===5
   })
- console.log(bestBooks);
- 
-  
   
   if (!writer) {
     return <p>Writer not found</p>;
