@@ -17,6 +17,8 @@ export interface BookWithWriter {
   cover_url: string | null;
   rating:number;
   genre:string;
+  slug:string;
+  min_price:number
   writer: {
     id: number;
     name: string;
