@@ -28,6 +28,7 @@ export interface BookWithWriter {
 
 export interface BookCarouselProps {
   books: BookWithWriter[];
+  title:string
 }
 
 export interface WriterCaouselProps {

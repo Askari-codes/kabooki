@@ -4,11 +4,11 @@ import "swiper/css";
 import { BookCarouselProps } from "../../../models/models";
 import BookSwiper from "./BookSwiper";
 
-const BookCarousel = ({ books }: BookCarouselProps) => {
+const BookCarousel = ({ books,title }: BookCarouselProps) => {
 
   return (
     <Section style={{ padding: "20px 0" }}>
-      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>Books</h2>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>{title}</h2>
       <BookSwiper books={books}/>
     </Section>
   );
