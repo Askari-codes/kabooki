@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import { error } from "console";
 
 const prisma = new PrismaClient();
 
 async function main() {
-   await prisma.book.deleteMany();
-   await prisma.writer.deleteMany();
+  await prisma.userFavoriteBook.deleteMany()
+  await prisma.book.deleteMany();
+  await prisma.writer.deleteMany();
 
   const writers = [
     {
@@ -201,52 +203,32 @@ async function main() {
       picture_url: "charles-dickens",
       country: "United Kingdom",
       slug: "charles-dickens",
-      books:[
+      books: [
         {
-                    title: "A Tale of Two Cities",
-                    genre: "Historical Fiction",
-                    publishedAt: "1859-01-01T00:00:00Z",
-                    summary:
-                      "A novel set in London and Paris before and during the French Revolution.",
-                    cover_url: "a-tale-of-two-cities",
-                    slug: "a-tale-of-two-cities",
-                    rating: 5,
-                    min_price: 10.0,
-                  },
-                  {
-                    title: "Great Expectations",
-                    genre: "Coming-of-Age",
-                    publishedAt: "1861-01-01T00:00:00Z",
-                    summary:
-                      "The story of a young orphan boy and his struggles and triumphs in 19th-century England.",
-                    cover_url: "great-expectations",
-                    slug: "great-expectations",
-                    rating: 5,
-                    min_price: 0.0,
-                  },
-      ]
-    },
-  ];
-
-  const users = [
-    {
-      user_name: "Mohammad Askari",
-      email: "Askari.fahlyani@gmail.com",
-      image: "Mohaamad Askari",
-      user_favorite_books:[
-        {
-          bookId: 1,
-          rating: 4.58,
-          comment: "very good book",
+          title: "A Tale of Two Cities",
+          genre: "Historical Fiction",
+          publishedAt: "1859-01-01T00:00:00Z",
+          summary:
+            "A novel set in London and Paris before and during the French Revolution.",
+          cover_url: "a-tale-of-two-cities",
+          slug: "a-tale-of-two-cities",
+          rating: 5,
+          min_price: 10.0,
         },
         {
-          bookId:2,
-          rating:4.68,
-          comment:'I like this book'
-        }
-      ]
-    }
-  ]
+          title: "Great Expectations",
+          genre: "Coming-of-Age",
+          publishedAt: "1861-01-01T00:00:00Z",
+          summary:
+            "The story of a young orphan boy and his struggles and triumphs in 19th-century England.",
+          cover_url: "great-expectations",
+          slug: "great-expectations",
+          rating: 5,
+          min_price: 0.0,
+        },
+      ],
+    },
+  ];
 
   async function upserWriter() {
     for (const writer of writers) {
@@ -276,38 +258,145 @@ async function main() {
       });
     }
   }
+  await upserWriter();
+
+  const Hamlet = await prisma.book.findUnique({
+    where: {
+      slug: "Hamlet",
+    },
+  });
+  if (!Hamlet) {
+    throw new Error("there is no such a book");
+  }
+
+  const Macbeth = await prisma.book.findUnique({
+    where: {
+      slug: "Macbeth",
+    },
+  });
+  if (!Macbeth) {
+    throw new Error("there is no such a book");
+  }
+  const Othello = await prisma.book.findUnique({
+    where: {
+      slug: "Othello",
+    },
+  });
+  if (!Othello) {
+    throw new Error("there is no such a book");
+  }
+  const Emma = await prisma.book.findUnique({
+    where: {
+      slug: "Emma",
+    },
+  });
+  if (!Emma) {
+    throw new Error("there is no such a book");
+  }
 
   async function upsertUser() {
-    const user = await prisma.user.upsert({
+    await prisma.user.upsert({
       where: {
         user_name: "Mohammad Askari",
       },
       update: {
-        email: "Askari.fahlyani@gmail.com",
-        image: "Mohaamad Askari",
+       
       },
       create: {
         user_name: "Mohammad Askari",
         email: "Askari.fahlyani@gmail.com",
         image: "Mohammad Askari",
-        user_favorite_books: {
-          create:[
-            {
-              bookId: 1,
-              rating: 4.58,
-              comment: "very good book",
-            },
-          ]
-        },
-      },
-      include: {
-        user_favorite_books: true,
-      },
+        }
     });
   }
-  upserWriter();
   upsertUser();
-}
+  
+  const user = await prisma.user.findUnique({
+    where:{
+      user_name:'Mohammad Askari'
+    }
+  })
+  if (!user) {
+    throw new Error('there is no such a user')
+  }
+  
+  
+
+  async function upsertUserFavoriteBook(userId:number, bookId:number, rating:number, comment:string) {
+    try {
+      
+      const existingFavorite = await prisma.userFavoriteBook.findFirst({
+        where: {
+          AND: [
+            { userId: userId },
+            { bookId: bookId },
+          ],
+        },
+      });
+  
+      let userFavoriteBook;
+  
+      if (existingFavorite) {
+        userFavoriteBook = await prisma.userFavoriteBook.update({
+          where: { id: existingFavorite.id }, // Use the primary key to update
+          data: {
+            rating: rating,
+            comment: comment,
+          },
+        });
+      } else {
+        userFavoriteBook = await prisma.userFavoriteBook.create({
+          data: {
+            userId: userId,
+            bookId: bookId,
+            rating: rating,
+            comment: comment,
+          },
+        });
+      }
+  
+      console.log("Upserted UserFavoriteBook:", userFavoriteBook);
+      return userFavoriteBook;
+    } catch (error) {
+      console.error("Error upserting UserFavoriteBook:", error);
+      throw error;
+    }
+  }
+  
+  upsertUserFavoriteBook(user!.id,Hamlet.id,4.5,'I like the Hamlet book')
+  upsertUserFavoriteBook(user!.id,Macbeth.id,4.2,'My favorite book')
+  
+
+  
+  }
+  
+      // {
+      //   bookId: Hamlet!.id,
+      //   rating: 4.58,
+      //   comment: "very good book",
+      // },
+      // {
+      //   bookId: Macbeth!.id,
+      //   rating: 4.58,
+      //   comment: "my favorite book",
+      // },
+      // {
+      //   bookId: Othello!.id,
+      //   rating: 4.58,
+      //   comment: "it is very intresting",
+      // },
+      // {
+      //   bookId: Emma!.id,
+      //   rating: 4.58,
+      //   comment: "like it",
+      // },
+
+
+  
+  
+
+
+
 
 main()
   .catch((e) => {
@@ -317,4 +406,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-
