@@ -15,10 +15,11 @@ model book {
   summary     String?  @db.Text
   cover_url   String?  @db.VarChar(255)
   writerId    Int
-  writer      writer   @relation(fields: [writerId], references: [id])
+  writer      writer   @relation(fields: [writerId], references: [id],onDelete: Cascade)
   slug        String @unique(map: "Book_slug_key") @db.VarChar(255)
   rating      Int 
   min_price   Float
+  userfavoriteBook UserFavoriteBook[] 
 }
 
 
@@ -31,7 +32,28 @@ model writer {
   picture_url String? @db.VarChar(255)
   country     String
   slug        String @unique(map: "Writer_slug_key") @db.VarChar(255)
-  books        book[]
+  books        book[] 
+
+}
+
+model User {
+  id    Int @id @default(autoincrement())
+  user_name String @unique() 
+  email String
+  image  String?
+  user_favorite_books UserFavoriteBook[]
+ 
+}
+
+model UserFavoriteBook {
+  id Int @id @default(autoincrement())
+  rating Float?
+  comment String?
+  userId  Int
+  bookId  Int 
+  user  User @relation(fields: [userId],references: [id])
+  book  book @relation(fields: [bookId],references: [id])
+  @@unique([userId, bookId]) // Composite unique constraint
 }
 
 
