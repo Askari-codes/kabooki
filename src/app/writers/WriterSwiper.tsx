@@ -16,9 +16,13 @@ const chunkArray = (array: WriterWithBooks[], size: number) => {
 };
 const WriterSwiper = ({ writers }: Props) => {
   const chunkedWriters = chunkArray(writers, 5);
+  console.log('chunkedWriters are',chunkedWriters);
+  
+  
+  
   return (
     <div>
-      {chunkedWriters.map((writers, index) => (
+      {chunkedWriters.map((writersGroup, index) => (
         <Swiper
           className=""
           key={index}
@@ -31,7 +35,7 @@ const WriterSwiper = ({ writers }: Props) => {
             1280: { slidesPerView: 4 },
           }}
         >
-          {writers.map((writer) => (
+          {writersGroup.map((writer) => (
             <SwiperSlide className="p-5 " key={writer.id}>
               <WriterCard key={writer.id} writer={writer} />
             </SwiperSlide>

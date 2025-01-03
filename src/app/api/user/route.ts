@@ -5,6 +5,8 @@ import prisma from "../../../../prisma/client";
 
 
 export async function GET(req:NextRequest){
-const user = await prisma.userFavoriteBook.findMany()
+const user = await prisma.userFavoriteBook.findMany({
+    include:{book:true}
+})
 return NextResponse.json(user)
 }

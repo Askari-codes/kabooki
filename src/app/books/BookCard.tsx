@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
 import { Label } from "@radix-ui/themes/dist/cjs/components/context-menu";
+import { UserFavoriteBook } from "@prisma/client";
 
 interface Props {
-  book: BookWithWriter;
+  book: BookWithWriter
 }
 
 const BookCard = ({ book }: Props) => {

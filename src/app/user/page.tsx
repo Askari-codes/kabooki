@@ -1,8 +1,15 @@
-import { Avatar, Container, Flex, Box, Text } from "@radix-ui/themes";
 import * as Separator from "@radix-ui/react-separator";
-import React from "react";
+import { Avatar, Box, Container, Flex, Text } from "@radix-ui/themes";
+import axios from "axios";
+import { FavoriteBook } from "../../../models/models";
+import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
 
-const UsersPage = () => {
+const UsersPage = async () => {
+  const response = await axios.get<FavoriteBook[]>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user`
+  );
+  const foavoriteBooks:FavoriteBook[] = response.data;
+
   return (
     <Container>
       <Flex justify="between">
@@ -57,7 +64,7 @@ const UsersPage = () => {
           height: "1px",
         }}
       />
-      
+      <FavoriteBookCarousel favoriteBooks={foavoriteBooks} title='My Favorite Books'/>
     </Container>
   );
 };

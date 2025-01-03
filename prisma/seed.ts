@@ -369,32 +369,6 @@ async function main() {
 
   
   }
-  
-      // {
-      //   bookId: Hamlet!.id,
-      //   rating: 4.58,
-      //   comment: "very good book",
-      // },
-      // {
-      //   bookId: Macbeth!.id,
-      //   rating: 4.58,
-      //   comment: "my favorite book",
-      // },
-      // {
-      //   bookId: Othello!.id,
-      //   rating: 4.58,
-      //   comment: "it is very intresting",
-      // },
-      // {
-      //   bookId: Emma!.id,
-      //   rating: 4.58,
-      //   comment: "like it",
-      // },
-
-
-  
-  
-
 
 
 

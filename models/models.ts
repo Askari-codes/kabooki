@@ -25,6 +25,18 @@ export interface BookWithWriter {
     last_name: string;
   } | null;
 }
+export interface FavoriteBook{
+  id:number;
+  rating:number;
+  comment:string;
+  book:{
+    id:number;
+    title:string;
+    genre:string;
+    cover_url:string,
+    slug:string
+  }
+}
 
 export interface BookCarouselProps {
   books: BookWithWriter[];
