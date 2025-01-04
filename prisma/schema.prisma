@@ -48,7 +48,7 @@ model User {
 model UserFavoriteBook {
   id Int @id @default(autoincrement())
   rating Float?
-  comment String?
+  comment String? @db.Text
   userId  Int
   bookId  Int 
   user  User @relation(fields: [userId],references: [id])

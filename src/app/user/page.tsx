@@ -1,8 +1,10 @@
 import * as Separator from "@radix-ui/react-separator";
-import { Avatar, Box, Container, Flex, Text } from "@radix-ui/themes";
+import { Avatar, Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
 import { FavoriteBook } from "../../../models/models";
 import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
+import { PlusIcon } from "@radix-ui/react-icons"
+
 
 const UsersPage = async () => {
   const response = await axios.get<FavoriteBook[]>(
@@ -13,8 +15,8 @@ const UsersPage = async () => {
   return (
     <Container>
       <Flex justify="between">
-        <Box>
-          <Flex direction="column" align="center">
+        <Box >
+          <Flex className=" h-[80%]" direction="column" align="center" justify='between'>
             <Avatar
               src={"/users/Mohammad_Askari.jpg"}
               fallback="Mohammad Askari"
@@ -24,6 +26,10 @@ const UsersPage = async () => {
             <Box className="m-4 p-2 border-2 border-gray border-dashed font-serif font-medium">
               Mohammad Askari
             </Box>
+            <Button   style={{width:'150px',height:'35px',cursor:'pointer'}}    >
+              Follow
+              <PlusIcon/>
+            </Button>
           </Flex>
         </Box>
         <Text className="text-justify w-[80%]">

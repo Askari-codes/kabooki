@@ -293,6 +293,22 @@ async function main() {
   if (!Emma) {
     throw new Error("there is no such a book");
   }
+  const vanity_fair =  await prisma.book.findUnique({
+    where: {
+      slug: "vanity-fair",
+    },
+  });
+  if (!vanity_fair) {
+    throw new Error("there is no such a book");
+  }
+  const a_tale_of_two_cities =  await prisma.book.findUnique({
+    where: {
+      slug: "a-tale-of-two-cities",
+    },
+  });
+  if (!a_tale_of_two_cities) {
+    throw new Error("there is no such a book");
+  }
 
   async function upsertUser() {
     await prisma.user.upsert({
@@ -338,7 +354,7 @@ async function main() {
   
       if (existingFavorite) {
         userFavoriteBook = await prisma.userFavoriteBook.update({
-          where: { id: existingFavorite.id }, // Use the primary key to update
+          where: { id: existingFavorite.id }, 
           data: {
             rating: rating,
             comment: comment,
@@ -363,8 +379,11 @@ async function main() {
     }
   }
   
-  upsertUserFavoriteBook(user!.id,Hamlet.id,4.5,'I like the Hamlet book')
-  upsertUserFavoriteBook(user!.id,Macbeth.id,4.2,'My favorite book')
+  upsertUserFavoriteBook(user!.id,Hamlet.id,4.5,"As a recent reader of Shakespeare's 'Hamlet,' I found myself completely engrossed by the tragic tale of the Prince of Denmark.")
+  upsertUserFavoriteBook(user!.id,Macbeth.id,4.2,"Shakespeare's 'Macbeth' is a riveting exploration of ambition and guilt. The play delves into the dark side of the human psyche as Macbeth, driven by prophetic ent.")
+  upsertUserFavoriteBook(user!.id,Emma.id,5,"Jane Austen's 'Emma' is a delightful and incisive portrayal of social dynamics and personal growth within a small English village. The title character, Emma Woodhouse, is charming yet flawed, making her both endearing and frustrating. Austen's sharp wit and keen observations of human nature shine through in her critique of class and matchmaking. The narrative's pacing is perfect, leading to misunderstandings that are both humorous and revealing. This novel not only entertains but also offers a critical look at the constraints faced by women in the 19th century. A timeless classic that continues to resonate with readers today.")
+  upsertUserFavoriteBook(user!.id,vanity_fair.id,5,"William Makepeace Thackeray's 'Vanity Fair' is a masterful satire of early 19th-century British society, where morality is often overshadowed by cunning and greed. Through the cunning Becky Sharp and the kind-hearted Amelia Sedley, Thackeray explores themes of social climbing and the pursuit of wealth. His sharp, ironic narration exposes the hypocrisies of an era obsessed with social status. The novel's breadth of characters and subplots weave a complex tapestry that illustrates the titular 'fair' as a never-ending parade of human foibles. A brilliant and biting critique that remains incredibly relevant.")
+  upsertUserFavoriteBook(user!.id,a_tale_of_two_cities.id,5,"Charles Dickens' 'A Tale of Two Cities' is a profound narrative of love, sacrifice, and revolution set against the backdrop of the French Revolution. The contrast between the cities of London and Paris provides a powerful examination of social injustice and human resilience. Dickens masterfully uses his characters, like the self-sacrificing Sydney Carton and the resilient Dr. Manette, to explore themes of redemption and rebirth amidst turmoil. His rich descriptions and intense plot twists make this a compelling read that captures the chaos and fervor of an era. A timeless piece that underscores the best and worst of human nature.")
   
 
   

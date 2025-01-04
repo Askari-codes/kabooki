@@ -1,4 +1,4 @@
-import { AspectRatio, Box, Flex, Text } from "@radix-ui/themes";
+import { AspectRatio, Box, Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "@/app/components/StarRating";
@@ -44,7 +44,15 @@ const FavoriteBookCard = ({ favoriteBook }: Props) => {
         <Box>
           <StarRating rating={favoriteBook.rating} />
         </Box>
-        
+        <Dialog.Root>
+          <Dialog.Trigger>
+            <Text className="cursor-pointer">Comment</Text>
+          </Dialog.Trigger>
+          <Dialog.Content>
+            {favoriteBook.comment}
+          </Dialog.Content>
+          
+        </Dialog.Root>
       </Flex>
     </Box>
   );
