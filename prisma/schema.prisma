@@ -8,21 +8,30 @@ datasource db {
 }
 
 model book {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  genre       String   @db.VarChar(100) // Changed from relation to String
-  publishedAt DateTime
-  summary     String?  @db.Text
-  cover_url   String?  @db.VarChar(255)
-  writerId    Int
-  writer      writer   @relation(fields: [writerId], references: [id],onDelete: Cascade)
-  slug        String @unique(map: "Book_slug_key") @db.VarChar(255)
-  rating      Int 
-  min_price   Float
-  userfavoriteBook UserFavoriteBook[] 
+  id               Int                @id @default(autoincrement())
+  title            String             @db.VarChar(255)
+  genre            String             @db.VarChar(100) // Changed from relation to String
+  publishedAt      DateTime
+  summary          String?            @db.Text
+  cover_url        String?            @db.VarChar(255)
+  writerId         Int
+  writer           writer             @relation(fields: [writerId], references: [id], onDelete: Cascade)
+  slug             String             @unique(map: "Book_slug_key") @db.VarChar(255)
+  rating           Int
+  min_price        Float
+  userfavoriteBook UserFavoriteBook[]
 }
 
-
+model Movie {
+  id          Int      @id @default(autoincrement())
+  rating      Float
+  genre       String
+  publishedAt DateTime
+  summary     String?  @db.Text
+  poster      String
+  slug        String
+  stream      String
+}
 
 model writer {
   id          Int     @id @default(autoincrement())
@@ -31,29 +40,26 @@ model writer {
   description String? @db.Text
   picture_url String? @db.VarChar(255)
   country     String
-  slug        String @unique(map: "Writer_slug_key") @db.VarChar(255)
-  books        book[] 
-
+  slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
+  books       book[]
 }
 
 model User {
-  id    Int @id @default(autoincrement())
-  user_name String @unique() 
-  email String
-  image  String?
+  id                  Int                @id @default(autoincrement())
+  user_name           String             @unique()
+  email               String
+  image               String?
   user_favorite_books UserFavoriteBook[]
- 
 }
 
 model UserFavoriteBook {
-  id Int @id @default(autoincrement())
-  rating Float?
+  id      Int     @id @default(autoincrement())
+  rating  Float?
   comment String? @db.Text
   userId  Int
-  bookId  Int 
-  user  User @relation(fields: [userId],references: [id])
-  book  book @relation(fields: [bookId],references: [id])
+  bookId  Int
+  user    User    @relation(fields: [userId], references: [id])
+  book    book    @relation(fields: [bookId], references: [id])
+
   @@unique([userId, bookId]) // Composite unique constraint
 }
-
-
