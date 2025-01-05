@@ -1,12 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import { error } from "console";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  
   await prisma.userFavoriteBook.deleteMany()
   await prisma.book.deleteMany();
   await prisma.writer.deleteMany();
+
+ 
+
 
   const writers = [
     {
@@ -326,7 +329,6 @@ async function main() {
     });
   }
   upsertUser();
-  
   const user = await prisma.user.findUnique({
     where:{
       user_name:'Mohammad Askari'
@@ -335,9 +337,6 @@ async function main() {
   if (!user) {
     throw new Error('there is no such a user')
   }
-  
-  
-
   async function upsertUserFavoriteBook(userId:number, bookId:number, rating:number, comment:string) {
     try {
       
@@ -384,10 +383,111 @@ async function main() {
   upsertUserFavoriteBook(user!.id,Emma.id,5,"Jane Austen's 'Emma' is a delightful and incisive portrayal of social dynamics and personal growth within a small English village. The title character, Emma Woodhouse, is charming yet flawed, making her both endearing and frustrating. Austen's sharp wit and keen observations of human nature shine through in her critique of class and matchmaking. The narrative's pacing is perfect, leading to misunderstandings that are both humorous and revealing. This novel not only entertains but also offers a critical look at the constraints faced by women in the 19th century. A timeless classic that continues to resonate with readers today.")
   upsertUserFavoriteBook(user!.id,vanity_fair.id,5,"William Makepeace Thackeray's 'Vanity Fair' is a masterful satire of early 19th-century British society, where morality is often overshadowed by cunning and greed. Through the cunning Becky Sharp and the kind-hearted Amelia Sedley, Thackeray explores themes of social climbing and the pursuit of wealth. His sharp, ironic narration exposes the hypocrisies of an era obsessed with social status. The novel's breadth of characters and subplots weave a complex tapestry that illustrates the titular 'fair' as a never-ending parade of human foibles. A brilliant and biting critique that remains incredibly relevant.")
   upsertUserFavoriteBook(user!.id,a_tale_of_two_cities.id,5,"Charles Dickens' 'A Tale of Two Cities' is a profound narrative of love, sacrifice, and revolution set against the backdrop of the French Revolution. The contrast between the cities of London and Paris provides a powerful examination of social injustice and human resilience. Dickens masterfully uses his characters, like the self-sacrificing Sydney Carton and the resilient Dr. Manette, to explore themes of redemption and rebirth amidst turmoil. His rich descriptions and intense plot twists make this a compelling read that captures the chaos and fervor of an era. A timeless piece that underscores the best and worst of human nature.")
-  
-
-  
   }
+
+  // Movie part
+  try {
+    await prisma.movie.deleteMany();
+} catch (error) {
+    console.error("Deletion failed: ", error);
+}
+  const movies=[
+    {
+      rating: 9.3,
+      title:'the-shawshank-redemption',
+      genre: "Drama",
+      publishedAt: new Date("1994-09-23"),
+      summary: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      poster: "the-shawshank-redemption",
+      slug: "the-shawshank-redemption",
+      stream: "Netflix"
+  },
+  {
+    title: "The Godfather",
+    rating: 9.2,
+    genre: "Crime, Drama",
+    publishedAt: new Date("1972-03-24"),
+    summary: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+    poster: "the-godfather",
+    slug: "the-godfather",
+    stream: "Netflix"
+  },
+  {
+    title: "The Godfather Part II",
+    rating: 9.0,
+    genre: "Crime, Drama",
+    publishedAt: new Date("1974-12-20"),
+    summary: "A sequel that many consider superior to its predecessor, focusing on the early life and career of Vito Corleone in 1920s New York City.",
+    poster: "the-godfather-part-ii",
+    slug: "the-godfather-part-ii",
+    stream: "Netflix"
+  },
+  {
+    title: "12 Angry Men",
+    rating: 8.9,
+    genre: "Drama",
+    publishedAt: new Date("1957-04-10"),
+    summary: "A courtroom drama that focuses on its intense dialogue and characters, as twelve jurors deliberate the guilt or acquittal of a defendant on the basis of reasonable doubt.",
+    poster: "12-angry-men",
+    slug: "12-angry-men",
+    stream: "Netflix"
+  },
+  {
+    title: "Schindler's List",
+    rating: 8.9,
+    genre: "Biography, Drama, History",
+    publishedAt: new Date("1993-12-15"),
+    summary: "A profound narrative on the horrors of the Holocaust, telling the story of Oskar Schindler, who saved over a thousand Jewish refugees by employing them in his factories.",
+    poster: "schindlers-list",
+    slug: "schindlers-list",
+    stream: "Netflix"
+  },
+  {
+    title: "The Lord of the Rings: The Return of the King",
+    rating: 8.9,
+    genre: "Adventure, Drama, Fantasy",
+    publishedAt: new Date("2003-12-17"),
+    summary: "Celebrated for its epic scope and emotional depth, the final chapter of the trilogy depicts the final confrontations of the War of the Ring.",
+    poster: "the-lord-of-the-rings-the-return-of-the-king",
+    slug: "the-lord-of-the-rings-the-return-of-the-king",
+    stream: "Netflix"
+  },
+  {
+    title: "Pulp Fiction",
+    rating: 8.9,
+    genre: "Crime, Drama",
+    publishedAt: new Date("1994-10-14"),
+    summary: "Known for its eclectic dialogue and nonlinear storyline, the film interconnects the lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits.",
+    poster: "pulp-fiction",
+    slug: "pulp-fiction",
+    stream: "Netflix"
+  },
+  {
+    title: "The Good, the Bad and the Ugly",
+    rating: 8.8,
+    genre: "Western",
+    publishedAt: new Date("1966-12-23"),
+    summary: "Famous for its iconic music and dramatic tension, the film follows three gunslingers competing to find fortune in a buried cache of Confederate gold amid the violent chaos of the American Civil War.",
+    poster: "the-good-the-bad-and-the-ugly",
+    slug: "the-good-the-bad-and-the-ugly",
+    stream: "Netflix"
+  },
+  {
+    title: "The Lord of the Rings: The Fellowship of the Ring",
+    rating: 8.8,
+    genre: "Adventure, Drama, Fantasy",
+    publishedAt: new Date("2001-12-19"),
+    summary: "Praised for its faithful adaptation of Tolkien's work, the film follows a young hobbit, Frodo Baggins, as he embarks on a perilous journey to destroy an ancient ring.",
+    poster: "the-lord-of-the-rings-the-fellowship-of-the-ring",
+    slug: "the-lord-of-the-rings-the-fellowship-of-the-ring",
+    stream: "Netflix"
+  }
+]
+
+ await prisma.movie.createMany({
+  data:movies,
+  skipDuplicates:false
+})
 
 
 

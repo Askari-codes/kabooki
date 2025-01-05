@@ -24,6 +24,7 @@ model book {
 
 model Movie {
   id          Int      @id @default(autoincrement())
+  title       String
   rating      Float
   genre       String
   publishedAt DateTime
