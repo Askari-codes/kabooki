@@ -2,21 +2,22 @@ import React from "react";
 import { WriterWithBooks } from "../../../models/models";
 import { Swiper, SwiperSlide } from "swiper/react";
 import WriterCard from "./WriterCard";
+import { chunkArray } from "../utilities/services";
 
 interface Props {
   writers: WriterWithBooks[];
 }
 
-const chunkArray = (array: WriterWithBooks[], size: number) => {
-  const chunks = [];
-  for (let i = 0; i < array.length; i += size) {
-    chunks.push(array.slice(i, i + size));
-  }
-  return chunks;
-};
+// const chunkArray = (array: WriterWithBooks[], size: number) => {
+//   const chunks = [];
+//   for (let i = 0; i < array.length; i += size) {
+//     chunks.push(array.slice(i, i + size));
+//   }
+//   return chunks;
+// };
 const WriterSwiper = ({ writers }: Props) => {
   const chunkedWriters = chunkArray(writers, 5);
-  console.log('chunkedWriters are',chunkedWriters);
+  
   
   
   

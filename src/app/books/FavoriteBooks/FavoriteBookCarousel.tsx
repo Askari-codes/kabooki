@@ -1,11 +1,8 @@
 "use client";
 import { Section } from "@radix-ui/themes";
 import "swiper/css";
-import { UserFavoriteBook } from "@prisma/client";
-import BookSwiper from "../BookSwiper";
-import FavoriteBookSwiper from "./FavoriteBookSwiper";
-import { Facebook } from "next/dist/lib/metadata/types/extra-types";
 import { FavoriteBook } from "../../../../models/models";
+import FavoriteBookSwiper from "./FavoriteBookSwiper";
 
 interface Props{
   favoriteBooks:FavoriteBook[],

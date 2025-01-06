@@ -22,7 +22,6 @@ const WriterProfile = async ({ params }: Props) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${slug}`
   );
   const writer: WriterWithBooks = response.data;
-  console.log(writer.books);
   const bestBooks: BookWithWriter[] = writer.books?.filter((book) => {
     return book.rating === 5;
   });

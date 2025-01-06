@@ -1,16 +1,26 @@
 import * as Separator from "@radix-ui/react-separator";
 import { Avatar, Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
-import { FavoriteBook } from "../../../models/models";
+import { FavoriteBook, FavoriteMovie } from "../../../models/models";
 import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
 import { PlusIcon } from "@radix-ui/react-icons"
+import FavoriteMovieCarousel from "../movies/favoriteMovies/FavoriteMovieCarousel";
+import { UserFavoriteMovie } from "@prisma/client";
 
 
 const UsersPage = async () => {
   const response = await axios.get<FavoriteBook[]>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteBooks`
   );
   const foavoriteBooks:FavoriteBook[] = response.data;
+
+  const favoriteMoviesResponse = await axios.get<FavoriteMovie[]>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteMovies`
+  )
+  const favoriteMovies = favoriteMoviesResponse.data
+  
+  
+  
 
   return (
     <Container>
@@ -71,6 +81,7 @@ const UsersPage = async () => {
         }}
       />
       <FavoriteBookCarousel favoriteBooks={foavoriteBooks} title='My Favorite Books'/>
+      <FavoriteMovieCarousel favoriteMovies={favoriteMovies}/>
     </Container>
   );
 };

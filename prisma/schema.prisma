@@ -23,15 +23,16 @@ model book {
 }
 
 model Movie {
-  id          Int      @id @default(autoincrement())
-  title       String
-  rating      Float
-  genre       String
-  publishedAt DateTime
-  summary     String?  @db.Text
-  poster      String
-  slug        String
-  stream      String
+  id                Int                 @id @default(autoincrement())
+  title             String
+  rating            Float
+  genre             String
+  publishedAt       DateTime
+  summary           String?             @db.Text
+  poster            String
+  slug              String              @unique
+  stream            String
+  userFavoriteMovie UserFavoriteMovie[]
 }
 
 model writer {
@@ -46,11 +47,12 @@ model writer {
 }
 
 model User {
-  id                  Int                @id @default(autoincrement())
-  user_name           String             @unique()
+  id                  Int                 @id @default(autoincrement())
+  user_name           String              @unique()
   email               String
   image               String?
   user_favorite_books UserFavoriteBook[]
+  userFavoriteMovies  UserFavoriteMovie[]
 }
 
 model UserFavoriteBook {
@@ -63,4 +65,14 @@ model UserFavoriteBook {
   book    book    @relation(fields: [bookId], references: [id])
 
   @@unique([userId, bookId]) // Composite unique constraint
+}
+
+model UserFavoriteMovie {
+  id      Int     @id @default(autoincrement())
+  rating  Float?
+  comment String?
+  userId  Int
+  movieId Int
+  user    User    @relation(fields: [userId], references: [id])
+  movie   Movie   @relation(fields: [movieId], references: [id])
 }
