@@ -1,9 +1,8 @@
-import { AspectRatio, Box, Button, Dialog, Flex, Text } from "@radix-ui/themes";
+import StarRating from "@/app/components/StarRating";
+import { AspectRatio, Box, Dialog, Flex, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
-import StarRating from "@/app/components/StarRating";
 import { FavoriteBook } from "../../../../models/models";
-import * as Popover from "@radix-ui/react-popover";
 
 interface Props {
   favoriteBook: FavoriteBook;

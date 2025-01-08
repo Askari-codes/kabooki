@@ -9,12 +9,12 @@ interface Props{
     title:string
 }
 
-const FavoriteBookCarousel = ({ favoriteBooks,title }: Props) => {
+const FavoriteBookCarousel = ({ favoriteBooks,title='Favorite Books' }: Props) => {
   
 
   return (
     <Section style={{ padding: "20px 0" }}>
-      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>{title}</h2>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem", fontWeight:'bold', paddingLeft:'1rem' }}>{title}</h2>
       <FavoriteBookSwiper favoriteBooks={favoriteBooks}/>
     </Section>
   );

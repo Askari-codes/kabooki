@@ -3,30 +3,34 @@ import { Avatar, Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
 import { FavoriteBook, FavoriteMovie } from "../../../models/models";
 import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
-import { PlusIcon } from "@radix-ui/react-icons"
+import { PlusIcon } from "@radix-ui/react-icons";
 import FavoriteMovieCarousel from "../movies/favoriteMovies/FavoriteMovieCarousel";
-import { UserFavoriteMovie } from "@prisma/client";
 
 
 const UsersPage = async () => {
   const response = await axios.get<FavoriteBook[]>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteBooks`
   );
-  const foavoriteBooks:FavoriteBook[] = response.data;
+  const foavoriteBooks: FavoriteBook[] = response.data;
 
   const favoriteMoviesResponse = await axios.get<FavoriteMovie[]>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteMovies`
-  )
-  const favoriteMovies = favoriteMoviesResponse.data
+  );
+  const favoriteMovies = favoriteMoviesResponse.data;
+ 
   
-  
-  
+
 
   return (
     <Container>
       <Flex justify="between">
-        <Box >
-          <Flex className=" h-[80%]" direction="column" align="center" justify='between'>
+        <Box>
+          <Flex
+            className=" h-[80%]"
+            direction="column"
+            align="center"
+            justify="between"
+          >
             <Avatar
               src={"/users/Mohammad_Askari.jpg"}
               fallback="Mohammad Askari"
@@ -36,9 +40,11 @@ const UsersPage = async () => {
             <Box className="m-4 p-2 border-2 border-gray border-dashed font-serif font-medium">
               Mohammad Askari
             </Box>
-            <Button   style={{width:'150px',height:'35px',cursor:'pointer'}}    >
+            <Button
+              style={{ width: "150px", height: "35px", cursor: "pointer" }}
+            >
               Follow
-              <PlusIcon/>
+              <PlusIcon />
             </Button>
           </Flex>
         </Box>
@@ -80,8 +86,11 @@ const UsersPage = async () => {
           height: "1px",
         }}
       />
-      <FavoriteBookCarousel favoriteBooks={foavoriteBooks} title='My Favorite Books'/>
-      <FavoriteMovieCarousel favoriteMovies={favoriteMovies}/>
+      <FavoriteBookCarousel
+        favoriteBooks={foavoriteBooks}
+        title="Favorite Books"
+      />
+      <FavoriteMovieCarousel favoriteMovies={favoriteMovies} />
     </Container>
   );
 };

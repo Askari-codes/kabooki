@@ -8,7 +8,7 @@ const BookCarousel = ({ books,title }: BookCarouselProps) => {
 
   return (
     <Section style={{ padding: "20px 0" }}>
-      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>{title}</h2>
+      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem", fontWeight:'bold' }}>{title}</h2>
       <BookSwiper books={books}/>
     </Section>
   );

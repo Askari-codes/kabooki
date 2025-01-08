@@ -9,7 +9,7 @@ const BookSection = async () => {
   );
   const books = await response.json();
 
-  return <BookCarousel books={books} />;
+  return <BookCarousel books={books} title="Favorit Books" />;
 };
 
 export default BookSection;

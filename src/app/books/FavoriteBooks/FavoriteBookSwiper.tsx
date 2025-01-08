@@ -1,10 +1,6 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import { UserFavoriteBook } from "@prisma/client";
-import BookCard from "../BookCard";
-import FavoriteBookCard from "./FavoriteBookCard";
 import { FavoriteBook } from "../../../../models/models";
+import FavoriteBookCard from "./FavoriteBookCard";
 
 interface Props {
   favoriteBooks: FavoriteBook[];

@@ -220,6 +220,15 @@ if(!pulp_fiction){
   throw new Error('there is no such a movie')
 }
 
+const the_lord_of_the_rings_the_fellowship_of_the_ring = await prisma.movie.findUnique({
+  where:{
+    slug:'the-lord-of-the-rings-the-fellowship-of-the-ring'
+  }
+})
+if (!the_lord_of_the_rings_the_fellowship_of_the_ring) {
+  throw new Error('there is no such a movie')
+}
+
 async function addUserFavoriteMovie(
   userId: number,
   movieId: number,
@@ -270,6 +279,7 @@ if (!user) {
 }
 await addUserFavoriteMovie(user.id, the_godfather_part_ii.id, 9.0, "the godfather part two is my favorite movie");
 await addUserFavoriteMovie(user.id, pulp_fiction.id, 9.5, "a very beatiful and pleasent movie");
+await addUserFavoriteMovie(user.id, the_lord_of_the_rings_the_fellowship_of_the_ring.id, 10, "this is the best movie that I've ever seen");
 
 
 
