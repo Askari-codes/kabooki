@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { writers } from "./data/WritersWithBooks";
 import movies from "./data/Movies";
+import { getFavoriteMovies } from "./data/FavoriteMovies";
 
 const prisma = new PrismaClient();
 
@@ -8,6 +9,11 @@ async function main() {
   await prisma.userFavoriteBook.deleteMany();
   await prisma.book.deleteMany();
   await prisma.writer.deleteMany();
+ 
+  const myFavoriteMovies = getFavoriteMovies().then(movie=>movie)
+  console.log(myFavoriteMovies);
+  
+  
 
   
 
@@ -266,6 +272,15 @@ async function addUserFavoriteMovie(
   } catch (error) {}
 }
 
+const the_good_the_bad_and_the_ugly = await prisma.movie.findUnique({
+  where:{
+    slug:'the-good-the-bad-and-the-ugly'
+  }
+})
+if (!the_good_the_bad_and_the_ugly) {
+  throw new Error('there is no such a book')
+}
+
 
 
 const user = await prisma.user.findUnique({
@@ -280,6 +295,7 @@ if (!user) {
 await addUserFavoriteMovie(user.id, the_godfather_part_ii.id, 9.0, "the godfather part two is my favorite movie");
 await addUserFavoriteMovie(user.id, pulp_fiction.id, 9.5, "a very beatiful and pleasent movie");
 await addUserFavoriteMovie(user.id, the_lord_of_the_rings_the_fellowship_of_the_ring.id, 10, "this is the best movie that I've ever seen");
+await addUserFavoriteMovie(user.id, the_good_the_bad_and_the_ugly.id, 8.5, "the good the bad and the ugly is my favorite western movie");
 
 
 

@@ -25,6 +25,22 @@ export interface BookWithWriter {
     last_name: string;
   } | null;
 }
+
+export interface PodcastWithHost{
+  id:number,            
+  title:string,             
+  genre:string,             
+  summary:string           
+  cover_url:string                                      
+  slug:string                         
+  rating :number         
+  min_price :number,
+  host:{
+    id:number
+    name:string
+    last_name:string
+  } |null     
+}
 export interface FavoriteBook {
   id: number;
   rating: number;

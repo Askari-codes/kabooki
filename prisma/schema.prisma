@@ -21,6 +21,20 @@ model book {
   min_price        Float
   userfavoriteBook UserFavoriteBook[]
 }
+model Podcast {
+  id                Int                 @id @default(autoincrement())
+  title             String              @db.VarChar(255)
+  genre             String              @db.VarChar(100)
+  publishedAt       DateTime
+  summary           String?             @db.Text
+  cover_url         String?             @db.VarChar(255)
+  hostId            Int
+  host              Host                @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  slug             String               @unique(map: "Podcast_slug_key") @db.VarChar(255)
+  rating           Int
+  min_price        Float
+  userFavoritePodcast UserFavoritePodcast[]
+}
 
 model Movie {
   id                Int                 @id @default(autoincrement())
@@ -35,6 +49,7 @@ model Movie {
   userFavoriteMovie UserFavoriteMovie[]
 }
 
+
 model writer {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(255)
@@ -45,6 +60,17 @@ model writer {
   slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
   books       book[]
 }
+model Host {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  last_name   String    @db.VarChar(255)
+  description String?   @db.Text
+  picture_url String?   @db.VarChar(255)
+  country     String
+  slug        String    @unique(map: "Host_slug_key") @db.VarChar(255)
+  podcasts    Podcast[]
+}
+
 
 model User {
   id                  Int                 @id @default(autoincrement())
@@ -53,6 +79,7 @@ model User {
   image               String?
   user_favorite_books UserFavoriteBook[]
   userFavoriteMovies  UserFavoriteMovie[]
+  userFavoritePodcasts  UserFavoritePodcast[] 
 }
 
 model UserFavoriteBook {
@@ -66,6 +93,17 @@ model UserFavoriteBook {
 
   @@unique([userId, bookId]) // Composite unique constraint
 }
+model UserFavoritePodcast {
+  id        Int      @id @default(autoincrement())
+  rating    Float?
+  comment   String?  @db.Text
+  userId    Int
+  podcastId Int
+  user      User     @relation(fields: [userId], references: [id])
+  podcast   Podcast  @relation(fields: [podcastId], references: [id])
+
+  @@unique([userId, podcastId]) // Composite unique constraint
+}
 
 model UserFavoriteMovie {
   id      Int     @id @default(autoincrement())
@@ -76,3 +114,4 @@ model UserFavoriteMovie {
   user    User    @relation(fields: [userId], references: [id])
   movie   Movie   @relation(fields: [movieId], references: [id])
 }
+
