@@ -1,4 +1,4 @@
-import { writer } from "@prisma/client";
+import { Podcast, writer } from "@prisma/client";
 
 export interface WriterWithBooks {
   id: number;
@@ -40,6 +40,15 @@ export interface PodcastWithHost{
     name:string
     last_name:string
   } |null     
+}
+export interface HostWithPodcast{
+  name:string
+  last_name:string
+  description:string
+  picture_url:string
+  country:string
+  slug:string
+  podcasts:Podcast[]
 }
 export interface FavoriteBook {
   id: number;

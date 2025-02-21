@@ -2,10 +2,12 @@ import { PrismaClient } from "@prisma/client";
 import { writers } from "./data/WritersWithBooks";
 import movies from "./data/Movies";
 import { getFavoriteMovies } from "./data/FavoriteMovies";
+import { hosts } from "./data/HostWithPodcasts";
 
 const prisma = new PrismaClient();
 
 async function main() {
+ 
   await prisma.userFavoriteBook.deleteMany();
   await prisma.book.deleteMany();
   await prisma.writer.deleteMany();
@@ -297,6 +299,44 @@ await addUserFavoriteMovie(user.id, pulp_fiction.id, 9.5, "a very beatiful and p
 await addUserFavoriteMovie(user.id, the_lord_of_the_rings_the_fellowship_of_the_ring.id, 10, "this is the best movie that I've ever seen");
 await addUserFavoriteMovie(user.id, the_good_the_bad_and_the_ugly.id, 8.5, "the good the bad and the ugly is my favorite western movie");
 
+// podcat part
+try {
+  await prisma.podcast.deleteMany()
+  await prisma.host.deleteMany()
+} catch (error) {
+  console.log(error);
+  
+}
+async function upsertHost() {
+  for (const host of hosts) {
+    await prisma.host.upsert({
+      where: { slug: host.slug },
+      update: {},
+      create: {
+        name: host.name,
+        last_name: host.last_name,
+        description: host.description,
+        picture_url: host.picture_url,
+        country: host.country,
+        slug: host.slug,
+        podcasts: {
+          create: host.podcasts.map((podcast) => ({
+            title:podcast.title,
+            publishedAt:podcast.publishedAt,
+            genre: podcast.genre,
+            summary: podcast.summary,
+            cover_url: podcast.cover_url,
+            slug: podcast.slug,
+            rating: podcast.rating,
+            min_price: podcast.min_price,
+          })),
+        },
+      },
+    });
+  }
+}
+
+await upsertHost()
 
 
 main()

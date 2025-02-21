@@ -1,6 +1,7 @@
 import { Section } from "@radix-ui/themes";
 import React from "react";
 import { PodcastWithHost } from "../../../models/models";
+import PodcastSwiper from "./PodcastSwiper";
 
 interface Props {
     podcasts:PodcastWithHost[],
@@ -13,8 +14,9 @@ const PodcatCarousel = ({podcasts,title}:Props) => {
       <h2
         style={{ marginBottom: "20px", fontSize: "1.5rem", fontWeight: "bold" }}
       >
-        {podcasts[0].host?.last_name}
+        {title}
       </h2>
+      <PodcastSwiper podcasts={podcasts}/>
     </Section>
   );
 };
