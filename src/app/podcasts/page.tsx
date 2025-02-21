@@ -1,9 +1,9 @@
 import React from 'react'
-import PadcastSection from './PadcastSection'
+import PadcastSection from './PodcastSection'
 
 const Podcasts = () => {
   return (
-    <PadcastSection/>
+    <div>hiii</div>
   )
 }
 

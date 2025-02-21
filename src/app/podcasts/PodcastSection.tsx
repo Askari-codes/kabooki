@@ -1,7 +1,7 @@
 import React from 'react'
 import PodcatCarousel from './PodcatCarousel'
 
-const PadcastSection = async() => {
+const PodcastSection = async() => {
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/podcasts`,
         {
@@ -14,4 +14,4 @@ const PadcastSection = async() => {
   )
 }
 
-export default PadcastSection
+export default PodcastSection

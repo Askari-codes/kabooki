@@ -18,7 +18,7 @@ const PodcatCarousel = ({podcasts,title}:Props) => {
       </h2>
       <PodcastSwiper podcasts={podcasts}/>
     </Section>
-  );
+  )
 };
 
 export default PodcatCarousel;
