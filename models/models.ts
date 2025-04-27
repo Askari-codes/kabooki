@@ -1,4 +1,4 @@
-import { Podcast, writer } from "@prisma/client";
+import { Podcast } from "@prisma/client";
 
 export interface WriterWithBooks {
   id: number;
@@ -70,6 +70,19 @@ export interface FavoriteMovie {
     id: number;
     title: string;
     poster: string;
+    slug: string;
+  };
+}
+
+export interface FavoritePodcast {
+  id: number;
+  rating: number;
+  comment: string;
+  podcast: {
+    id: number;
+    title: string;
+    genre: string;
+    cover_url: string;
     slug: string;
   };
 }

@@ -1,22 +1,30 @@
 import * as Separator from "@radix-ui/react-separator";
 import { Avatar, Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
-import { FavoriteBook, FavoriteMovie } from "../../../models/models";
+import { FavoriteBook, FavoriteMovie, FavoritePodcast } from "../../../models/models";
 import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
 import { PlusIcon } from "@radix-ui/react-icons";
 import FavoriteMovieCarousel from "../movies/favoriteMovies/FavoriteMovieCarousel";
+import FavoriePodcastCarousel from "../podcasts/FavoritePodcast/FavoriePodcastCarousel";
 
 
 const UsersPage = async () => {
-  const response = await axios.get<FavoriteBook[]>(
+  const favoriteBookResponse = await axios.get<FavoriteBook[]>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteBooks`
   );
-  const foavoriteBooks: FavoriteBook[] = response.data;
+  const foavoriteBooks: FavoriteBook[] = favoriteBookResponse.data;
 
   const favoriteMoviesResponse = await axios.get<FavoriteMovie[]>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteMovies`
   );
   const favoriteMovies = favoriteMoviesResponse.data;
+
+  const favoritePodcastsResponse = await axios.get<FavoritePodcast[]>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoritePodcasts`
+  )
+  const favoritePodcasts = favoritePodcastsResponse.data;
+  
+  
  
   
 
@@ -91,6 +99,7 @@ const UsersPage = async () => {
         title="Favorite Books"
       />
       <FavoriteMovieCarousel favoriteMovies={favoriteMovies} />
+      <FavoriePodcastCarousel favoritePodcasts={favoritePodcasts}/>
     </Container>
   );
 };
