@@ -1,32 +1,23 @@
 import React from "react";
-import { WriterWithBooks } from "../../../models/models";
+import { Writer } from "@prisma/client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import WriterCard from "./WriterCard";
 import { chunkArray } from "../utilities/services";
 
 interface Props {
-  writers: WriterWithBooks[];
+  writers: Writer[];
 }
 
-// const chunkArray = (array: WriterWithBooks[], size: number) => {
-//   const chunks = [];
-//   for (let i = 0; i < array.length; i += size) {
-//     chunks.push(array.slice(i, i + size));
-//   }
-//   return chunks;
-// };
+
 const WriterSwiper = ({ writers }: Props) => {
   const chunkedWriters = chunkArray(writers, 5);
-  
-  
-  
+  const [firstChunked,...rest]=chunkedWriters;
   
   return (
     <div>
-      {chunkedWriters.map((writersGroup, index) => (
+      
         <Swiper
           className=""
-          key={index}
           spaceBetween={20}
           slidesPerView={1}
           breakpoints={{
@@ -36,13 +27,13 @@ const WriterSwiper = ({ writers }: Props) => {
             1280: { slidesPerView: 4 },
           }}
         >
-          {writersGroup.map((writer) => (
+          {firstChunked.map((writer) => (
             <SwiperSlide className="p-5 " key={writer.id}>
               <WriterCard key={writer.id} writer={writer} />
             </SwiperSlide>
           ))}
         </Swiper>
-      ))}
+      
     </div>
   );
 };

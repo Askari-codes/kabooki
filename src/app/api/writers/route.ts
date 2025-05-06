@@ -1,18 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/client";
-import { writer } from "@prisma/client";
+import { Writer } from "@prisma/client";
 
 export async function GET() {
 
   
   try {
-    const writers: writer[] = await prisma.writer.findMany(
-      {
-        take:5,
-        include:{
-          books:true
-        }
-      }
+    const writers: Writer[] = await prisma.writer.findMany(
+      
     );
     
     return NextResponse.json(writers);

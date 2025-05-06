@@ -3,11 +3,13 @@ import {
   Section
 } from "@radix-ui/themes";
 import "swiper/css";
-import { WriterCaouselProps } from "../../../models/models";
 import WriterSwiper from "./WriterSwiper";
+import { Writer } from "@prisma/client";
+interface Props{
+  writers:Writer[]
+}
 
-
-const WriterCarousel = ({writers}:WriterCaouselProps) => {
+const WriterCarousel = ({writers}:Props) => {
 
 
 

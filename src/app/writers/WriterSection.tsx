@@ -1,4 +1,4 @@
-import { WriterWithBooks } from "../../../models/models";
+import { Writer } from "@prisma/client";
 import WriterCarousel from "./WriterCarousel"
 
 
@@ -7,12 +7,14 @@ const WriterSection = async() => {
     {
       cache: "no-cache",
     });
-   const writers:WriterWithBooks[] = await response.json()
+   const writers:Writer[] = await response.json()
    
+
 
   return (
   
-    <WriterCarousel writers={writers}/>
+    
+     <WriterCarousel writers={writers}/>
   
   )
 }

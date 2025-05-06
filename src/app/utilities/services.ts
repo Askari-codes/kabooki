@@ -1,8 +1,8 @@
 import { Movie } from "@prisma/client";
-import { WriterWithBooks } from "../../../models/models";
+import { Writer } from "@prisma/client";
 
 interface chunkArray{
-    writers:WriterWithBooks[]
+    writers:Writer[]
 
 }
 

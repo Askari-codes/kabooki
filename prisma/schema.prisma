@@ -7,50 +7,86 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model book {
-  id               Int                @id @default(autoincrement())
-  title            String             @db.VarChar(255)
-  genre            String             @db.VarChar(100) // Changed from relation to String
-  publishedAt      DateTime
-  summary          String?            @db.Text
-  cover_url        String?            @db.VarChar(255)
-  writerId         Int
-  writer           writer             @relation(fields: [writerId], references: [id], onDelete: Cascade)
-  slug             String             @unique(map: "Book_slug_key") @db.VarChar(255)
-  rating           Int
-  min_price        Float
-  userfavoriteBook UserFavoriteBook[]
+model Book {
+  id                  Int                 @id @default(autoincrement())
+  title               String              @db.VarChar(255)
+  genre               String              @db.VarChar(100) // Changed from relation to String
+  published_at        DateTime
+  summary             String?             @db.Text
+  cover_url           String?             @db.VarChar(255)
+  writer_id           Int
+  writer              Writer              @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+  slug                String              @unique(map: "Book_slug_key") @db.VarChar(255)
+  rating              Int
+  min_price           Float
+  user_favorite_books UserFavoriteBooks[]
 }
+
 model Podcast {
-  id                Int                 @id @default(autoincrement())
-  title             String              @db.VarChar(255)
-  genre             String              @db.VarChar(100)
-  publishedAt       DateTime
-  summary           String?             @db.Text
-  cover_url         String?             @db.VarChar(255)
-  hostId            Int
-  host              Host                @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  slug             String               @unique(map: "Podcast_slug_key") @db.VarChar(255)
-  rating           Int
-  min_price        Float
-  userFavoritePodcast UserFavoritePodcast[]
+  id                     Int                    @id @default(autoincrement())
+  title                  String                 @db.VarChar(255)
+  genre                  String                 @db.VarChar(100)
+  published_at           DateTime
+  summary                String?                @db.Text
+  cover_url              String?                @db.VarChar(255)
+  host_id                Int
+  host                   Host                   @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  slug                   String                 @unique(map: "Podcast_slug_key") @db.VarChar(255)
+  rating                 Int
+  min_price              Decimal
+  user_favorite_podcasts UserFavoritePodcasts[]
 }
 
 model Movie {
-  id                Int                 @id @default(autoincrement())
-  title             String
-  rating            Float
-  genre             String
-  publishedAt       DateTime
-  summary           String?             @db.Text
-  poster            String
-  slug              String              @unique
-  stream            String
-  userFavoriteMovie UserFavoriteMovie[]
+  id                   Int                  @id @default(autoincrement())
+  title                String
+  rating               Float
+  published_at         DateTime
+  summary              String?              @db.Text
+  poster               String
+  slug                 String               @unique
+  stream               String
+  directors            MoviesDirectors[]
+  user_favorite_movies UserFavoriteMovies[]
+  MovieGenre           MoviesGenres[]
 }
 
+model Genre {
+  id           Int            @id @default(autoincrement())
+  name         String
+  MoviesGenres MoviesGenres[]
+}
 
-model writer {
+model MoviesGenres {
+  movie    Movie @relation(fields: [movie_id], references: [id])
+  movie_id Int
+  genre    Genre @relation(fields: [genre_id], references: [id])
+  genre_id Int
+
+  @@id([movie_id, genre_id])
+}
+
+model MoviesDirectors {
+  movie       Movie    @relation(fields: [movie_id], references: [id])
+  movie_id    Int
+  director    Director @relation(fields: [director_id], references: [id])
+  director_id Int
+
+  @@id([movie_id, director_id])
+}
+
+model Director {
+  id          Int               @id @default(autoincrement())
+  name        String            @db.VarChar(255)
+  last_name   String            @db.VarChar(255)
+  description String?           @db.Text
+  picture_url String?           @db.VarChar(255)
+  country     String
+  slug        String            @unique(map: "Director_slug_key") @db.VarChar(255)
+  movies      MoviesDirectors[]
+}
+
+model Writer {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(255)
   last_name   String  @db.VarChar(255)
@@ -58,8 +94,9 @@ model writer {
   picture_url String? @db.VarChar(255)
   country     String
   slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
-  books       book[]
+  books       Book[]
 }
+
 model Host {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(255)
@@ -71,47 +108,46 @@ model Host {
   podcasts    Podcast[]
 }
 
-
 model User {
-  id                  Int                 @id @default(autoincrement())
-  user_name           String              @unique()
-  email               String
-  image               String?
-  user_favorite_books UserFavoriteBook[]
-  userFavoriteMovies  UserFavoriteMovie[]
-  userFavoritePodcasts  UserFavoritePodcast[] 
+  id                     Int                    @id @default(autoincrement())
+  user_name              String                 @unique()
+  email                  String
+  image                  String?
+  user_favorite_books    UserFavoriteBooks[]
+  user_favorite_podcasts UserFavoritePodcasts[]
+  user_favorite_movies   UserFavoriteMovies[]
 }
 
-model UserFavoriteBook {
+model UserFavoriteBooks {
   id      Int     @id @default(autoincrement())
   rating  Float?
   comment String? @db.Text
-  userId  Int
-  bookId  Int
-  user    User    @relation(fields: [userId], references: [id])
-  book    book    @relation(fields: [bookId], references: [id])
+  user_Id Int
+  book_Id Int
+  user    User    @relation(fields: [user_Id], references: [id])
+  book    Book    @relation(fields: [book_Id], references: [id])
 
-  @@unique([userId, bookId]) // Composite unique constraint
-}
-model UserFavoritePodcast {
-  id        Int      @id @default(autoincrement())
-  rating    Float?
-  comment   String?  @db.Text
-  userId    Int
-  podcastId Int
-  user      User     @relation(fields: [userId], references: [id])
-  podcast   Podcast  @relation(fields: [podcastId], references: [id])
-
-  @@unique([userId, podcastId]) // Composite unique constraint
+  @@unique([user_Id, book_Id]) // Composite unique constraint
 }
 
-model UserFavoriteMovie {
-  id      Int     @id @default(autoincrement())
-  rating  Float?
-  comment String?
-  userId  Int
-  movieId Int
-  user    User    @relation(fields: [userId], references: [id])
-  movie   Movie   @relation(fields: [movieId], references: [id])
+model UserFavoritePodcasts {
+  id         Int     @id @default(autoincrement())
+  rating     Float?
+  comment    String? @db.Text
+  user_id    Int
+  podcast_id Int
+  users      User    @relation(fields: [user_id], references: [id])
+  podcasts   Podcast @relation(fields: [podcast_id], references: [id])
+
+  @@unique([user_id, podcast_id]) // Composite unique constraint
 }
 
+model UserFavoriteMovies {
+  id       Int     @id @default(autoincrement())
+  rating   Float?
+  comment  String?
+  user_id  Int
+  movie_id Int
+  user     User    @relation(fields: [user_id], references: [id])
+  movie    Movie   @relation(fields: [movie_id], references: [id])
+}

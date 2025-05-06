@@ -1,11 +1,11 @@
 import React from "react";
 import { AspectRatio, Box, Flex, Text } from "@radix-ui/themes";
-import { writer } from "@prisma/client";
+import { Writer } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
 interface WriterCardProps {
-  writer: writer;
+  writer: Writer;
 }
 
 const WriterCard: React.FC<WriterCardProps> = ({ writer }) => {
@@ -21,12 +21,11 @@ const WriterCard: React.FC<WriterCardProps> = ({ writer }) => {
         <AspectRatio ratio={8 / 12}>
           <Image
             src={
-              `/writers/${writer.picture_url}.jpg` ||
-              `/writers/${writer.picture_url}.jpeg`
+              `/writers/${writer.picture_url}`
             }
             width={300}
             height={200}
-            alt="A house in a forest"
+            alt={writer.name +" "+writer.last_name}
             style={{
               objectFit: "cover",
               width: "100%",
