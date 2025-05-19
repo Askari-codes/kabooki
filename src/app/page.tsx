@@ -3,12 +3,12 @@ import { Container } from "@radix-ui/themes";
 import WriterSection from "./writers/WriterSection";
 import MovieSection from "./movies/MovieSection";
 //import PodcastSection from "./podcasts/PodcastSection";
-import Navbar from "./navigation/Navbar";
+import NavbarWrapper from "./navigation/NavbarWrapper";
 
 export default function Home() {
   return (
     <Container >
-      <Navbar/>
+      <NavbarWrapper/>
        <WriterSection/>
        {/* <BookSection/> */}
        <MovieSection/>

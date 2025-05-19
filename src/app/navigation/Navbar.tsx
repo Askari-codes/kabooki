@@ -1,4 +1,5 @@
-import React from "react";
+
+import React,{useEffect, useState} from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -34,7 +35,31 @@ const navigationLinks = [
   },
 ];
 
-const Navbar = () => {
+interface Props {
+  searchHandler:(arg:string)=>void
+  requestHandler:(bool:boolean)=>void
+}
+
+const Navbar = ({searchHandler,requestHandler}:Props) => {
+const getSearchValue=(arg:string)=>{
+searchHandler(arg)
+}
+const[searchValue,setSearchValue] = useState<string>("")
+     const handleSearch = (event:React.ChangeEvent<HTMLInputElement>) => {
+        const input = event.target.value
+        if (/^[a-zA-Z\s]*$/.test(input)) {
+          setSearchValue(input)
+          searchHandler(input)
+        }
+        return input
+      };
+      const searchRequest =()=>{
+        requestHandler(true)
+      }
+
+
+  
+
   return (
     <Container>
       <NavigationMenu>
@@ -48,13 +73,23 @@ const Navbar = () => {
               </NavigationMenuItem>
             ))}
           </Flex>
+         <TextField.Root
+                onChange={handleSearch}
+                placeholder="search a book or witer..."
+                size={"2"}
+                className="mt-4"
+                variant="classic"
+                type="text"
+                value={searchValue}
+              >
+                <TextField.Slot>
+                  <MagnifyingGlassIcon height="16" width="16" onClick={searchRequest} />
+                </TextField.Slot>
+              </TextField.Root>
+          )
         </NavigationMenuList>
       </NavigationMenu>
-      <TextField.Root placeholder="search a book or witer..." size={"2"} className="mt-4" variant="classic">
-        <TextField.Slot>
-          <MagnifyingGlassIcon height="16" width="16" />
-        </TextField.Slot>
-      </TextField.Root>
+     
     </Container>
   );
 };
