@@ -40,10 +40,13 @@ const navigationLinks = [
 
 const Navbar = () => {
   const[searchValue,setSearchValue] = useState<string>("")
+  const[results,setResult]=useState<any>()
   const handleSearch = async (query:string) => {
     try {
       const res = await axios.post((`${process.env.NEXT_PUBLIC_BASE_URL}/api/search`), { query });
-      setSearchValue(res.data.results);
+      console.log(res.data);
+      
+      setResult(res.data.results);
     } catch (error) {
       console.error('Search failed:', error);
     }
@@ -58,11 +61,17 @@ const Navbar = () => {
         return input
       };
       const searchRequest =async()=>{
-        handleSearch(searchValue)
+        if(searchValue.length>3){
+
+          handleSearch(searchValue)
+        }
         
       }
 
+useEffect(()=>{
+console.log('results are',results);
 
+},[results])
   
 
   return (
@@ -85,7 +94,7 @@ const Navbar = () => {
                 className="mt-4"
                 variant="classic"
                 type="text"
-                value={searchValue??""}
+                value={searchValue??''}
               >
                 <TextField.Slot>
                   <MagnifyingGlassIcon height="16" width="16" onClick={searchRequest} />
