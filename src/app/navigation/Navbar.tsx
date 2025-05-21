@@ -1,5 +1,5 @@
-'use client'
-import React,{useEffect, useState} from "react";
+"use client";
+import React, { useEffect, useState, useContext } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,6 +12,9 @@ import { Container, Flex, TextField } from "@radix-ui/themes";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import axios from "axios";
+import SearchProvider from "../Context/searchProvider";
+import { MyContext } from "../Context/myContext";
+import useSearchContext from "../Context/useSearchContext";
 export const dynamic = "force-dynamic";
 
 const navigationLinks = [
@@ -37,42 +40,42 @@ const navigationLinks = [
   },
 ];
 
-
 const Navbar = () => {
-  const[searchValue,setSearchValue] = useState<string>("")
-  const[results,setResult]=useState<any>()
-  const handleSearch = async (query:string) => {
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [results, setResult] = useState<any>();
+  const context = useContext(MyContext);
+  const { value } = useSearchContext();
+
+  const handleSearch = async (query: string) => {
     try {
-      const res = await axios.post((`${process.env.NEXT_PUBLIC_BASE_URL}/api/search`), { query });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/search`,
+        { query }
+      );
       console.log(res.data);
-      
+
       setResult(res.data.results);
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error("Search failed:", error);
     }
   };
 
-     const searchInputHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value
-        if (/^[a-zA-Z\s]*$/.test(input)) {
-          setSearchValue(input)
-          
-        }
-        return input
-      };
-      const searchRequest =async()=>{
-        if(searchValue.length>3){
+  const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value;
+    if (/^[a-zA-Z\s]*$/.test(input)) {
+      setSearchValue(input);
+    }
+    return input;
+  };
+  const searchRequest = async () => {
+    if (searchValue.length > 3) {
+      handleSearch(searchValue);
+    }
+  };
 
-          handleSearch(searchValue)
-        }
-        
-      }
-
-useEffect(()=>{
-console.log('results are',results);
-
-},[results])
-  
+  useEffect(() => {
+    console.log(value);
+  }, []);
 
   return (
     <Container>
@@ -87,22 +90,25 @@ console.log('results are',results);
               </NavigationMenuItem>
             ))}
           </Flex>
-         <TextField.Root
-                onChange={searchInputHandler}
-                placeholder="search a book or witer..."
-                size={"2"}
-                className="mt-4"
-                variant="classic"
-                type="text"
-                value={searchValue??''}
-              >
-                <TextField.Slot>
-                  <MagnifyingGlassIcon height="16" width="16" onClick={searchRequest} />
-                </TextField.Slot>
-              </TextField.Root>
+          <TextField.Root
+            onChange={searchInputHandler}
+            placeholder="search a book or witer..."
+            size={"2"}
+            className="mt-4"
+            variant="classic"
+            type="text"
+            value={searchValue ?? ""}
+          >
+            <TextField.Slot>
+              <MagnifyingGlassIcon
+                height="16"
+                width="16"
+                onClick={searchRequest}
+              />
+            </TextField.Slot>
+          </TextField.Root>
         </NavigationMenuList>
       </NavigationMenu>
-     
     </Container>
   );
 };
