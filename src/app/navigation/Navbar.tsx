@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState} from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,8 +12,7 @@ import { Container, Flex, TextField } from "@radix-ui/themes";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import axios from "axios";
-import SearchProvider from "../Context/searchProvider";
-import { MyContext } from "../Context/myContext";
+
 import useSearchContext from "../Context/useSearchContext";
 export const dynamic = "force-dynamic";
 
@@ -41,20 +40,19 @@ const navigationLinks = [
 ];
 
 const Navbar = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [results, setResult] = useState<any>();
-  const context = useContext(MyContext);
-  const { value } = useSearchContext();
-
+  const [searchInputValue, setSearchValue] = useState<string>("");
+  
+  const {result,setResult}=useSearchContext()
   const handleSearch = async (query: string) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/search`,
         { query }
       );
-      console.log(res.data);
+      // console.log('res is ,',res.data);
+      
 
-      setResult(res.data.results);
+      setResult(res.data);
     } catch (error) {
       console.error("Search failed:", error);
     }
@@ -68,14 +66,15 @@ const Navbar = () => {
     return input;
   };
   const searchRequest = async () => {
-    if (searchValue.length > 3) {
-      handleSearch(searchValue);
+    if (searchInputValue.length > 3) {
+      handleSearch(searchInputValue);
     }
   };
 
   useEffect(() => {
-    console.log(value);
-  }, []);
+    console.log('the result is',result);
+    
+  }, [result]);
 
   return (
     <Container>
@@ -97,7 +96,7 @@ const Navbar = () => {
             className="mt-4"
             variant="classic"
             type="text"
-            value={searchValue ?? ""}
+            value={searchInputValue ?? ""}
           >
             <TextField.Slot>
               <MagnifyingGlassIcon

@@ -1,9 +1,14 @@
-import React from 'react'
+'use client'
+import React from "react";
+import SearchResult from "./SearchResult";
+import SearchProvider from "../Context/searchProvider";
 
-const SearchResult = () => {
+const SearchResultWrapper = () => {
   return (
-    <div>SearchResult</div>
-  )
-}
+    <SearchProvider>
+      <SearchResult />
+    </SearchProvider>
+  );
+};
 
-export default SearchResult
+export default SearchResultWrapper;
