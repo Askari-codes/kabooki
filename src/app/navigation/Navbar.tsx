@@ -12,7 +12,7 @@ import { Container, Flex, TextField } from "@radix-ui/themes";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import axios from "axios";
-
+import { useRouter } from 'next/navigation';
 import useSearchContext from "../Context/useSearchContext";
 export const dynamic = "force-dynamic";
 
@@ -41,21 +41,11 @@ const navigationLinks = [
 
 const Navbar = () => {
   const [searchInputValue, setSearchValue] = useState<string>("");
-  
+  const router=useRouter()
   const {result,setResult}=useSearchContext()
   const handleSearch = async (query: string) => {
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/search`,
-        { query }
-      );
-      // console.log('res is ,',res.data);
-      
-
-      setResult(res.data);
-    } catch (error) {
-      console.error("Search failed:", error);
-    }
+   
+    router.push(`/searchResult?query=${encodeURIComponent(query)}`)
   };
 
   const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +58,7 @@ const Navbar = () => {
   const searchRequest = async () => {
     if (searchInputValue.length > 3) {
       handleSearch(searchInputValue);
+    
     }
   };
 
