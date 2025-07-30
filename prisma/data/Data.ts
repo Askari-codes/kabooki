@@ -4,4 +4,5 @@ import { movies } from "./Movies";
 import { genres } from "./Genres";
 import { moviesDirectors } from "./MoviesDirectors";
 import { moviesGenres } from "./MoviesGenres";
-export { directors, writers, movies, genres, moviesDirectors, moviesGenres };
+import{books} from './Books'
+export { directors, writers, movies, genres, moviesDirectors, moviesGenres,books };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import SearchResult from "./SearchResult";
 
 interface ResolvedSearchParams {
   query?: string  
@@ -9,7 +10,7 @@ interface SearchResultProps {
   searchParams: Promise<ResolvedSearchParams>;
 }
 
-const SearchResult = async ({ searchParams }: SearchResultProps) => {
+const SearchResultWrapper = async ({ searchParams }: SearchResultProps) => {
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams.query;
 
@@ -34,7 +35,9 @@ const SearchResult = async ({ searchParams }: SearchResultProps) => {
   console.log('Received query in SearchResult:', query);
   console.log('Fetched searchResultData:', searchResultData);
 
-  return <div>search result</div>;
+  return (
+    <SearchResult searchResult={searchResultData}/>
+  );
 };
 
-export default SearchResult;
+export default SearchResultWrapper;

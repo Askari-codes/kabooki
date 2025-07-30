@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { query } = body;
   console.log(query);
-  // return NextResponse.json({ query })
+ 
 
   try {
     const writers = await prisma.writer.findMany({

@@ -1,17 +1,17 @@
-import { writer } from "@prisma/client";
+import { Writer } from "@prisma/client";
+import { Container } from "@radix-ui/themes";
+import WriterSection from "./WriterSection";
+
 
 const Writers = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/`);
-    const writers:writer[] = await response.json();
+    const writers:Writer[] = await response.json();
   
   return (
-    <div>
-      <div>{writers.map((writer)=>(
-        <div key={writer.id}>
-          {writer.name} {writer.last_name} 
-        </div>
-      ))}</div>
-    </div>
+   <Container>
+      <WriterSection writers={writers}>
+      </WriterSection>
+   </Container>
   );
 };
 

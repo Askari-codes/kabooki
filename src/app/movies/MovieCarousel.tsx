@@ -16,7 +16,7 @@ const MovieCarousel = ({movies}:Props) => {
 
   return (
     <Section style={{ padding: "20px 0" }}>
-      <h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>movies</h2>
+      {movies.length?<h2 style={{ marginBottom: "20px", fontSize: "1.5rem" }}>movies</h2>:''}
       <MovieSwiper movies={movies}/>
     </Section>
   );

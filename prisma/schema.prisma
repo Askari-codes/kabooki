@@ -14,8 +14,7 @@ model Book {
   published_at        DateTime
   summary             String?             @db.Text
   cover_url           String?             @db.VarChar(255)
-  writer_id           Int
-  writer              Writer              @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+  writers             BooksWriters[]             
   slug                String              @unique(map: "Book_slug_key") @db.VarChar(255)
   rating              Int
   min_price           Float
@@ -94,7 +93,16 @@ model Writer {
   picture_url String? @db.VarChar(255)
   country     String
   slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
-  books       Book[]
+  books      BooksWriters[]
+}
+
+model BooksWriters {
+  book_id   Int
+  writer_id Int
+  book      Book    @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  writer    Writer  @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+
+  @@id([book_id, writer_id])
 }
 
 model Host {

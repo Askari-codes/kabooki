@@ -5,9 +5,9 @@ import {
   movies,
   genres,
   moviesDirectors,
-  moviesGenres
+  moviesGenres,
+  books,
 } from "./data/Data";
-
 
 const prisma = new PrismaClient();
 
@@ -18,6 +18,7 @@ async function main() {
   await prisma.director.deleteMany();
   await prisma.movie.deleteMany();
   await prisma.writer.deleteMany();
+  await prisma.book.deleteMany();
 
   async function insertMovie() {
     for (const movie of movies) {
@@ -39,6 +40,32 @@ async function main() {
   }
 
   await insertMovie();
+
+ async function insertBooks() {
+  for(const book of books){
+    await prisma.book.upsert({
+      where:{slug:book.slug},
+      update:{},
+      create:{
+        
+        id:book.id,
+        title:book.title,
+        genre:book.genre,
+        published_at:book.published_at,
+        summary:book.summary,
+        cover_url:book.cover_url,
+        slug:book.slug,
+        rating:book.rating,
+        min_price:book.min_price
+
+
+      }
+    })
+  }
+ }
+
+ await insertBooks()
+  
 
   async function insertWriter() {
     for (const writer of writers) {

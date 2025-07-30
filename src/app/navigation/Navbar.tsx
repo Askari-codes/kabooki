@@ -11,7 +11,6 @@ import {
 import { Container, Flex, TextField } from "@radix-ui/themes";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import axios from "axios";
 import { useRouter } from 'next/navigation';
 import useSearchContext from "../Context/useSearchContext";
 export const dynamic = "force-dynamic";
@@ -42,7 +41,6 @@ const navigationLinks = [
 const Navbar = () => {
   const [searchInputValue, setSearchValue] = useState<string>("");
   const router=useRouter()
-  const {result,setResult}=useSearchContext()
   const handleSearch = async (query: string) => {
    
     router.push(`/searchResult?query=${encodeURIComponent(query)}`)
@@ -62,10 +60,7 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('the result is',result);
-    
-  }, [result]);
+ 
 
   return (
     <Container>
