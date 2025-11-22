@@ -1,12 +1,15 @@
 import * as Separator from "@radix-ui/react-separator";
 import axios from "axios";
 import Image from "next/image";
-import { BookWithWriter, WriterWithBooks } from "../../../../models/models";
+import { Writer } from '@prisma/client'
 import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import BookCarousel from "@/app/books/BookCarousel";
-import Link from "next/link";
 import TextWithLinks from "@/app/components/TextWithLinks";
-import { write } from "fs";
+import { useEffect } from "react";
+import prisma from "../../../../prisma/client";
+import Book from '@prisma/client'
+import { log } from "console";
+
 
 interface Props {
   params: { slug: string };
@@ -18,41 +21,52 @@ interface BookLinks{
 const WriterProfile = async ({ params }: Props) => {
   const slug = params.slug;
 
-  const response = await axios.get(
+  const writerDetails = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${slug}`
   );
-  const writer: WriterWithBooks = response.data;
-  const bestBooks: BookWithWriter[] = writer.books?.filter((book) => {
-    return book.rating === 5;
-  });
-  const otherBooks = writer.books.filter((book) => {
-    return book.rating !== 5;
-  });
+
+  const writerBooksIds = writerDetails.data.books
+  let booksIdList =[]
   
+    for(const writerbook of writerBooksIds){
+      const bookId=writerbook.book_id
+      booksIdList.push(bookId)     
+    }
+    
+    const books = await Promise.all(
+      booksIdList.map(async(id)=>{
+    const {data} = await     axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${id}`
+        );
+        return data
+      })
+    )
+  
+ console.log(writerDetails.data.description);
+ 
 
-  if (!writer) {
-    return <p>Writer not found</p>;
-  }
-
+  
+  
   return (
     <Container>
+      
       <Flex justify="between">
         <Image
           width={400}
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
-          alt={writer.name + " " + writer.last_name}
+          alt={writerDetails.data.name + " " + writerDetails.data.last_name}
           src={
-            "/writers/" + writer.picture_url + ".jpg" ||
-            "/writers/" + writer.picture_url + "jpeg"
+            "/writers/" + writerDetails.data.picture_url  ||
+            "/writers/" + writerDetails.data.picture_url + "jpeg"
           }
         />
         <Box className="p-5">
           <Flex direction="column">
             <Heading className="">
-              {writer.name} {writer.last_name}
+              {writerDetails.data.name} {writerDetails.data.last_name}
             </Heading>
-            <TextWithLinks books={writer.books} description={writer.description}/>
+            <TextWithLinks books={books} description={writerDetails.data.description}/>
             
           </Flex>
         </Box>
@@ -64,7 +78,7 @@ const WriterProfile = async ({ params }: Props) => {
           height: "1px",
         }}
       />
-      <BookCarousel title="Selected Books" books={bestBooks} />
+      {/* <BookCarousel title="Selected Books" books={bestBooks} />
       <Separator.Root
         style={{
           margin: "1.5rem 0",
@@ -72,7 +86,7 @@ const WriterProfile = async ({ params }: Props) => {
           height: "1px",
         }}
       />
-      <BookCarousel title="Other Books" books={otherBooks} />
+      <BookCarousel title="Other Books" books={otherBooks} /> */}
     </Container>
   );
 };

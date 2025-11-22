@@ -7,11 +7,13 @@ import {
   moviesDirectors,
   moviesGenres,
   books,
+  booksWriters
 } from "./data/Data";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.booksWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
   await prisma.moviesDirectors.deleteMany();
   await prisma.genre.deleteMany();
@@ -117,6 +119,19 @@ async function main() {
   }
 
   await insertGenre();
+
+  async function insertBooksWriters() {
+    for(const bookwriter of booksWriters){
+      await prisma.booksWriters.create({
+        data:{
+          book_id:bookwriter.book_id,
+          writer_id:bookwriter.writer_id
+        }
+      })
+    }
+  }
+
+  await insertBooksWriters()
 
   async function insertMovieDirector() {
     for (const moviesDirector of moviesDirectors) {
