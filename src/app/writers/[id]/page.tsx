@@ -12,17 +12,19 @@ import { log } from "console";
 
 
 interface Props {
-  params: { slug: string };
+  params: { id: string };
 }
 interface BookLinks{
   [title:string]:string
 }
 
 const WriterProfile = async ({ params }: Props) => {
-  const slug = params.slug;
+  const id = params.id;
+
+  
 
   const writerDetails = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${slug}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${id}`
   );
 
   const writerBooksIds = writerDetails.data.books

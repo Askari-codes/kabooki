@@ -22,7 +22,12 @@ const TextWithLinks: React.FC<TextWithLinksProps> = ({
     {}
   );
   
-  const regex = new RegExp(`\\b(${Object.keys(bookLinks).join('|')})\\b`, "g");
+  const regex = new RegExp(
+    `\\b(${Object.keys(bookLinks)
+      .map(title => title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("|")})\\b`,
+    "g"
+  );
   const parts = description?.split(regex);
   const renderText = () =>
     parts?.map((part, index) => {
