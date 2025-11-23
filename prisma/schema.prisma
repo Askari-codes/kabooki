@@ -18,6 +18,7 @@ model Book {
   slug                String              @unique(map: "Book_slug_key") @db.VarChar(255)
   rating              Int
   min_price           Float
+  is_the_best         Boolean             @default(false)        
   user_favorite_books UserFavoriteBooks[]
 }
 
