@@ -1,21 +1,27 @@
+
 import React from "react";
-import { BookWithWriter } from "../../../models/models";
+import { Book } from '@prisma/client';
 import { Swiper, SwiperSlide } from "swiper/react";
 import BookCard from "./BookCard";
 
 interface Props {
-  books: BookWithWriter[];
+  books: Book[];
+  moreBooks:Boolean
 }
 
-const chunkArray = (array: BookWithWriter[], size: number) => {
+const chunkArray = (array: Book[], size: number) => {
   const chunks = [];
   for (let i = 0; i < array.length; i += size) {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
 };
-const BookSwiper = ({ books }: Props) => {
-  const chunkedWriters = chunkArray(books, 5);
+const BookSwiper = ({ books,moreBooks }: Props) => {
+  const chunkedWriters = chunkArray(books, 10);
+  const partOne= chunkedWriters[0]
+  console.log('part one is',partOne);
+  
+  
   return (
     <div>
       {chunkedWriters.map((books, index) => (

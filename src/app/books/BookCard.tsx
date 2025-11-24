@@ -1,14 +1,13 @@
 import React from "react";
 import { AspectRatio, Box, Flex, Text, } from "@radix-ui/themes";
-import { BookWithWriter } from "../../../models/models";
+import { Book } from '@prisma/client'
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
 import { Label } from "@radix-ui/themes/dist/cjs/components/context-menu";
-import { UserFavoriteBook } from "@prisma/client";
 
 interface Props {
-  book: BookWithWriter
+  book: Book
 }
 
 const BookCard = ({ book }: Props) => {
@@ -26,7 +25,7 @@ const BookCard = ({ book }: Props) => {
             width={300}
             height={200}
             src={
-              `/books/${book.cover_url}.jpg` || `/books/${book.cover_url}.jpeg`
+              `/books/${book.title}.jpg` 
             }
             alt={book.title}
             style={{

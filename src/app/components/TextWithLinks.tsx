@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { BookWithWriter } from "../../../models/models";
+import { Book } from '@prisma/client'
 
 interface BookLinks {
   [title: string]: string;
 }
 interface TextWithLinksProps {
-  books: BookWithWriter[];
+  books: Book[];
   description: string | null;
 }
 
@@ -15,8 +15,8 @@ const TextWithLinks: React.FC<TextWithLinksProps> = ({
   description,
 }: TextWithLinksProps) => {
   const bookLinks: BookLinks = books.reduce(
-    (acc: BookLinks, book: BookWithWriter) => {
-      acc[book.title] = `/books/${book.slug}`;
+    (acc: BookLinks, book: Book) => {
+      acc[book.title] = `/books/${book.id}`;
       return acc;
     },
     {}

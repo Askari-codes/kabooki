@@ -4,8 +4,8 @@ import prisma from "../../../../../prisma/client";
 
 
 
-export async function GET(req:NextRequest,{params}:{params:{id:number}}) {
-    const id = Number (params.id)
+export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
+    const id = Number(params.id)
     
 
     try {

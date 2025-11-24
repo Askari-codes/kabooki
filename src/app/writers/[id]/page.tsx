@@ -1,13 +1,13 @@
 import * as Separator from "@radix-ui/react-separator";
 import axios from "axios";
 import Image from "next/image";
-import { Writer } from '@prisma/client'
+import { Book } from '@prisma/client'
 import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import BookCarousel from "@/app/books/BookCarousel";
 import TextWithLinks from "@/app/components/TextWithLinks";
 import { useEffect } from "react";
 import prisma from "../../../../prisma/client";
-import Book from '@prisma/client'
+
 import { log } from "console";
 
 
@@ -35,7 +35,7 @@ const WriterProfile = async ({ params }: Props) => {
       booksIdList.push(bookId)     
     }
     
-    const books = await Promise.all(
+    const books:Book[] = await Promise.all(
       booksIdList.map(async(id)=>{
     const {data} = await     axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${id}`
@@ -44,7 +44,10 @@ const WriterProfile = async ({ params }: Props) => {
       })
     )
   
- console.log(writerDetails.data.description);
+    const bestBooks = books.filter((book)=>book.is_the_best)
+    const otherBooks = books.filter((book)=>book.is_the_best===false)
+    
+    
  
 
   
@@ -80,7 +83,7 @@ const WriterProfile = async ({ params }: Props) => {
           height: "1px",
         }}
       />
-      {/* <BookCarousel title="Selected Books" books={bestBooks} />
+      <BookCarousel title="Selected Books" books={bestBooks} />
       <Separator.Root
         style={{
           margin: "1.5rem 0",
@@ -88,7 +91,7 @@ const WriterProfile = async ({ params }: Props) => {
           height: "1px",
         }}
       />
-      <BookCarousel title="Other Books" books={otherBooks} /> */}
+      <BookCarousel title="Other Books" books={otherBooks} />
     </Container>
   );
 };

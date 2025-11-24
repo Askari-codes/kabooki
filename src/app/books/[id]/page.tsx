@@ -1,20 +1,23 @@
 import Image from "next/image";
 import { Box, Card, Heading, Text, Separator } from "@radix-ui/themes";
-import { BookWithWriter } from "../../../../models/models";
+// import { BookWithWriter } from "../../../../models/models";
 import axios from "axios";
 import { notFound } from "next/navigation";
 
-const BookProfile = async ({ params }: { params: { slug: string } }) => {
-  // const response = await axios.get(
-  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${params.slug}`
-  // );
+const BookProfile = async ({ params }: { params: { id: string } }) => {
+  const id= Number(params.id)
+  const bookInformatie = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${id}`
+  );
+  console.log(bookInformatie);
+  
   // const book: BookWithWriter = response.data;
 
   // if (!book) return notFound();
 
   return (
     <div>
-      {params.slug}
+      {id}
     </div>
     // <Box
     //   style={{
