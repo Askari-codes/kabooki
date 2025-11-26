@@ -6,4 +6,5 @@ import { moviesDirectors } from "./MoviesDirectors";
 import { moviesGenres } from "./MoviesGenres";
 import{books} from './Books';
 import {booksWriters} from './BooksWriters';
-export { directors, writers, movies, genres, moviesDirectors, moviesGenres,books,booksWriters };
+import { relatedWriters } from "./RelatedWriters";
+export { directors, writers, movies, genres, moviesDirectors, moviesGenres,books,booksWriters,relatedWriters };

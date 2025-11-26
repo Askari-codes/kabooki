@@ -95,6 +95,24 @@ model Writer {
   country     String
   slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
   books      BooksWriters[]
+
+  // Reverse relation to RelatedWriters for writer1
+  writerRelations1 RelatedWriters[] @relation("WriterRelationsFromWriter1")
+
+  // Reverse relation to RelatedWriters for writer2
+  writerRelations2 RelatedWriters[] @relation("WriterRelationsFromWriter2")
+}
+
+model RelatedWriters {
+  id           Int     @id @default(autoincrement())
+  writer_id_1    Int
+  writer_id_2    Int
+ 
+
+  writer1      Writer  @relation("WriterRelationsFromWriter1", fields: [writer_id_1], references: [id])
+  writer2      Writer  @relation("WriterRelationsFromWriter2", fields: [writer_id_2], references: [id])
+
+  @@unique([writer_id_1, writer_id_2]) // Ensure no duplicate relationships
 }
 
 model BooksWriters {

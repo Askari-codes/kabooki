@@ -37,7 +37,7 @@ const BookCard = ({ book }: Props) => {
           />
         </AspectRatio>
         <Text size={"6"}  className="mt-2" weight="medium">
-          <Link href={`books/${book.slug}`}>{book.title}</Link>
+          <Link href={`books/${book.id}`}>{book.title}</Link>
         </Text>
         <Box>
           <StarRating rating={book.rating} />

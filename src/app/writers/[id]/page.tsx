@@ -1,31 +1,25 @@
-import * as Separator from "@radix-ui/react-separator";
 import axios from "axios";
-import Image from "next/image";
 import { Book } from '@prisma/client'
-import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
-import BookCarousel from "@/app/books/BookCarousel";
-import TextWithLinks from "@/app/components/TextWithLinks";
-import { useEffect } from "react";
-import prisma from "../../../../prisma/client";
+import { Container } from "@radix-ui/themes";
+import WriterProfile from "./WriterProfile";
+import WriterBooks from "./WriterBooks";
 
-import { log } from "console";
 
 
 interface Props {
   params: { id: string };
 }
-interface BookLinks{
-  [title:string]:string
-}
 
-const WriterProfile = async ({ params }: Props) => {
-  const id = params.id;
+
+const Writer = async ({ params }: Props) => {
+  const id = Number (params.id);
 
   
 
   const writerDetails = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${id}`
   );
+  const writer= writerDetails.data
 
   const writerBooksIds = writerDetails.data.books
   let booksIdList =[]
@@ -44,56 +38,15 @@ const WriterProfile = async ({ params }: Props) => {
       })
     )
   
-    const bestBooks = books.filter((book)=>book.is_the_best)
-    const otherBooks = books.filter((book)=>book.is_the_best===false)
-    
-    
- 
-
-  
   
   return (
     <Container>
-      
-      <Flex justify="between">
-        <Image
-          width={400}
-          height={400}
-          style={{ width: 400, height: 400, objectFit: "cover" }}
-          alt={writerDetails.data.name + " " + writerDetails.data.last_name}
-          src={
-            "/writers/" + writerDetails.data.picture_url  ||
-            "/writers/" + writerDetails.data.picture_url + "jpeg"
-          }
-        />
-        <Box className="p-5">
-          <Flex direction="column">
-            <Heading className="">
-              {writerDetails.data.name} {writerDetails.data.last_name}
-            </Heading>
-            <TextWithLinks books={books} description={writerDetails.data.description}/>
-            
-          </Flex>
-        </Box>
-      </Flex>
-      <Separator.Root
-        style={{
-          margin: "1.5rem 0",
-          backgroundColor: "lightgray",
-          height: "1px",
-        }}
-      />
-      <BookCarousel title="Selected Books" books={bestBooks} />
-      <Separator.Root
-        style={{
-          margin: "1.5rem 0",
-          backgroundColor: "lightgray",
-          height: "1px",
-        }}
-      />
-      <BookCarousel title="Other Books" books={otherBooks} />
+      <WriterProfile writer={writer} books={books}/>
+      <WriterBooks books={books}/>
+    
+     
     </Container>
   );
 };
 
-export default WriterProfile;
+export default Writer;

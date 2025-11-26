@@ -7,13 +7,15 @@ import {
   moviesDirectors,
   moviesGenres,
   books,
-  booksWriters
+  booksWriters,
+  relatedWriters
 } from "./data/Data";
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.booksWriters.deleteMany()
+  await prisma.relatedWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
   await prisma.moviesDirectors.deleteMany();
   await prisma.genre.deleteMany();
@@ -58,7 +60,8 @@ async function main() {
         cover_url:book.cover_url,
         slug:book.slug,
         rating:book.rating,
-        min_price:book.min_price
+        min_price:book.min_price,
+        is_the_best:book.is_the_best
 
 
       }
@@ -81,7 +84,8 @@ async function main() {
           description: writer.description,
           picture_url: writer.picture_url,
           country: writer.country,
-          slug: writer.slug,
+          slug: writer.slug
+        
         },
       });
     }
@@ -132,6 +136,19 @@ async function main() {
   }
 
   await insertBooksWriters()
+
+  async function insertRelatedWriters(){
+    for(const item of relatedWriters){
+      await prisma.relatedWriters.create({
+        data:{
+          writer_id_1:item.writer_id_1,
+          writer_id_2:item.writer_id_2
+        }
+      })
+    }
+  }
+
+  insertRelatedWriters()
 
   async function insertMovieDirector() {
     for (const moviesDirector of moviesDirectors) {

@@ -19,7 +19,6 @@ const chunkArray = (array: Book[], size: number) => {
 const BookSwiper = ({ books,moreBooks }: Props) => {
   const chunkedWriters = chunkArray(books, 10);
   const partOne= chunkedWriters[0]
-  console.log('part one is',partOne);
   
   
   return (
