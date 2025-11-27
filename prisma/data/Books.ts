@@ -35,7 +35,7 @@ export const books = [
       "A powerful reflection on dictatorship and disillusionment in Peru, told through a fragmented conversation between a journalist and his former chauffeur. The novel delves into personal and political despair.",
     cover_url: "conversation-in-the-cathedral.jpg",
     slug: "conversation-in-the-cathedral",
-    min_price: 22.04,
+    min_price: 0.0,
     is_the_best: true,
   },
   {

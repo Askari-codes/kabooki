@@ -42,9 +42,9 @@ const BookCard = ({ book }: Props) => {
         <Box>
           <StarRating rating={book.rating} />
         </Box>
-        <Text weight='medium' >
+        {/* <Text weight='medium' >
           {book.min_price===0.00?'Free':`from $${book.min_price}`}
-        </Text>
+        </Text> */}
       </Flex>
     </Box>
   );

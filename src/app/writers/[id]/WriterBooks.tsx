@@ -1,36 +1,33 @@
-'use client'
-import React,{useState,useEffect} from 'react'
+"use client";
+import React, { useState, useEffect } from "react";
 import * as Separator from "@radix-ui/react-separator";
-import { Book } from '@prisma/client'
+import { Book } from "@prisma/client";
 import { Box, Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import BookCarousel from "@/app/books/BookCarousel";
 import WriterProfile from "./WriterProfile";
 
-export interface Props{
-    books:Book[]
+export interface Props {
+  books: Book[];
 }
 
-const WriterBooks = ({books}:Props) => {
-    const [showMoreBooks,setShowMoreBooks] = useState<Boolean>(false)
+const WriterBooks = ({ books }: Props) => {
+  const [showMoreBooks, setShowMoreBooks] = useState<Boolean>(false);
 
-    const bestBooks = books.filter((book)=>book.is_the_best)
-    const otherBooks = books.filter((book)=>book.is_the_best===false)
-    const firstPart:Book[] = otherBooks.slice(0,10);
-    const remainPart = otherBooks.slice(10)
-    
-    console.log(bestBooks);
-    
-    
+  const bestBooks = books.filter((book) => book.is_the_best);
+  const otherBooks = books.filter((book) => book.is_the_best === false);
+  const freeBooks = books.filter((book)=>(book.min_price===0))
+  const firstPart: Book[] = otherBooks.slice(0, 10);
+  const remainPart = otherBooks.slice(10);
 
-    const displayBooksHandler = ()=>{
-        setShowMoreBooks(!showMoreBooks)
-    }
-   
-    
+
+
+  const displayBooksHandler = () => {
+    setShowMoreBooks(!showMoreBooks);
+  };
 
   return (
     <Container>
-         <BookCarousel title="Selected Books" books={bestBooks} />
+      <BookCarousel title="Selected Books" books={bestBooks} />
       <Separator.Root
         style={{
           margin: "1.5rem 0",
@@ -39,10 +36,14 @@ const WriterBooks = ({books}:Props) => {
         }}
       />
       <BookCarousel title="Other Books" books={firstPart} />
-      {showMoreBooks&&<BookCarousel title='' books={remainPart}/>}
-      <Button onClick={displayBooksHandler}>{showMoreBooks?'Fewer Books':'All Books'}</Button>
-    </Container>
-  )
-}
+      {showMoreBooks && <BookCarousel title="" books={remainPart} />}
+      <Button onClick={displayBooksHandler}>
+        {showMoreBooks ? "Fewer Books" : "All Books"}
+      </Button>
+      {freeBooks.length&&<BookCarousel title="free books" books={freeBooks}/>}
 
-export default WriterBooks
+    </Container>
+  );
+};
+
+export default WriterBooks;

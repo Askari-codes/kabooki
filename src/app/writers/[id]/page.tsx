@@ -1,52 +1,59 @@
 import axios from "axios";
-import { Book } from '@prisma/client'
+import { Book, Writer, BooksWriters } from "@prisma/client";
 import { Container } from "@radix-ui/themes";
 import WriterProfile from "./WriterProfile";
 import WriterBooks from "./WriterBooks";
-
-
-
+import RelatedWriters from "./RelatedWriters";
 interface Props {
   params: { id: string };
 }
 
+const WriterPage = async ({ params }: Props) => {
+  const id = Number(params.id);
 
-const Writer = async ({ params }: Props) => {
-  const id = Number (params.id);
-
-  
-
-  const writerDetails = await axios.get(
+  const response = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${id}`
   );
-  const writer= writerDetails.data
+  const { data: writer } = response;
 
-  const writerBooksIds = writerDetails.data.books
-  let booksIdList =[]
+  const writerBooksIds = writer.books;
+
+  const booksIdList = writerBooksIds.map((writerBook: BooksWriters) => {
+    return writerBook.book_id;
+  });
+
+  const books: Book[] = await Promise.all(
+    booksIdList.map(async (id: number) => {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${id}`
+      );
+      return data;
+    })
+  );
   
-    for(const writerbook of writerBooksIds){
-      const bookId=writerbook.book_id
-      booksIdList.push(bookId)     
-    }
-    
-    const books:Book[] = await Promise.all(
-      booksIdList.map(async(id)=>{
-    const {data} = await     axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${id}`
-        );
-        return data
-      })
-    )
   
+  const relateWritersDataIds = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/relatedWriters/${id}`
+  );
+  const relateWritersIds = relateWritersDataIds.data;
+
+  const relatedWriters: Writer[] = await Promise.all(
+    relateWritersIds.map(async (id: Number) => {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/${id}`
+      );
+      return data;
+    })
+  );
+
   
   return (
     <Container>
-      <WriterProfile writer={writer} books={books}/>
-      <WriterBooks books={books}/>
-    
-     
+      <WriterProfile writer={writer} books={books} />
+      <WriterBooks books={books} />
+      <RelatedWriters relatedWriters={relatedWriters} writer={writer}/>
     </Container>
   );
 };
 
-export default Writer;
+export default WriterPage;
