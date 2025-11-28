@@ -92,7 +92,7 @@ export const books = [
   },
   {
     id: 8,
-    title: "Who Killed Palomino Molero?",
+    title: "Who Killed Palomino Molero",
     genre: "Literary Fiction",
     rating: 9,
     published_at: "1986-01-01T00:00:00Z",
