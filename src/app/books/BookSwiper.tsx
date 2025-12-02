@@ -6,7 +6,8 @@ import BookCard from "./BookCard";
 
 interface Props {
   books: Book[];
-  moreBooks:Boolean
+  showDownloadButton:boolean
+  
 }
 
 const chunkArray = (array: Book[], size: number) => {
@@ -16,9 +17,8 @@ const chunkArray = (array: Book[], size: number) => {
   }
   return chunks;
 };
-const BookSwiper = ({ books,moreBooks }: Props) => {
+const BookSwiper = ({ books,showDownloadButton}: Props) => {
   const chunkedWriters = chunkArray(books, 10);
-  const partOne= chunkedWriters[0]
   
   
   return (
@@ -38,7 +38,7 @@ const BookSwiper = ({ books,moreBooks }: Props) => {
         >
           {books.map((book) => (
             <SwiperSlide className="p-5 " key={book.id}>
-              <BookCard key={book.id} book={book} />
+              <BookCard key={book.id} book={book} showDownloadButton={showDownloadButton} />
             </SwiperSlide>
           ))}
         </Swiper>

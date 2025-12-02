@@ -1,16 +1,21 @@
-import React from "react";
-import { AspectRatio, Box, Flex, Text, } from "@radix-ui/themes";
+import React, { useEffect } from "react";
+import { AspectRatio, Box, Flex, Text,Button } from "@radix-ui/themes";
+import { DownloadIcon } from "@radix-ui/react-icons"
 import { Book } from '@prisma/client'
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
-import { Label } from "@radix-ui/themes/dist/cjs/components/context-menu";
 
 interface Props {
-  book: Book
+  book: Book;
+  showDownloadButton?:boolean;
 }
 
-const BookCard = ({ book }: Props) => {
+const BookCard = ({ book,showDownloadButton }: Props) => {
+  useEffect(()=>{
+    console.log('log',book.pdf_url);
+    
+  },[])
   return (
     <Box
       style={{
@@ -21,6 +26,9 @@ const BookCard = ({ book }: Props) => {
     >
       <Flex direction={"column"} width={"100%"}>
         <AspectRatio ratio={8 / 12}>
+        {showDownloadButton && <Link  target="_blank"   className=" flex justify-start p-1 " href={`${book.pdf_url}`} download> <Button   variant="soft" color="blue">
+           <DownloadIcon className="text-blue-800 h-5 w-5 cursor-pointer"/>
+          </Button></Link>}
           <Image
             width={300}
             height={200}
@@ -37,14 +45,11 @@ const BookCard = ({ book }: Props) => {
           />
         </AspectRatio>
         <Text size={"6"}  className="mt-2" weight="medium">
-          <Link href={`books/${book.id}`}>{book.title}</Link>
+          <Link  href={`books/${book.id}`}>{book.title}  </Link >
         </Text>
         <Box>
           <StarRating rating={book.rating} />
         </Box>
-        {/* <Text weight='medium' >
-          {book.min_price===0.00?'Free':`from $${book.min_price}`}
-        </Text> */}
       </Flex>
     </Box>
   );

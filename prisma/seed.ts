@@ -61,7 +61,8 @@ async function main() {
         slug:book.slug,
         rating:book.rating,
         min_price:book.min_price,
-        is_the_best:book.is_the_best
+        is_the_best:book.is_the_best,
+        pdf_url:book.pdf_url
 
 
       }

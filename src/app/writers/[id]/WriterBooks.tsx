@@ -94,7 +94,7 @@ const WriterBooks = ({ books }: Props) => {
               height: "1px",
             }}
           />
-          <BookCarousel title="Free Books" books={freeBooks} />
+          <BookCarousel title="Free Books" books={freeBooks} showDownloadButton />
         </>
       )}
     </Container>

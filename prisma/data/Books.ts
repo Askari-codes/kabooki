@@ -37,6 +37,7 @@ export const books = [
     slug: "conversation-in-the-cathedral",
     min_price: 0.0,
     is_the_best: true,
+    pdf_url:'/pdfs/conversation-in-the-cathedral.pdf'
   },
   {
     id: 4,
