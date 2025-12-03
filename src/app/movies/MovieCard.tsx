@@ -25,7 +25,7 @@ const MovieCard = ({movie}:Props) => {
           <Image
             width={300}
             height={200}
-            src={`/movies/${movie.poster}.jpeg`}
+            src={movie.poster}
             alt={movie.title}
             style={{
               objectFit: "cover",
@@ -36,14 +36,12 @@ const MovieCard = ({movie}:Props) => {
           />
         </AspectRatio>
         <Text size={"6"}  className="mt-2" weight="medium">
-          <Link href={`books/${movie.slug}`}>{movie.title}</Link>
+          <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
         </Text>
         <Box>
           <StarRating rating={movie.rating} />
         </Box>
-        <Text weight='medium' >
-          {/* {book.min_price===0.00?'Free':`from $${book.min_price}`} */}
-        </Text>
+        
       </Flex>
     </Box>
   )

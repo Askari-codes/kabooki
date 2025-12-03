@@ -12,7 +12,7 @@ interface Props{
 }
 
 const MovieSwiper = ({movies}:Props) => {
-  const chunkedMovies =  chunkArray(movies,5)
+  const chunkedMovies =  chunkArray(movies,10)
   const fristArray = chunkedMovies[0]
   
   

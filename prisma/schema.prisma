@@ -21,6 +21,34 @@ model Book {
   is_the_best         Boolean             @default(false)    
   pdf_url             String?
   user_favorite_books UserFavoriteBooks[]
+  bookMovies          BookMovies[] 
+}
+model Movie {
+  id                   Int                  @id @default(autoincrement())
+  title                String
+  related_book_title   String?
+  rating               Float
+  published_at         DateTime
+  summary              String?              @db.Text
+  poster               String
+  slug                 String               @unique
+  stream               String
+  directors            MoviesDirectors[]
+  user_favorite_movies UserFavoriteMovies[]
+  MovieGenre           MoviesGenres[]
+  bookMovies           BookMovies[]  
+}
+
+model BookMovies {
+  id        Int      @id @default(autoincrement())
+  book_id   Int
+  movie_id  Int
+
+  
+  book   Book  @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  movie  Movie @relation(fields: [movie_id], references: [id], onDelete: Cascade)
+
+  @@unique([book_id, movie_id]) 
 }
 
 model Podcast {
@@ -38,19 +66,6 @@ model Podcast {
   user_favorite_podcasts UserFavoritePodcasts[]
 }
 
-model Movie {
-  id                   Int                  @id @default(autoincrement())
-  title                String
-  rating               Float
-  published_at         DateTime
-  summary              String?              @db.Text
-  poster               String
-  slug                 String               @unique
-  stream               String
-  directors            MoviesDirectors[]
-  user_favorite_movies UserFavoriteMovies[]
-  MovieGenre           MoviesGenres[]
-}
 
 model Genre {
   id           Int            @id @default(autoincrement())

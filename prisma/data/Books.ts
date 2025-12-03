@@ -37,7 +37,7 @@ export const books = [
     slug: "conversation-in-the-cathedral",
     min_price: 0.0,
     is_the_best: true,
-    pdf_url:'/pdfs/conversation-in-the-cathedral.pdf'
+    pdf_url: "/pdfs/conversation-in-the-cathedral.pdf",
   },
   {
     id: 4,
@@ -75,8 +75,9 @@ export const books = [
       "An epic historical novel based on Brazil’s Canudos rebellion in the 19th century, portraying the clash between fanaticism, revolution, and authoritarianism in the Brazilian backlands.",
     cover_url: "the-war-of-the-end-of-the-world.jpg",
     slug: "the-war-of-the-end-of-the-world",
-    min_price: 25.96,
+    min_price: 0,
     is_the_best: true,
+    pdf_url: "/pdfs/the-war-of-the-end-of-the-world.pdf",
   },
   {
     id: 7,
@@ -140,8 +141,9 @@ export const books = [
       "A chilling blend of political violence and Andean mythology, this novel follows an investigation into mysterious disappearances in a remote mountain town plagued by terrorism and superstition.",
     cover_url: "death-in-the-andes.jpg",
     slug: "death-in-the-andes",
-    min_price: 11.82,
+    min_price: 0,
     is_the_best: false,
+    pdf_url: "/pdfs/death-in-the-andes.pdf",
   },
   {
     id: 12,

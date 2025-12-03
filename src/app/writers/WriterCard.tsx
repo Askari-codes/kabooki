@@ -20,12 +20,10 @@ const WriterCard: React.FC<WriterCardProps> = ({ writer }) => {
       <Flex direction={"column"} width={"100%"}>
         <AspectRatio ratio={8 / 12}>
           <Image
-            src={
-              `/writers/${writer.picture_url}`
-            }
+            src={`/writers/${writer.picture_url}`}
             width={300}
             height={200}
-            alt={writer.name +" "+writer.last_name}
+            alt={writer.name + " " + writer.last_name}
             style={{
               objectFit: "cover",
               width: "100%",
@@ -34,9 +32,9 @@ const WriterCard: React.FC<WriterCardProps> = ({ writer }) => {
             }}
           />
         </AspectRatio>
-        <Text  size={"6"} align={"center"} className="mt-2" weight="medium" >
-          <Link href={`writers/${writer.slug}`} >
-          {writer.name + " " + writer.last_name}
+        <Text size={"6"} align={"center"} className="mt-2" weight="medium">
+          <Link href={`/writers/${writer.id}`}>
+            {writer.name + " " + writer.last_name}
           </Link>
         </Text>
       </Flex>

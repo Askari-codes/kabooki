@@ -4,7 +4,19 @@ import { movies } from "./Movies";
 import { genres } from "./Genres";
 import { moviesDirectors } from "./MoviesDirectors";
 import { moviesGenres } from "./MoviesGenres";
-import{books} from './Books';
-import {booksWriters} from './BooksWriters';
+import { books } from "./Books";
+import { booksWriters } from "./BooksWriters";
 import { relatedWriters } from "./RelatedWriters";
-export { directors, writers, movies, genres, moviesDirectors, moviesGenres,books,booksWriters,relatedWriters };
+import { bookMovies } from "./Bookmovies";
+export {
+  directors,
+  writers,
+  movies,
+  genres,
+  moviesDirectors,
+  moviesGenres,
+  books,
+  booksWriters,
+  relatedWriters,
+  bookMovies,
+};

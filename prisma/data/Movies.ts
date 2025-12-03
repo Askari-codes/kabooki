@@ -1100,5 +1100,49 @@ export const movies = [
     slug: "the-social-network",
     stream: "Hulu",
   },
+  {
+    id: 101,
+    title: 'The City and the Dogs',
+    related_book_title:'The Time of the Hero',
+    rating: 7.4,
+    published_at: new Date('1985-07-18T00:00:00.000Z'),
+    summary: 'A group of young cadets at a Peruvian military academy form an inner circle to escape boredom and the strict rules — but a robbery leads to a murder, exposing brutality, corruption and class tension. The film is based on Mario Vargas Llosa’s novel The Time of the Hero.',
+    poster: '/movies/the-city-and-the-dogs.jpg',
+    slug: 'the-city-and-the-dogs',
+    stream: ''
+  },
+  {
+    id: 102,
+    title: 'Captain Pantoja and the Special Services',
+    related_book_title:'Captain Pantoja and the Special Services',
+    rating: 7.0,
+    published_at: new Date('1999-01-01T00:00:00.000Z'),
+    summary: 'Captain Pantaleón Pantoja, a disciplined army officer, is ordered to create a secret brothel for soldiers in remote jungle outposts — a bureaucratic, absurd and darkly comic mission. Based on Mario Vargas Llosa’s novel ‘Pantaleón y las visitadoras’.',
+    poster: '/movies/captain-pantoja-and-the-special-services.jpg',
+    slug: 'captain-pantoja-and-the-special-services',
+    stream: ''
+  },
+  {
+    id: 103,
+    title: 'Tune in Tomorrow...',
+    related_book_title:'Aunt Julia and the Scriptwriter',
+    rating: 6.1,
+    published_at: new Date('1990-10-26T00:00:00.000Z'),
+    summary: 'An offbeat romantic comedy about a young man working at a radio station who falls in love with his aunt — a love that spirals into chaos when their relationship becomes part of the radio soap opera he writes for. This film adapts Mario Vargas Llosa’s novel ‘Aunt Julia and the Scriptwriter’.',
+    poster: '/movies/tune-in-tomorrow.jpg',
+    slug: 'tune-in-tomorrow',
+    stream: ''
+  },
+  {
+    id: 104,
+    title: 'The Feast of the Goat',
+    related_book_title:'The Feast of the Goat',
+    rating: 6.4,
+    published_at: new Date('2006-02-24T00:00:00.000Z'),
+    summary: 'A dramatic political thriller exploring the last days of a brutal dictatorship — a woman returns to her homeland to confront her past under the regime of a tyrannical ruler. The film is based on Mario Vargas Llosa’s novel of the same name.',
+    poster: '/movies/the-feast-of-the-goat.jpg',
+    slug: 'the-feast-of-the-goat',
+    stream: ''
+  }
 ];
 

@@ -1,20 +1,18 @@
-import React from 'react'
+import React from "react";
 import * as Separator from "@radix-ui/react-separator";
-import { Box, Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box,Container, Flex, Heading } from "@radix-ui/themes";
 import Image from "next/image";
-import { Book, Writer } from '@prisma/client';
+import { Book, Writer } from "@prisma/client";
 import TextWithLinks from "@/app/components/TextWithLinks";
 
-
-export interface Props{
-    writer:Writer,
-    books:Book[]
+export interface Props {
+  writer: Writer;
+  books: Book[];
 }
 
-
-const WriterProfile = ({writer,books}:Props) => {
+const WriterProfile = ({ writer, books }: Props) => {
   return (
-   <Container>
+    <Container>
       <Flex justify="between">
         <Image
           width={400}
@@ -22,7 +20,7 @@ const WriterProfile = ({writer,books}:Props) => {
           style={{ width: 400, height: 400, objectFit: "cover" }}
           alt={writer.name + " " + writer.last_name}
           src={
-            "/writers/" + writer.picture_url  ||
+            "/writers/" + writer.picture_url ||
             "/writers/" + writer.picture_url + "jpeg"
           }
         />
@@ -31,8 +29,7 @@ const WriterProfile = ({writer,books}:Props) => {
             <Heading className="">
               {writer.name} {writer.last_name}
             </Heading>
-            <TextWithLinks books={books} description={writer.description}/>
-            
+            <TextWithLinks books={books} description={writer.description} />
           </Flex>
         </Box>
       </Flex>
@@ -43,8 +40,8 @@ const WriterProfile = ({writer,books}:Props) => {
           height: "1px",
         }}
       />
-   </Container>
-  )
-}
+    </Container>
+  );
+};
 
-export default WriterProfile
+export default WriterProfile;

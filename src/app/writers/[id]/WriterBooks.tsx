@@ -1,8 +1,8 @@
 "use client";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import * as Separator from "@radix-ui/react-separator";
 import { Book } from "@prisma/client";
-import { Box, Button, Container,Flex} from "@radix-ui/themes";
+import { Box, Button, Container, Flex } from "@radix-ui/themes";
 import BookCarousel from "@/app/books/BookCarousel";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,11 +11,11 @@ export interface Props {
 }
 
 const WriterBooks = ({ books }: Props) => {
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(1);
 
   const bestBooks = books.filter((book) => book.is_the_best);
   const otherBooks = books.filter((book) => book.is_the_best === false);
-  const freeBooks = books.filter((book)=>(book.min_price===0))
+  const freeBooks = books.filter((book) => book.min_price === 0);
 
   const booksPerPage = 10;
   const totalPages = Math.ceil(otherBooks.length / booksPerPage);
@@ -27,9 +27,6 @@ const WriterBooks = ({ books }: Props) => {
   const handlePrev = () => {
     if (page > 1) setPage(page - 1);
   };
-
-
- 
 
   return (
     <Container>
@@ -75,7 +72,7 @@ const WriterBooks = ({ books }: Props) => {
             + More Books
           </Button>
         ) : (
-          <Box /> 
+          <Box />
         )}
 
         {page > 1 && (
@@ -94,7 +91,11 @@ const WriterBooks = ({ books }: Props) => {
               height: "1px",
             }}
           />
-          <BookCarousel title="Free Books" books={freeBooks} showDownloadButton />
+          <BookCarousel
+            title="Free Books"
+            books={freeBooks}
+            showDownloadButton
+          />
         </>
       )}
     </Container>

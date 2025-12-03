@@ -1,20 +1,22 @@
-import React from 'react'
+import React from "react";
 import { Box, Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
-import WriterCarousel from '../WriterCarousel';
-import { Writer } from '@prisma/client';
+import WriterCarousel from "../WriterCarousel";
+import { Writer } from "@prisma/client";
 
-export interface Props{
-    relatedWriters:Writer[]
-    writer:Writer
+export interface Props {
+  relatedWriters: Writer[];
+  writer: Writer;
 }
 
-
-const RelatedWriters = ({relatedWriters,writer}:Props) => {
+const RelatedWriters = ({ relatedWriters, writer }: Props) => {
   return (
     <Container>
-        <WriterCarousel title={'if you like'+writer.name+''+writer.last_name} writers={relatedWriters}/>
+      <WriterCarousel
+        title={"if you like" + writer.name + "" + writer.last_name}
+        writers={relatedWriters}
+      />
     </Container>
-  )
-}
+  );
+};
 
-export default RelatedWriters
+export default RelatedWriters;

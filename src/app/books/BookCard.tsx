@@ -1,40 +1,47 @@
 import React, { useEffect } from "react";
-import { AspectRatio, Box, Flex, Text,Button } from "@radix-ui/themes";
-import { DownloadIcon } from "@radix-ui/react-icons"
-import { Book } from '@prisma/client'
+import { AspectRatio, Box, Flex, Text, Button } from "@radix-ui/themes";
+import { DownloadIcon } from "@radix-ui/react-icons";
+import { Book } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
 
 interface Props {
   book: Book;
-  showDownloadButton?:boolean;
+  showDownloadButton?: boolean;
 }
 
-const BookCard = ({ book,showDownloadButton }: Props) => {
-  useEffect(()=>{
-    console.log('log',book.pdf_url);
-    
-  },[])
+const BookCard = ({ book, showDownloadButton }: Props) => {
+  useEffect(() => {
+    console.log("log", book.pdf_url);
+  }, []);
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Flex direction={"column"} width={"100%"}>
+    <Box className="flex justify-center items-center">
+      <Flex direction="column" width="100%">
+        {showDownloadButton && (
+          <Link
+            target="_blank"
+            className="m-1 "
+            href={`${book.pdf_url}`}
+            download
+          >
+            {" "}
+            <Button
+              className="mb-4"
+              size={"2"}
+              radius="small"
+              variant="solid"
+              color="blue"
+            >
+              <DownloadIcon width="18" height="18" className="cursor-pointer" />
+            </Button>
+          </Link>
+        )}
         <AspectRatio ratio={8 / 12}>
-        {showDownloadButton && <Link  target="_blank"   className=" flex justify-start p-1 " href={`${book.pdf_url}`} download> <Button   variant="soft" color="blue">
-           <DownloadIcon className="text-blue-800 h-5 w-5 cursor-pointer"/>
-          </Button></Link>}
           <Image
             width={300}
             height={200}
-            src={
-              `/books/${book.title}.jpg` 
-            }
+            src={`/books/${book.title}.jpg`}
             alt={book.title}
             style={{
               objectFit: "cover",
@@ -44,8 +51,8 @@ const BookCard = ({ book,showDownloadButton }: Props) => {
             }}
           />
         </AspectRatio>
-        <Text size={"6"}  className="mt-2" weight="medium">
-          <Link  href={`books/${book.id}`}>{book.title}  </Link >
+        <Text size={"6"} className="mt-2" weight="medium">
+          <Link href={`/books/${book.id}`}>{book.title} </Link>
         </Text>
         <Box>
           <StarRating rating={book.rating} />

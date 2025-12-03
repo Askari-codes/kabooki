@@ -8,7 +8,8 @@ import {
   moviesGenres,
   books,
   booksWriters,
-  relatedWriters
+  relatedWriters,
+  bookMovies
 } from "./data/Data";
 
 const prisma = new PrismaClient();
@@ -32,6 +33,7 @@ async function main() {
         create: {
           id: movie.id,
           title: movie.title,
+          related_book_title:movie.related_book_title,
           rating: movie.rating,
           published_at: movie.published_at,
           summary: movie.summary,
@@ -71,6 +73,19 @@ async function main() {
  }
 
  await insertBooks()
+
+ async function insertBookMovies() {
+  for(const item of bookMovies){
+    await prisma.bookMovies.create({
+      data:{
+        book_id:item.book_id,
+        movie_id:item.movie_id
+      }
+    })
+  }
+ }
+
+ await insertBookMovies()
   
 
   async function insertWriter() {
