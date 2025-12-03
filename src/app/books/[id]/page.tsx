@@ -11,14 +11,21 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${bookId}`
   )
   const {data:book} =response
-  console.log('book',book);
+  
+  const writerResponse = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookWriters/${bookId}`
+  )
+  const {data:writer} =writerResponse
+  
+  
+  
   
   
   
   return (
    
     <Container>
-      {/* <BookProfile/> */}
+      <BookProfile writer={writer} book={book}/>
     </Container>
   );
 };

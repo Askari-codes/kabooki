@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import * as Separator from "@radix-ui/react-separator";
 import { Box,Container, Flex, Heading,Text } from "@radix-ui/themes";
 import Image from "next/image";
@@ -10,6 +11,10 @@ export interface Props {
   book: Book;
 }
 const BookProfile = ({book,writer}:Props) => {
+    useEffect(()=>{
+        console.log('cover urls is ',book.cover_url);
+    },[])
+    
   return (
     <Container>
       <Flex justify="between">
@@ -17,7 +22,7 @@ const BookProfile = ({book,writer}:Props) => {
           width={400}
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
-          alt={writer.name + " " + writer.last_name}
+          alt={book.title}
           src={
            `/books/${book.cover_url}`
           }
