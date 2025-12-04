@@ -15,6 +15,7 @@ import {
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.book.deleteMany();
   await prisma.booksWriters.deleteMany()
   await prisma.relatedWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
@@ -23,7 +24,6 @@ async function main() {
   await prisma.director.deleteMany();
   await prisma.movie.deleteMany();
   await prisma.writer.deleteMany();
-  await prisma.book.deleteMany();
 
   async function insertMovie() {
     for (const movie of movies) {
@@ -50,7 +50,7 @@ async function main() {
  async function insertBooks() {
   for(const book of books){
     await prisma.book.upsert({
-      where:{slug:book.slug},
+      where:{id:book.id},
       update:{},
       create:{
         
