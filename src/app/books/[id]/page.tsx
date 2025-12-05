@@ -43,27 +43,11 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
   )
   
   
-  
-  
-  
-  
-
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
   return (
    
     <Container>
       <BookProfile writer={writer} book={book}/>
-      <OtherBooks/>
+      <OtherBooks books={otherBooks} writer={writer}/>
     </Container>
   );
 };
