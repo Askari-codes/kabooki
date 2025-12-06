@@ -12,9 +12,7 @@ interface Props {
 }
 
 const BookCard = ({ book, showDownloadButton }: Props) => {
-  useEffect(() => {
-    console.log("log", book.pdf_url);
-  }, []);
+ 
   return (
     <Box className="flex justify-center items-center">
       <Flex direction="column" width="100%">

@@ -13,6 +13,10 @@ export interface Props {
 }
 const BookProfile = ({ book, writer }: Props) => {
   
+  useEffect(()=>{
+    console.log(book.cover_url);
+  },[])
+  
 
   return (
     <Container>
