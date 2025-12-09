@@ -10,7 +10,7 @@ const WriterSection = async({writers}:Props) => {
   return (
   
     
-     <WriterCarousel writers={writers}/>
+     <WriterCarousel title={'Writers'} writers={writers}/>
   
   )
 }

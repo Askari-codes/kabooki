@@ -1,16 +1,19 @@
 import { Box, Flex, AspectRatio,Text } from '@radix-ui/themes'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { Movie } from '@prisma/client'
 import StarRating from '../components/StarRating'
+import { log } from 'console'
 
 interface Props{
     movie:Movie
 }
 
 const MovieCard = ({movie}:Props) => {
-    
+    useEffect(()=>{
+      console.log('movie poster',movie)
+    },[])
     
   return (
     <Box
@@ -25,7 +28,7 @@ const MovieCard = ({movie}:Props) => {
           <Image
             width={300}
             height={200}
-            src={movie.poster}
+            src={`/movies/${movie.poster}.jpg`}
             alt={movie.title}
             style={{
               objectFit: "cover",

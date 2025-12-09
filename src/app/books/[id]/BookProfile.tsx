@@ -14,7 +14,7 @@ export interface Props {
 const BookProfile = ({ book, writer }: Props) => {
   
   useEffect(()=>{
-    console.log(`/books/${writer.slug}${book.cover_url}`);
+    console.log(book.min_price);
   },[])
   
 
@@ -30,7 +30,7 @@ const BookProfile = ({ book, writer }: Props) => {
           alt={book.title}
           src={`/books/${writer.slug}/${book.cover_url}`}
         />
-        <Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${book.pdf_url}`}> Download</Link></Button>
+        {!book.min_price?<Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${book.pdf_url}`}> Download</Link></Button>:null}
        </Flex>
         </Box>
         <Box width={'75%'} className="p-5">

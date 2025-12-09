@@ -10,7 +10,7 @@ const MovieSection = async ({movies}:MovieSection) => {
     
     
   return (
-    <MovieCarousel movies={movies}/>
+    <MovieCarousel title="Movies" movies={movies}/>
   )
 }
 
