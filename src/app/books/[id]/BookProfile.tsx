@@ -14,7 +14,7 @@ export interface Props {
 const BookProfile = ({ book, writer }: Props) => {
   
   useEffect(()=>{
-    console.log(book.cover_url);
+    console.log(`/books/${writer.slug}${book.cover_url}`);
   },[])
   
 
@@ -28,7 +28,7 @@ const BookProfile = ({ book, writer }: Props) => {
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
           alt={book.title}
-          src={`/books/${book.cover_url}`}
+          src={`/books/${writer.slug}/${book.cover_url}`}
         />
         <Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${book.pdf_url}`}> Download</Link></Button>
        </Flex>

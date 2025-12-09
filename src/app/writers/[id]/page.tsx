@@ -60,11 +60,13 @@ const WriterPage = async ({ params }: Props) => {
       return item;
     }
   });
+ 
+  
 
   return (
     <Container>
       <WriterProfile writer={writer} books={books} />
-      <WriterBooks books={books} />
+      <WriterBooks writer={writer} books={books} />
       <RelatedWriters relatedWriters={relatedWriters} writer={writer} />
       <RelatedMovies movies={relatedMovies} writer={writer} />
     </Container>

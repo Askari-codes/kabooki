@@ -48,6 +48,7 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
     <Container>
       <BookProfile writer={writer} book={book}/>
       <OtherBooks books={otherBooks} writer={writer}/>
+     
     </Container>
   );
 };
