@@ -3,6 +3,7 @@ import React from 'react';
 
 interface Props{
     rating:number
+   
 }
 
 const StarRating = ({ rating }:Props) => {

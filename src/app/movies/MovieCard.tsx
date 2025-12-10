@@ -1,34 +1,40 @@
-import { Box, Flex, AspectRatio,Text } from '@radix-ui/themes'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import Image from 'next/image'
-import { Movie } from '@prisma/client'
-import StarRating from '../components/StarRating'
-import { log } from 'console'
+import { Box, Flex, AspectRatio, Text, Badge } from "@radix-ui/themes";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import Image from "next/image";
+import { Movie } from "@prisma/client";
+import StarRating from "../components/StarRating";
 
-interface Props{
-    movie:Movie
+interface Props {
+  movie: Movie;
 }
 
-const MovieCard = ({movie}:Props) => {
-    useEffect(()=>{
-      console.log('movie poster',movie)
-    },[])
-    
+const MovieCard = ({ movie }: Props) => {
+  useEffect(() => {
+    console.log("movie poster", movie.poster);
+  }, []);
+
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Flex
+      direction={"column"}
+      justify={"between"}
+      height={"500px"}
+      width={"100%"}
     >
-      <Flex direction={"column"} width={"100%"}>
-        <AspectRatio ratio={8 / 12}>
+      <AspectRatio className="h-[300px] " ratio={8 / 12}>
+        <Flex direction={'column'} gap={'1'}>
+          <Badge className=" " size={"3"}>
+            <Flex className="w-[100%] " justify={"center"}>
+              <Text className=""></Text>
+              <div className="">
+                <StarRating rating={movie.rating} />
+              </div>
+            </Flex>
+          </Badge>
           <Image
             width={300}
             height={200}
-            src={`/movies/${movie.poster}.jpg`}
+            src={movie.poster}
             alt={movie.title}
             style={{
               objectFit: "cover",
@@ -37,17 +43,14 @@ const MovieCard = ({movie}:Props) => {
               borderRadius: "var(--radius-2)",
             }}
           />
-        </AspectRatio>
-        <Text size={"6"}  className="mt-2" weight="medium">
-          <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-        </Text>
-        <Box>
-          <StarRating rating={movie.rating} />
-        </Box>
-        
-      </Flex>
-    </Box>
-  )
-}
+        </Flex>
+      </AspectRatio>
+      <Text className="h-[100px] flex justify-center items-baseline text-[1.5rem]">
+        <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+      </Text>
+      
+    </Flex>
+  );
+};
 
-export default MovieCard
+export default MovieCard;

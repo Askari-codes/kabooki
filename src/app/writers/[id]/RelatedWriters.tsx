@@ -10,9 +10,9 @@ export interface Props {
 
 const RelatedWriters = ({ relatedWriters, writer }: Props) => {
   return (
-    <Container>
+    <Container className="font-serif">
       <WriterCarousel
-        title={"if you like" + writer.name + "" + writer.last_name}
+        title={"If you like" + writer.name + "" + writer.last_name}
         writers={relatedWriters}
       />
     </Container>

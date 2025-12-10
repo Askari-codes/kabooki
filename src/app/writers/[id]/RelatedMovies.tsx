@@ -9,7 +9,7 @@ interface Props {
 
 const RelatedMovies = ({ movies, writer }: Props) => {
   return (
-    <Container>
+    <Container className="font-serif">
       <MovieCarousel
         title={` Movies which are made based on ${writer.name} ${writer.last_name} novels`}
         movies={movies}
