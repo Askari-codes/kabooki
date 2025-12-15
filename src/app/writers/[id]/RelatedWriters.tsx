@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
+import {  Container } from "@radix-ui/themes";
 import WriterCarousel from "../WriterCarousel";
 import { Writer } from "@prisma/client";
 

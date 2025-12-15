@@ -3,14 +3,15 @@ import { Box, Button, Container, Flex } from "@radix-ui/themes";
 import BookCarousel from "./BookCarousel";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Book } from "@prisma/client";
+import { Book, Writer } from "@prisma/client";
 
 interface Propse {
   books: Book[];
-  title:string
+  title:string,
+  writer?:Writer
 }
 
-const BookCarouselWithPagination = ({ books,title }: Propse) => {
+const BookCarouselWithPagination = ({ books,title,writer }: Propse) => {
   const [page, setPage] = useState(1);
 
   const booksPerPage = 10;
@@ -42,6 +43,7 @@ const BookCarouselWithPagination = ({ books,title }: Propse) => {
               <BookCarousel
                 title={i === 0 ? title : ""}
                 books={books.slice(start, end)}
+                writer={writer}
                
               />
             </motion.div>

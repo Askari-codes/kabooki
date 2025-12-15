@@ -9,17 +9,22 @@ import {
   Container,
 } from "@radix-ui/themes";
 import { DividerHorizontalIcon, DownloadIcon } from "@radix-ui/react-icons";
-import { Book } from "@prisma/client";
+import { Book, Writer } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
+import { log } from "console";
 
 interface Props {
   book: Book;
   showDownloadButton?: boolean;
+  writer?:Writer
 }
 
-const BookCard = ({ book}: Props) => {
+const BookCard = ({ book,writer}: Props) => {
+  useEffect(()=>{
+    console.log('title',book.title)
+  },[])
   return (
     <Flex  direction={"column"} justify={"between"} height={'510px'} >
       <AspectRatio className="h-[400px] "  ratio={8 / 12}>
@@ -50,7 +55,7 @@ const BookCard = ({ book}: Props) => {
           <Image
             width={300}
             height={200}
-            src={`/books/${book.title}.jpg`}
+            src={`/books/${writer?.slug}/${book.cover_url}`}
             alt={book.title}
             style={{
               objectFit: "cover",

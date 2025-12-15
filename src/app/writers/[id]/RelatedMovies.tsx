@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "@radix-ui/themes";
 import { Movie, Writer } from "@prisma/client";
 import MovieCarousel from "@/app/movies/MovieCarousel";
+import Seprator from "@/app/components/Seprator";
 interface Props {
   movies: Movie[];
   writer: Writer;
@@ -14,6 +15,7 @@ const RelatedMovies = ({ movies, writer }: Props) => {
         title={` Movies which are made based on ${writer.name} ${writer.last_name} novels`}
         movies={movies}
       />
+      <Seprator/>
     </Container>
   );
 };

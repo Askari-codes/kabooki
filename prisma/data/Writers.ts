@@ -120,4 +120,15 @@ export const writers = [
     slug: "Louise-Glück",
     books: [],
   },
+  {
+  id: 12,
+  name: "Gabriel",
+  last_name: "García Márquez",
+  description:
+    "Colombian novelist, short-story writer, screenwriter, and journalist, celebrated for pioneering the literary style of magical realism. He is best known for works like 'One Hundred Years of Solitude' and 'Love in the Time of Cholera'.",
+  picture_url: "Gabriel-Garcia-Marquez.jpg",
+  country: "Colombia",
+  slug: "Gabriel-Garcia-Marquez",
+  books: [],
+},
 ];

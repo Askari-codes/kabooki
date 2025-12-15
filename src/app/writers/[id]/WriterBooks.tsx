@@ -20,7 +20,7 @@ const WriterBooks = ({ books,writer }: Props) => {
     <Container>
       <BookCarousel writer={writer} title="Selected Books" books={bestBooks} />
       <Seprator />
-      <BookCarouselWithPagination books={otherBooks} title='Other Books' />
+      <BookCarouselWithPagination writer={writer} books={otherBooks} title='Other Books' />
       {freeBooks.length > 0 && (
         <>
           <Seprator />
@@ -28,9 +28,12 @@ const WriterBooks = ({ books,writer }: Props) => {
             title="Free Books"
             books={freeBooks}
             showDownloadButton
+            writer={writer}
           />
+        <Seprator/>
         </>
       )}
+
     </Container>
   );
 };
