@@ -100,7 +100,8 @@ async function main() {
           description: writer.description,
           picture_url: writer.picture_url,
           country: writer.country,
-          slug: writer.slug
+          slug: writer.slug,
+          nobelist:writer.nobelist
         
         },
       });

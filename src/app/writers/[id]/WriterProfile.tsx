@@ -12,35 +12,44 @@ export interface Props {
 
 const WriterProfile = ({ writer, books }: Props) => {
   return (
-    <Container >
-      <Flex  align={'start'}   justify="between">
-       
-       <Container  height={'500px'} >
-          <Container >
-             <Flex width={'100%'} height={'80px'} justify={'end'} align={'center'}  >
-         <Image
-       
-        
-          width={60}
-          height={60}
-          alt="nobel-prize"
-          src={"/medals/nobel_medal.svg"}
-        />
-       </Flex>
+    <Container>
+      <Flex align={"start"} justify="between">
+        <Container height={"500px"}>
+          <Container>
+            {writer.nobelist && (
+              <Flex
+                width={"100%"}
+                height={"80px"}
+                justify={"end"}
+                align={"center"}
+              >
+                <Image
+                  width={60}
+                  height={60}
+                  alt="nobel-prize"
+                  src={"/medals/nobel_medal.svg"}
+                />
+              </Flex>
+            )}
             <Image
-          width={400}
-          height={400}
-          style={{ width: 400, height: 400, objectFit: "cover",borderRadius:'100%',border:'1px solid yellow' }}
-          alt={writer.name + " " + writer.last_name}
-          src={
-            "/writers/" + writer.picture_url ||
-            "/writers/" + writer.picture_url + "jpeg"
-          }
-        />
+              width={400}
+              height={400}
+              style={{
+                width: 400,
+                height: 400,
+                objectFit: "cover",
+                borderRadius: "100%",
+                border: "1px solid yellow",
+              }}
+              alt={writer.name + " " + writer.last_name}
+              src={
+                "/writers/" + writer.picture_url ||
+                "/writers/" + writer.picture_url + "jpeg"
+              }
+            />
           </Container>
-      
-       </Container>
-      
+        </Container>
+
         <Box className="p-5">
           <Flex direction="column">
             <Heading className="">

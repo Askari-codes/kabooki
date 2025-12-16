@@ -9,6 +9,7 @@ export const writers = [
     country: "Peru",
     slug: "Mario-Vargas-Llosa",
     books: [],
+    nobelist:true
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const writers = [
     country: "Sweden",
     slug: "Tomas-Tranströmer",
     books: [],
+    nobelist:true
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ export const writers = [
     country: "China",
     slug: "Mo-Yan",
     books: [],
+    nobelist:true
   },
   {
     id: 4,
@@ -42,6 +45,7 @@ export const writers = [
     country: "Canada",
     slug: "Alice-Munro",
     books: [],
+    nobelist:true
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ export const writers = [
     country: "France",
     slug: "Patrick-Modiano",
     books: [],
+    nobelist:true
   },
   {
     id: 6,
@@ -64,6 +69,7 @@ export const writers = [
     country: "Belarus",
     slug: "Svetlana-Alexievich",
     books: [],
+    nobelist:true
   },
   {
     id: 7,
@@ -75,6 +81,7 @@ export const writers = [
     country: "United States",
     slug: "Bob-Dylan",
     books: [],
+    nobelist:true
   },
   {
     id: 8,
@@ -86,6 +93,7 @@ export const writers = [
     country: "United Kingdom",
     slug: "Kazuo-Ishiguro",
     books: [],
+    nobelist:true
   },
   {
     id: 9,
@@ -97,6 +105,7 @@ export const writers = [
     country: "Poland",
     slug: "Olga-Tokarczuk",
     books: [],
+    nobelist:true
   },
   {
     id: 10,
@@ -108,6 +117,7 @@ export const writers = [
     country: "Austria",
     slug: "Peter-Handke",
     books: [],
+    nobelist:true
   },
   {
     id: 11,
@@ -119,6 +129,7 @@ export const writers = [
     country: "United States",
     slug: "Louise-Glück",
     books: [],
+    nobelist:true
   },
   {
   id: 12,
@@ -130,5 +141,6 @@ export const writers = [
   country: "Colombia",
   slug: "Gabriel-Garcia-Marquez",
   books: [],
+  nobelist:true
 },
 ];

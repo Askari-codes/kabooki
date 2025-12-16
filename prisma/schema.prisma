@@ -63,6 +63,7 @@ model Podcast {
   slug                   String                 @unique(map: "Podcast_slug_key") @db.VarChar(255)
   rating                 Int
   min_price              Decimal
+  
   user_favorite_podcasts UserFavoritePodcasts[]
 }
 
@@ -110,6 +111,7 @@ model Writer {
   picture_url String? @db.VarChar(255)
   country     String
   slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
+  nobelist    Boolean @default(false)
   books      BooksWriters[]
 
   // Reverse relation to RelatedWriters for writer1

@@ -12,7 +12,7 @@ interface Props {
 const OtherBooks = ({books,writer}:Props) => {
   return (
     <Container>
-      <BookCarouselWithPagination books={books} title={`Other ${writer.name} ${writer.last_name}'s Books`}/>
+      <BookCarouselWithPagination books={books} writer={writer} title={`Other ${writer.name} ${writer.last_name}'s Books`}/>
     </Container>
   )
 }
