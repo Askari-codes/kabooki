@@ -66,9 +66,9 @@ const WriterPage = async ({ params }: Props) => {
   return (
     <Container>
       <WriterProfile writer={writer} books={books} />
-      <WriterBooks writer={writer} books={books} />
-      <RelatedMovies movies={relatedMovies} writer={writer} />
-      <RelatedWriters relatedWriters={relatedWriters} writer={writer} />
+     {books.length!==0&&<WriterBooks writer={writer} books={books} />} 
+    {relatedMovies.length!==0&& <RelatedMovies movies={relatedMovies} writer={writer} />}  
+     {relatedWriters.length!==0&&<RelatedWriters relatedWriters={relatedWriters} writer={writer} />} 
     </Container>
   );
 };

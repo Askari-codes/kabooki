@@ -13,7 +13,9 @@ export async function GET(
       },
       include: {
         movie: true,
+        
       },
+      
     });
 
     const movies = bookMovies.map((item)=>{

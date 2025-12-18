@@ -143,4 +143,14 @@ export const writers = [
   books: [],
   nobelist:true
 },
+{
+  id: 13,
+  name: "Carlos",
+  last_name: "Fuentes",
+  description: "Carlos Fuentes Macías was a preeminent Mexican novelist and essayist, widely considered one of the most influential figures in the Latin American 'Boom' of the 1960s and 70s. Born in 1928, his work deeply explored the complexities of Mexican identity, history, and the intersection of myth and modernity. He served as a diplomat and a professor, bringing a cosmopolitan perspective to his critique of power and society. His narrative style often employed experimental techniques, weaving together different time periods and voices to create a rich, cinematic tapestry of the human experience. Among his most celebrated masterpieces is 'The Death of Artemio Cruz' (1962), which provides a searing look at the corruption of the Mexican Revolution through the eyes of a dying tycoon. Another pivotal work, 'Aura' (1962), is a haunting, gothic novella written in the second person that blurs the lines between reality and the supernatural. His sprawling, ambitious novel 'Terra Nostra' (1975) stands as a monumental examination of Hispanic culture and the weight of the past. Other essential titles include 'Where the Air Is Clear' (1958), his first major success that captured the essence of Mexico City, and 'The Old Gringo' (1985), which fictionalizes the disappearance of American writer Ambrose Bierce during the Mexican Revolution. Despite his massive global impact and numerous accolades, including the Miguel de Cervantes Prize and the Prince of Asturias Award, Fuentes famously never received the Nobel Prize in Literature, though he was frequently a top contender. He remained a prolific and vital voice in world literature until his death in 2012, leaving behind a legacy that redefined the possibilities of the modern Spanish-language novel.",
+  picture_url: "Carlos-Fuentes.jpg",
+  country: "Mexico",
+  slug: "Carlos-Fuentes",
+  nobelist: false
+},
 ];

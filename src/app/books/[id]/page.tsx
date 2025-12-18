@@ -4,15 +4,17 @@ import { Box, Card, Heading, Text, Separator, Container } from "@radix-ui/themes
 import axios from "axios";
 import { notFound } from "next/navigation";
 import BookProfile from "./BookProfile";
-import OtherBooks from "./OtherBooks";
-import { Book, BooksWriters, Writer } from "@prisma/client";
+import BestBooks from "./BestBooks";
+import { Book, BooksWriters, Writer,Movie } from "@prisma/client";
+import { log } from "console";
+import MovieCarousel from "@/app/movies/MovieCarousel";
 
 const BookPage = async ({ params }: { params: { id: string } }) => {
   const bookId = Number(params.id)
- const response = await axios.get(
+ const bookResponse = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${bookId}`
   )
-  const {data:book} =response
+  const {data:book} =bookResponse
   
   const writerResponse = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookWriters/${bookId}`
@@ -41,13 +43,22 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
     })
     
   )
+  const bestBoks = otherBooks.filter((b)=>b.is_the_best)
+  
+ const filmResponse = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookMovies/${bookId}`
+  )
+  const movies:Movie[]=filmResponse.data
+  console.log('film respone is ',filmResponse)
+ 
   
   
   return (
    
     <Container>
       <BookProfile writer={writer} book={book}/>
-      <OtherBooks books={otherBooks} writer={writer}/>
+      <BestBooks books={bestBoks} writer={writer}/>
+      {movies.length!==0&&<MovieCarousel movies={movies} title="Related movies"/>}
      
     </Container>
   );

@@ -22,6 +22,19 @@ model Book {
   pdf_url             String?
   user_favorite_books UserFavoriteBooks[]
   bookMovies          BookMovies[] 
+   relatedFrom         RelatedBook[]       @relation("BookRelatedFrom")
+  relatedTo           RelatedBook[]       @relation("BookRelatedTo")
+}
+model RelatedBook {
+  id            Int   @id @default(autoincrement())
+
+  bookId        Int
+  relatedBookId Int
+
+  book          Book @relation("BookRelatedFrom", fields: [bookId], references: [id], onDelete: Cascade)
+  relatedBook   Book @relation("BookRelatedTo", fields: [relatedBookId], references: [id], onDelete: Cascade)
+
+  @@unique([bookId, relatedBookId])
 }
 model Movie {
   id                   Int                  @id @default(autoincrement())

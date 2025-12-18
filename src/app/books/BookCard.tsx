@@ -22,9 +22,7 @@ interface Props {
 }
 
 const BookCard = ({ book,writer}: Props) => {
-  useEffect(()=>{
-    console.log('title',book.title)
-  },[])
+ 
   return (
     <Flex  direction={"column"} justify={"between"} height={'510px'} >
       <AspectRatio className="h-[400px] "  ratio={8 / 12}>

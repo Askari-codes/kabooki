@@ -1,6 +1,7 @@
+'use client'
 import { Book, Writer } from '@prisma/client'
 import { Container } from '@radix-ui/themes'
-import React from 'react'
+import React,{useEffect} from 'react'
 import BookCarousel from '../BookCarousel'
 import BookCarouselWithPagination from '../BookCarouselWithPagination'
 
@@ -9,12 +10,14 @@ interface Props {
   writer:Writer
 }
 
-const OtherBooks = ({books,writer}:Props) => {
+const BestBooks = ({books,writer}:Props) => {
+  
+
   return (
     <Container>
-      <BookCarouselWithPagination books={books} writer={writer} title={`Other ${writer.name} ${writer.last_name}'s Books`}/>
+<BookCarousel books={books} writer={writer} title={`${writer.name} ${writer.last_name}'s best books`}/>
     </Container>
   )
 }
 
-export default OtherBooks
+export default BestBooks
