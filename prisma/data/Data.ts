@@ -8,6 +8,7 @@ import { books } from './Books/Books'
 import { booksWriters } from "./BooksWriters";
 import { relatedWriters } from "./RelatedWriters";
 import { bookMovies } from "./Bookmovies";
+import { bookRelatedToOtherBooks } from "./bookRelatedToOtherBooks";
 export {
   directors,
   writers,
@@ -19,4 +20,5 @@ export {
   booksWriters,
   relatedWriters,
   bookMovies,
+  bookRelatedToOtherBooks
 };

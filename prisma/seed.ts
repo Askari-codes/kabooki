@@ -9,13 +9,15 @@ import {
   books,
   booksWriters,
   relatedWriters,
-  bookMovies
+  bookMovies,
+  bookRelatedToOtherBooks
 } from "./data/Data";
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.book.deleteMany();
+  await prisma.relatedBook.deleteMany
   await prisma.booksWriters.deleteMany()
   await prisma.relatedWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
@@ -73,6 +75,19 @@ async function main() {
  }
 
  await insertBooks()
+
+ async function insertBookRelatedToOtherBooks() {
+  for(const item of bookRelatedToOtherBooks){
+    await prisma.relatedBook.create({
+      data:{
+        bookId:item.bookId,
+        relatedBookId:item.relatedBookId
+      }
+    })
+      }
+    }
+    await insertBookRelatedToOtherBooks()
+ 
 
  async function insertBookMovies() {
   for(const item of bookMovies){
