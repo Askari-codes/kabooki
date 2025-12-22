@@ -215,5 +215,18 @@ export const booksWriters = [
     {writer_id:13,
         book_id:93,
     },
+    {writer_id:14,
+        book_id:94,
+    },
+    {writer_id:15,
+        book_id:95,
+    },
+    {writer_id:16,
+        book_id:96,
+    },
+    {writer_id:17,
+        book_id:97,
+    },
+    
     
 ]

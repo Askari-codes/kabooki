@@ -153,4 +153,44 @@ export const writers = [
   slug: "Carlos-Fuentes",
   nobelist: false
 },
+{
+  id: 14,
+  name: "José",
+  last_name: "Saramago",
+  description: "José Saramago (1922–2010) was a Portuguese novelist, essayist, and journalist whose work blends satire, philosophical inquiry, and a highly distinctive narrative style marked by long sentences, minimal punctuation, and flowing dialogue. Born into a poor rural family in Portugal and largely self-educated, he worked various jobs before gaining literary recognition later in life. Saramago became one of the most influential European writers of the late twentieth century, known for transforming simple hypothetical ideas into profound explorations of ethics, power, religion, and human responsibility. His writing often challenges political authority, organized religion, and social complacency, while maintaining deep empathy for ordinary people and their struggles.\n\nOne of his most famous novels, Blindness, depicts a sudden epidemic of white blindness that spreads through a city, revealing the thin veneer of civilization and the moral choices people make under extreme conditions. The Gospel According to Jesus Christ offers a radical and humanized retelling of Jesus’s life, provoking intense controversy and international debate. Baltasar and Blimunda is a richly imaginative historical novel set in eighteenth-century Portugal, combining love, mysticism, and political critique. In The Stone Raft, the Iberian Peninsula physically detaches from Europe, becoming a powerful metaphor for cultural identity and isolation. Death with Interruptions begins with a darkly comic premise—death suddenly stops occurring—and evolves into a moving reflection on mortality, love, and meaning. Awarded the Nobel Prize in Literature in 1998, Saramago is celebrated for fiction that confronts reality with imagination, moral urgency, and intellectual courage.",
+  picture_url: "jose-saramago.jpg",
+  country: "Portugal",
+  slug: "jose-saramago",
+  nobelist: true
+},
+ {
+  id: 15,
+  name: "William",
+  last_name: "Faulkner",
+  description: "William Faulkner (1897–1962) was an American novelist, short-story writer, and essayist, widely regarded as one of the most important figures in modern literature. Born in Mississippi, Faulkner drew deeply from the history, culture, and racial tensions of the American South, transforming his regional experience into works of universal significance. His fiction is known for its complex narrative structures, shifting perspectives, stream-of-consciousness techniques, and dense, poetic language. Through these experimental methods, Faulkner explored memory, time, guilt, family, and the enduring legacy of slavery and moral failure in Southern society.\n\nMuch of Faulkner’s major work is set in the fictional Yoknapatawpha County, a richly imagined world that allowed him to examine generations of families and the psychological consequences of history. The Sound and the Fury is one of his most celebrated novels, portraying the decline of the Compson family through fragmented and challenging narrative voices that mirror the characters’ inner turmoil. As I Lay Dying follows a poor rural family transporting their mother’s body for burial, combining dark humor with profound emotional depth. Light in August confronts themes of identity, race, and alienation in the segregated South, while Absalom, Absalom! presents a haunting meditation on obsession, myth, and the impossibility of fully understanding the past. In his short stories, such as A Rose for Emily, Faulkner distilled these themes into powerful and unsettling portraits of Southern life.\n\nFaulkner received the Nobel Prize in Literature in 1949, praised for his powerful and artistically unique contribution to the modern American novel. His influence extends far beyond American literature, shaping narrative experimentation worldwide and challenging readers to confront the complexities of human consciousness and historical responsibility.",
+  picture_url: "william-faulkner.jpg",
+  country: "United States",
+  slug: "william-faulkner",
+  nobelist: true
+},
+{
+  id: 16,
+  name: "Julio",
+  last_name: "Cortázar",
+  description: "Julio Cortázar (1914–1984) was an Argentine novelist, short-story writer, and essayist, widely regarded as one of the most innovative voices of 20th-century Latin American literature. Born in Belgium to Argentine parents and raised primarily in Argentina, Cortázar later settled in Paris, where much of his mature work was written. He became a central figure of the Latin American Boom, known for blending realism with fantasy, existential inquiry, and playful formal experimentation. Cortázar constantly challenged traditional narrative structures, inviting readers to actively participate in the construction of meaning rather than passively consume a story.\n\nHis most famous novel, Hopscotch, is a radical literary experiment that can be read in multiple sequences, reflecting themes of freedom, chance, love, and the search for authenticity. The novel follows Horacio Oliveira and a group of intellectuals drifting between Paris and Buenos Aires, questioning art, language, and the nature of existence. In his short fiction, Cortázar achieved extraordinary mastery, often introducing subtle disruptions of reality that feel both dreamlike and unsettling. Stories such as The Continuity of Parks, Blow-Up, and House Taken Over reveal how the ordinary can suddenly become strange, exposing hidden fears and psychological tensions beneath everyday life.\n\nCortázar’s collections, including Bestiary, Final del juego, and All Fires the Fire, showcase his ability to merge the fantastic with precise emotional insight, influencing generations of writers worldwide. Beyond fiction, he was politically engaged, supporting leftist movements in Latin America and using his international reputation to speak out against dictatorship and injustice. Although he never received the Nobel Prize, Cortázar’s literary legacy remains immense. His work continues to inspire readers and writers with its intellectual daring, linguistic inventiveness, and deep commitment to artistic freedom.",
+  picture_url: "julio-cortazar.jpg",
+  country: "Argentina",
+  slug: "julio-cortazar",
+  nobelist: false
+},
+{
+  id: 17,
+  name: "Juan",
+  last_name: "Rulfo",
+  description: "Juan Rulfo (1917–1986) was a Mexican novelist, short-story writer, and screenwriter whose small but powerful body of work permanently changed the course of Latin American literature. Born in the rural state of Jalisco, Rulfo grew up amid the social violence and economic hardship that followed the Mexican Revolution and the Cristero War. These experiences deeply shaped his literary vision. Although he published very little, Rulfo’s writing is marked by extraordinary intensity, emotional restraint, and a haunting atmosphere in which silence, death, and memory play central roles.\n\nRulfo is best known for his novel *Pedro Páramo* (1955), a landmark work that blends fragmented narration, shifting perspectives, and voices of the dead into a dreamlike yet deeply rooted portrayal of rural Mexico. The novel follows Juan Preciado’s journey to the town of Comala in search of his father, Pedro Páramo, only to discover a ghost town filled with murmurs, memories, and unresolved suffering. Through this innovative structure, Rulfo explores themes of power, abandonment, guilt, and the lingering effects of tyranny. *Pedro Páramo* is widely regarded as a foundational text of Latin American literature and a precursor to magical realism, profoundly influencing writers such as Gabriel García Márquez, Carlos Fuentes, and Mario Vargas Llosa.\n\nIn addition to the novel, Rulfo published the short-story collection *El Llano en llamas* (*The Burning Plain*), which depicts peasants, soldiers, and outcasts struggling with poverty, violence, and despair. These stories are notable for their stark language, moral ambiguity, and deep empathy for marginalized lives. Although Rulfo never received the Nobel Prize, his literary reputation is immense. His work demonstrates how minimalism, silence, and narrative innovation can convey the deepest human suffering and resilience, securing his place as one of the most influential writers of the twentieth century.",
+  picture_url: "juan-rulfo.jpg",
+  country: "Mexico",
+  slug: "juan-rulfo",
+  nobelist: false
+},
 ];
