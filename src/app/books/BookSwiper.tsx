@@ -4,22 +4,23 @@ import { Book, Writer } from '@prisma/client';
 import { Swiper, SwiperSlide } from "swiper/react";
 import BookCard from "./BookCard";
 import { writer } from "repl";
+import { BookWithWriters } from "../../../prisma/types";
+
 
 interface Props {
-  books: Book[];
-  showDownloadButton:boolean
-  writer?:Writer
+ books:BookWithWriters[]
+ hasTooltip?:boolean
   
 }
 
-const chunkArray = (array: Book[], size: number) => {
+const chunkArray = (array: BookWithWriters[], size: number) => {
   const chunks = [];
   for (let i = 0; i < array.length; i += size) {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
 };
-const BookSwiper = ({ books,showDownloadButton,writer}: Props) => {
+const BookSwiper = ({ books,hasTooltip }: Props) => {
   const chunkedWriters = chunkArray(books, 10);
   
   
@@ -40,7 +41,7 @@ const BookSwiper = ({ books,showDownloadButton,writer}: Props) => {
         >
           {books.map((book) => (
             <SwiperSlide className="p-5 " key={book.id}>
-              <BookCard writer={writer} key={book.id} book={book} showDownloadButton={showDownloadButton} />
+              <BookCard book={book} key={book.id} hasTooltip={hasTooltip}  />
             </SwiperSlide>
           ))}
         </Swiper>

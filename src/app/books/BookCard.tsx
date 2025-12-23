@@ -1,82 +1,92 @@
 import React, { useEffect } from "react";
-import {
-  AspectRatio,
-  Box,
-  Flex,
-  Text,
-  Button,
-  Badge,
-  Container,
-} from "@radix-ui/themes";
-import { DividerHorizontalIcon, DownloadIcon } from "@radix-ui/react-icons";
-import { Book, Writer } from "@prisma/client";
+import { AspectRatio, Flex, Text, Badge } from "@radix-ui/themes";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import { Book, Writer, BooksWriters } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
-import { log } from "console";
+import { BookWithWriters } from "../../../prisma/types";
 
 interface Props {
-  book: Book;
-  showDownloadButton?: boolean;
-  writer?:Writer
+  book: BookWithWriters;
+  hasTooltip?: boolean;
 }
 
-const BookCard = ({ book,writer}: Props) => {
- 
+const BookCard = ({ book, hasTooltip }: Props) => {
+  useEffect(() => {
+    console.log("book", book.writers);
+  });
+
   return (
-    <Flex  direction={"column"} justify={"between"} height={'510px'} >
-      <AspectRatio className="h-[400px] "  ratio={8 / 12}>
-        <Flex gap='1'  direction="column">
+    <Flex direction={"column"} justify={"between"} height={"510px"}>
+      <AspectRatio className="h-[400px] " ratio={8 / 12}>
+        <Flex gap="1" direction="column">
           {!book.min_price ? (
             <Badge className=" " size={"3"}>
-             <Flex className="w-[100%] " justify={'between'}>
-              <Text className="">
-                Free
-              </Text>
-              <div className="">
-                <StarRating rating={book.rating} />
-              </div>
-              </Flex> 
+              <Flex className="w-[100%] " justify={"between"}>
+                <Text className="">Free</Text>
+                <div className="">
+                  <StarRating rating={book.rating} />
+                </div>
+              </Flex>
             </Badge>
           ) : (
             <Badge className=" " size={"3"}>
-             <Flex className="w-[100%] " justify={'center'}>
-              <Text className="">
-               
-              </Text>
-              <div className="">
-                <StarRating rating={book.rating} />
-              </div>
-              </Flex> 
+              <Flex className="w-[100%] " justify={"center"}>
+                <Text className=""></Text>
+                <div className="">
+                  <StarRating rating={book.rating} />
+                </div>
+              </Flex>
             </Badge>
           )}
-          <Image
-            width={300}
-            height={200}
-            src={`/books/${writer?.slug}/${book.cover_url}`}
-            alt={book.title}
-            style={{
-              objectFit: "cover",
-              width: "100%",
-              height: "100%",
-              borderRadius: "var(--radius-2)",
-              
-            }}
-          />
+         {hasTooltip? <Tooltip.Provider>
+            <Tooltip.Root>
+              <Tooltip.Trigger>
+                <Image
+                  width={300}
+                  height={200}
+                  src={`/books/${book.writers[0].writer.slug}/${book.cover_url}`}
+                  alt={book.title}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "var(--radius-2)",
+                  }}
+                />
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content>
+                  {`${book.writers[0].writer.name} ${book.writers[0].writer.last_name}`}
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.Provider>: <Image
+                  width={300}
+                  height={200}
+                  src={`/books/${book.writers[0].writer.slug}/${book.cover_url}`}
+                  alt={book.title}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "var(--radius-2)",
+                  }}
+                />}
         </Flex>
       </AspectRatio>
-     
-       <div className="h-[100px] flex justify-center items-baseline text-[1.5rem]">
-         <Link className=" font-serif font-semibold  " href={`/books/${book.id}`}>
+
+      <div className="h-[100px] flex justify-center items-baseline text-[1.5rem]">
+        <Link
+          className=" font-serif font-semibold  "
+          href={`/books/${book.id}`}
+        >
           {book.title}{" "}
         </Link>
-       </div>
-       
-      </Flex>
-   
+      </div>
+    </Flex>
   );
 };
 
 export default BookCard;
-
-

@@ -1,8 +1,9 @@
-import { Book } from "@prisma/client";
-import BookCarousel from "./BookCarousel";
+import BookCarousel from "./Carousels/BookCarousel";
+import { BookWithWriters } from "../../../prisma/types";
+
 
 interface BookSection{
-  books:Book[]
+  books:BookWithWriters[]
 }
 
 const BookSection = async ({books}:BookSection) => {

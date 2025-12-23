@@ -12,9 +12,11 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
                 writer:true
             }
         })
+        // console.log(bookWriterInformation);
+        
         const writer=bookWriterInformation?.writer
 
-        return NextResponse.json(writer);
+        return NextResponse.json(bookWriterInformation);
     } catch (error) {
         NextResponse.json(error,{status:500})
         

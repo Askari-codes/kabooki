@@ -3,8 +3,8 @@ import React from "react";
 import Seprator from "@/app/components/Seprator";
 import { Book, Writer } from "@prisma/client";
 import {Container} from "@radix-ui/themes";
-import BookCarousel from "@/app/books/BookCarousel";
-import BookCarouselWithPagination from "@/app/books/BookCarouselWithPagination";
+import BookCarousel from "@/app/books/Carousels/BookCarousel";
+import BookCarouselWithPagination from "@/app/books/Carousels/BookCarouselWithPagination";
 
 export interface Props {
   books: Book[];

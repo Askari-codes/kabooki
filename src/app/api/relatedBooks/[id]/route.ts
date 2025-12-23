@@ -18,14 +18,10 @@ export async function GET(
     });
 
     if (rows.length === 0) {
-      return NextResponse.json(
-        { error: "There is no related book" },
-        { status: 404 }
-      );
+      return NextResponse.json([]);
     }
 
- 
-    const relatedBooks = rows.map(row => row.relatedBook);
+    const relatedBooks = rows.map((row) => row.relatedBook);
 
     return NextResponse.json(relatedBooks);
   } catch (e) {

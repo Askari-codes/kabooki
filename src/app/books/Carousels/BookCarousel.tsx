@@ -1,21 +1,24 @@
 "use client";
 import { Section, Heading } from "@radix-ui/themes";
 import "swiper/css";
-import BookSwiper from "./BookSwiper";
+import BookSwiper from "../BookSwiper";
 import { Book, Writer } from "@prisma/client";
+import { BookWithWriters } from "../../../../prisma/types";
+
 
 interface Props {
-  title: string;
-  books: Book[];
-  showDownloadButton?: boolean;
-  writer?: Writer;
+ books:BookWithWriters[]
+ title:string
+ hasTooltip?:boolean
 }
 
 const BookCarousel = ({
   books,
   title,
-  writer,
-  showDownloadButton = false,
+  hasTooltip
+  
+
+  
 }: Props) => {
   return (
     <Section style={{ padding: "20px 0" }}>
@@ -27,9 +30,8 @@ const BookCarousel = ({
         ""
       )}
       <BookSwiper
-        writer={writer}
-        showDownloadButton={showDownloadButton}
         books={books}
+        hasTooltip={hasTooltip}
       />
     </Section>
   );

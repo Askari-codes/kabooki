@@ -11,10 +11,17 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
     try {
         const book = await prisma.book.findUnique({
             where:{id},
+            include:{
+                writers:{
+                    include:{writer:true}
+                }
+            }
         })
         if (!book) {
             return NextResponse.json({error:'Book not found'},{status:404});
         }
+       console.log(JSON.stringify(book, null, 2));
+        
         return NextResponse.json(book);
     } catch (error) { 
         console.log(error);
