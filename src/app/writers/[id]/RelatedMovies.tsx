@@ -5,14 +5,14 @@ import MovieCarousel from "@/app/movies/MovieCarousel";
 import Seprator from "@/app/components/Seprator";
 interface Props {
   movies: Movie[];
-  writer: Writer;
+  writerName:string
 }
 
-const RelatedMovies = ({ movies, writer }: Props) => {
+const RelatedMovies = ({ movies, writerName }: Props) => {
   return (
     <Container className="font-serif">
       <MovieCarousel
-        title={` Movies which are made based on ${writer.name} ${writer.last_name} novels`}
+        title={` Movies which are made based on ${writerName} novels`}
         movies={movies}
       />
       <Seprator/>

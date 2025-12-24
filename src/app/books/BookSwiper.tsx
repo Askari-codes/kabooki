@@ -8,19 +8,20 @@ import { BookWithWriters } from "../../../prisma/types";
 
 
 interface Props {
- books:BookWithWriters[]
+ books:BookWithWriters[]|Book[]
  hasTooltip?:boolean
+ writerSlug?:string
   
 }
 
-const chunkArray = (array: BookWithWriters[], size: number) => {
+const chunkArray = (array: BookWithWriters[]|Book[], size: number) => {
   const chunks = [];
   for (let i = 0; i < array.length; i += size) {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
 };
-const BookSwiper = ({ books,hasTooltip }: Props) => {
+const BookSwiper = ({ books,hasTooltip,writerSlug }: Props) => {
   const chunkedWriters = chunkArray(books, 10);
   
   
@@ -41,7 +42,7 @@ const BookSwiper = ({ books,hasTooltip }: Props) => {
         >
           {books.map((book) => (
             <SwiperSlide className="p-5 " key={book.id}>
-              <BookCard book={book} key={book.id} hasTooltip={hasTooltip}  />
+              <BookCard book={book} key={book.id} hasTooltip={hasTooltip} writerSlug={writerSlug}  />
             </SwiperSlide>
           ))}
         </Swiper>

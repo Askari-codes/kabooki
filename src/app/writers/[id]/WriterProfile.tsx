@@ -4,19 +4,19 @@ import { Box, Container, Flex, Heading } from "@radix-ui/themes";
 import Image from "next/image";
 import { Book, Writer } from "@prisma/client";
 import TextWithLinks from "@/app/components/TextWithLinks";
+import { WriterWithBooks } from "../../../../prisma/types";
 
 export interface Props {
-  writer: Writer;
-  books: Book[];
+ writerWithBooks:WriterWithBooks
 }
 
-const WriterProfile = ({ writer, books }: Props) => {
+const WriterProfile = ({writerWithBooks }: Props) => {
   return (
     <Container>
       <Flex align={"start"} justify="between">
         <Container height={"500px"}>
           <Container>
-            {writer.nobelist && (
+            {writerWithBooks.nobelist && (
               <Flex
                 width={"100%"}
                 height={"80px"}
@@ -41,10 +41,10 @@ const WriterProfile = ({ writer, books }: Props) => {
                 borderRadius: "100%",
                 border: "1px solid yellow",
               }}
-              alt={writer.name + " " + writer.last_name}
+              alt={writerWithBooks.name + " " + writerWithBooks.last_name}
               src={
-                "/writers/" + writer.picture_url ||
-                "/writers/" + writer.picture_url + "jpeg"
+                "/writers/" + writerWithBooks.picture_url ||
+                "/writers/" + writerWithBooks.picture_url + "jpeg"
               }
             />
           </Container>
@@ -53,9 +53,9 @@ const WriterProfile = ({ writer, books }: Props) => {
         <Box className="p-5">
           <Flex direction="column">
             <Heading className="">
-              {writer.name} {writer.last_name}
+              {writerWithBooks.name} {writerWithBooks.last_name}
             </Heading>
-            <TextWithLinks books={books} description={writer.description} />
+            <TextWithLinks books={writerWithBooks.books} description={writerWithBooks.description} />
           </Flex>
         </Box>
       </Flex>

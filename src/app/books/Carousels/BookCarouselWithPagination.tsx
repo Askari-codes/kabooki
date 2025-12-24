@@ -4,14 +4,15 @@ import BookCarousel from "./BookCarousel";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Book, Writer } from "@prisma/client";
+import { BookWithWriters } from "../../../../prisma/types";
 
 interface Propse {
-  books: Book[];
-  title:string,
-  writer?:Writer
+ books:BookWithWriters[]|Book[]
+  title:string
+  writerSlug?: string;
 }
 
-const BookCarouselWithPagination = ({ books,title,writer }: Propse) => {
+const BookCarouselWithPagination = ({ books,title,writerSlug }: Propse) => {
   const [page, setPage] = useState(1);
 
   const booksPerPage = 10;
@@ -43,7 +44,7 @@ const BookCarouselWithPagination = ({ books,title,writer }: Propse) => {
               <BookCarousel
                 title={i === 0 ? title : ""}
                 books={books.slice(start, end)}
-                writer={writer}
+                writerSlug={writerSlug}
                
               />
             </motion.div>

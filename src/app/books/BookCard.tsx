@@ -8,14 +8,22 @@ import StarRating from "../components/StarRating";
 import { BookWithWriters } from "../../../prisma/types";
 
 interface Props {
-  book: BookWithWriters;
+  book: BookWithWriters|Book;
   hasTooltip?: boolean;
+  writerSlug?: string;
 }
 
-const BookCard = ({ book, hasTooltip }: Props) => {
-  useEffect(() => {
-    console.log("book", book.writers);
-  });
+const BookCard = ({ book, hasTooltip,writerSlug }: Props) => {
+ function hasWriters(book: any): book is BookWithWriters {
+  return (book as BookWithWriters).writers !== undefined;
+}
+let folderName = "default"; 
+  
+  if (hasWriters(book)) {
+    folderName = book.writers[0]?.writer.slug;
+  } else if (writerSlug) {
+    folderName = writerSlug;
+  }
 
   return (
     <Flex direction={"column"} justify={"between"} height={"510px"}>
@@ -40,40 +48,52 @@ const BookCard = ({ book, hasTooltip }: Props) => {
               </Flex>
             </Badge>
           )}
-         {hasTooltip? <Tooltip.Provider>
-            <Tooltip.Root>
-              <Tooltip.Trigger>
-                <Image
-                  width={300}
-                  height={200}
-                  src={`/books/${book.writers[0].writer.slug}/${book.cover_url}`}
-                  alt={book.title}
-                  style={{
-                    objectFit: "cover",
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "var(--radius-2)",
-                  }}
-                />
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content>
-                  {`${book.writers[0].writer.name} ${book.writers[0].writer.last_name}`}
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.Provider>: <Image
-                  width={300}
-                  height={200}
-                  src={`/books/${book.writers[0].writer.slug}/${book.cover_url}`}
-                  alt={book.title}
-                  style={{
-                    objectFit: "cover",
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "var(--radius-2)",
-                  }}
-                />}
+          {hasTooltip ? (
+            <Tooltip.Provider>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <Image
+                    width={300}
+                    height={200}
+                    src={`/books/${folderName}/${book.cover_url}`}
+                    alt={book.title}
+                    style={{
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "var(--radius-2)",
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    sideOffset={-35}
+                    className="z-50 select-none rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white shadow-md animate-in fade-in zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                    align="center"
+                    side="top"
+                  >
+                    {/* <Link href={`/writers/${book.writers[0].writer.id}`}>
+                      {" "}
+                      {`Written by ${book.writers[0].writer.name} ${book.writers[0].writer.last_name}`}
+                    </Link> */}
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </Tooltip.Provider>
+          ) : (
+            <Image
+              width={300}
+              height={200}
+              src={`/books/${folderName}/${book.cover_url}`}
+              alt={book.title}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+                borderRadius: "var(--radius-2)",
+              }}
+            />
+          )}
         </Flex>
       </AspectRatio>
 

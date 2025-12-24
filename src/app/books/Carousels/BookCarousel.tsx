@@ -7,15 +7,17 @@ import { BookWithWriters } from "../../../../prisma/types";
 
 
 interface Props {
- books:BookWithWriters[]
+ books:BookWithWriters[]|Book[]
  title:string
  hasTooltip?:boolean
+ writerSlug?: string;
 }
 
 const BookCarousel = ({
   books,
   title,
-  hasTooltip
+  hasTooltip,
+  writerSlug
   
 
   
@@ -32,6 +34,7 @@ const BookCarousel = ({
       <BookSwiper
         books={books}
         hasTooltip={hasTooltip}
+        writerSlug={writerSlug}
       />
     </Section>
   );

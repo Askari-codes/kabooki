@@ -14,8 +14,14 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}) {
             include:{
                 writers:{
                     include:{writer:true}
+                },
+                bookMovies:{
+                    include:{
+                        movie:true
+                    }
                 }
             }
+            
         })
         if (!book) {
             return NextResponse.json({error:'Book not found'},{status:404});
