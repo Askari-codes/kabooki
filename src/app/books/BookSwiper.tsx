@@ -4,17 +4,17 @@ import { Book, Writer } from '@prisma/client';
 import { Swiper, SwiperSlide } from "swiper/react";
 import BookCard from "./BookCard";
 import { writer } from "repl";
-import { BookWithWriters } from "../../../prisma/types";
+import { BookWithWriters, RelatedBookExtended } from "../../../prisma/types";
 
 
 interface Props {
- books:BookWithWriters[]|Book[]
+ books:BookWithWriters[]|RelatedBookExtended[]|Book[]
  hasTooltip?:boolean
  writerSlug?:string
   
 }
 
-const chunkArray = (array: BookWithWriters[]|Book[], size: number) => {
+const chunkArray = (array: BookWithWriters[]|RelatedBookExtended[]|Book[], size: number) => {
   const chunks = [];
   for (let i = 0; i < array.length; i += size) {
     chunks.push(array.slice(i, i + size));

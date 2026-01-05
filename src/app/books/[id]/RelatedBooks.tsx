@@ -2,18 +2,18 @@ import { Book, BooksWriters, Writer } from '@prisma/client'
 import { Container } from '@radix-ui/themes'
 import React from 'react'
 import BookCarousel from '../Carousels/BookCarousel'
-import { BookWithWriters } from '../../../../prisma/types'
+import { BookWithWriters, RelatedBookExtended } from '../../../../prisma/types'
 
 
 interface Props {
-   books:BookWithWriters[]
-   sourceBook:Book
+   relatedBooks:RelatedBookExtended[]
+   sourceBook:BookWithWriters
 }
 
-const RelatedBooks = ({books,sourceBook}:Props) => {
+const RelatedBooks = ({relatedBooks,sourceBook}:Props) => {
   return (
     <Container>
-        <BookCarousel books={books} hasTooltip ={true}  title={`If you like ${sourceBook.title}`}/>
+        <BookCarousel books={relatedBooks} hasTooltip ={true}  title={`If you like ${sourceBook.title}`}/>
     </Container>
   )
 }

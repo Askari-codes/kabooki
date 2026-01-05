@@ -6,16 +6,14 @@ import Image from "next/image";
 import { Book, Writer } from "@prisma/client";
 import TextWithLinks from "@/app/components/TextWithLinks";
 import Link from "next/link";
+import { BookWithWriters } from "../../../../prisma/types";
 
 export interface Props {
-  writer: Writer;
-  book: Book;
+  bookWithWriters:BookWithWriters
 }
-const BookProfile = ({ book, writer }: Props) => {
+const BookProfile = ({ bookWithWriters }: Props) => {
   
-  useEffect(()=>{
-    console.log(book.min_price);
-  },[])
+ 
   
 
   return (
@@ -27,16 +25,16 @@ const BookProfile = ({ book, writer }: Props) => {
           width={400}
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
-          alt={book.title}
-          src={`/books/${writer.slug}/${book.cover_url}`}
+          alt={bookWithWriters.title}
+          src={`/books/${bookWithWriters.writer.slug}/${bookWithWriters.cover_url}`}
         />
-        {!book.min_price?<Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${book.pdf_url}`}> Download</Link></Button>:null}
+        {!bookWithWriters.min_price?<Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${bookWithWriters.pdf_url}`}> Download</Link></Button>:null}
        </Flex>
         </Box>
         <Box width={'75%'} className="p-5">
           <Flex direction="column">
-            <Heading className="">{book.title}</Heading>
-            <Text className="text-justify">{book.summary}</Text>
+            <Heading className="">{bookWithWriters.title}</Heading>
+            <Text className="text-justify">{bookWithWriters.summary}</Text>
           </Flex>
         </Box>
       </Flex>

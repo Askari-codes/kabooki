@@ -5,22 +5,24 @@ import { Book, Writer, BooksWriters } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../components/StarRating";
-import { BookWithWriters } from "../../../prisma/types";
+import { BookWithWriters, RelatedBookExtended } from "../../../prisma/types";
 
 interface Props {
-  book: BookWithWriters|Book;
+  book: BookWithWriters|RelatedBookExtended|Book;
   hasTooltip?: boolean;
   writerSlug?: string;
 }
 
 const BookCard = ({ book, hasTooltip,writerSlug }: Props) => {
- function hasWriters(book: any): book is BookWithWriters {
-  return (book as BookWithWriters).writers !== undefined;
-}
-let folderName = "default"; 
-  
-  if (hasWriters(book)) {
-    folderName = book.writers[0]?.writer.slug;
+function hasWriter(b: any): b is (BookWithWriters | RelatedBookExtended) {
+    return b && typeof b === 'object' && b.writer !== undefined && b.writer !== null;
+  }
+
+  let folderName = "default";
+
+  if (hasWriter(book)) {
+    // TypeScript now knows 'book.writer' exists
+    folderName = book.writer!.slug;
   } else if (writerSlug) {
     folderName = writerSlug;
   }

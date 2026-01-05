@@ -1,24 +1,23 @@
-'use client'
-import { Book, Writer } from '@prisma/client'
-import { Container } from '@radix-ui/themes'
-import React,{useEffect} from 'react'
-import BookCarousel from '../Carousels/BookCarousel'
-import { BookWithWriters } from '../../../../prisma/types'
+"use client";
+import { Book, Writer } from "@prisma/client";
+import { Container } from "@radix-ui/themes";
+import React, { useEffect } from "react";
+import BookCarousel from "../Carousels/BookCarousel";
+import { BookWithWriters } from "../../../../prisma/types";
 
 interface Props {
-  books:BookWithWriters[]
-  writer:Writer
-  
+  bookWithWriters:BookWithWriters
+  mainBookId?:number
 }
 
-const BestBooks = ({books,writer}:Props) => {
-  
-
+const BestBooks = ({ bookWithWriters,mainBookId }: Props) => {
+  const bestBooks:Book[] = bookWithWriters.writer!.books.filter((b)=>{return b.is_the_best&&b.id!==mainBookId})
+  const  writerName:string = bookWithWriters.writer!.name+''+bookWithWriters.writer!.last_name
   return (
     <Container>
-<BookCarousel books={books}  title={`${writer.name} ${writer.last_name}'s best books`}/>
+      <BookCarousel writerSlug={bookWithWriters.writer!.slug}  books={bestBooks} title={`${writerName}'s best books`} />
     </Container>
-  )
-}
+  );
+};
 
-export default BestBooks
+export default BestBooks;

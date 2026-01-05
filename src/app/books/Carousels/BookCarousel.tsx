@@ -3,11 +3,11 @@ import { Section, Heading } from "@radix-ui/themes";
 import "swiper/css";
 import BookSwiper from "../BookSwiper";
 import { Book, Writer } from "@prisma/client";
-import { BookWithWriters } from "../../../../prisma/types";
+import { BookWithWriters, RelatedBookExtended } from "../../../../prisma/types";
 
 
 interface Props {
- books:BookWithWriters[]|Book[]
+ books:BookWithWriters[]|RelatedBookExtended[]|Book[]
  title:string
  hasTooltip?:boolean
  writerSlug?: string;
