@@ -13,8 +13,13 @@ export interface Props {
 }
 const BookProfile = ({ bookWithWriters }: Props) => {
   
- 
-  
+const books:Book[]= bookWithWriters.writer!.books.filter((b)=>b.id!==bookWithWriters.id)
+const writer:Writer = bookWithWriters.writer!  
+const writers:Writer[] = [writer]
+
+
+
+
 
   return (
     <Container>
@@ -34,7 +39,8 @@ const BookProfile = ({ bookWithWriters }: Props) => {
         <Box width={'75%'} className="p-5">
           <Flex direction="column">
             <Heading className="">{bookWithWriters.title}</Heading>
-            <Text className="text-justify">{bookWithWriters.summary}</Text>
+            {/* <Text className="text-justify">{bookWithWriters.summary}</Text> */}
+            <TextWithLinks books={books} description={bookWithWriters.summary} writers={writers}  />
           </Flex>
         </Box>
       </Flex>

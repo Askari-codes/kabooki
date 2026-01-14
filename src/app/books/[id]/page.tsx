@@ -18,6 +18,9 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
  
  const relatedBooks:RelatedBookExtended[] = bookWithWriters.relatedFrom.map((book)=>(book))
  const movies = bookWithWriters.bookMovies
+
+ console.log(bookWithWriters);
+ 
  
 
   return (

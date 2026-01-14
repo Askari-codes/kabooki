@@ -8,7 +8,7 @@ type LinkMap = Record<string, string>;
 
 interface TextWithLinksProps {
   books: Book[];
-  writers: Writer[];
+  writers?: Writer[];
   description: string | null;
 }
 
@@ -24,13 +24,11 @@ const buildRegex = (keys: string[]) => {
 };
 
 export default function TextWithLinks({ books, writers, description }: TextWithLinksProps) {
-  useEffect(()=>{
-    console.log("writers prop:", writers.map(w => `${w.name} ${w.last_name}`));
-  },[])
+  
   const links: LinkMap = React.useMemo(() => {
     const map: LinkMap = {};
     for (const b of books) map[b.title] = `/books/${b.id}`;
-
+    if (writers)
     for (const w of writers) {
       const fullName = `${w.name} ${w.last_name}`; // <-- your fields
       map[fullName] = `/writers/${w.id}`;
@@ -75,7 +73,7 @@ export default function TextWithLinks({ books, writers, description }: TextWithL
         <Link
           key={`l-${textStart}`}
           href={links[text]}
-          target="_blank"
+          target=""
           rel="noopener noreferrer"
           className="text-blue-600 font-medium"
         >
