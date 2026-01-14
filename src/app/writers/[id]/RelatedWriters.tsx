@@ -5,14 +5,14 @@ import { Writer } from "@prisma/client";
 
 export interface Props {
   relatedWriters: Writer[];
-  writer: Writer;
+  writerName: string;
 }
 
-const RelatedWriters = ({ relatedWriters, writer }: Props) => {
+const RelatedWriters = ({ relatedWriters, writerName }: Props) => {
   return (
     <Container className="font-serif">
       <WriterCarousel
-        title={"If you like" + writer.name + "" + writer.last_name}
+        title={"If you like" + writerName}
         writers={relatedWriters}
       />
     </Container>

@@ -8,6 +8,7 @@ import { BookWithWriters, RelatedBookExtended } from '../../../../prisma/types'
 interface Props {
    relatedBooks:RelatedBookExtended[]
    sourceBook:BookWithWriters
+   writerSlug:string
 }
 
 const RelatedBooks = ({relatedBooks,sourceBook}:Props) => {

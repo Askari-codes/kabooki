@@ -20,5 +20,6 @@ export type BookWithWriters = Book & {
 };
 
 export type WriterWithBooks = Writer &{
-  books:(Book&{movies:Movie[]})[]
+  books:(Book&{movies:Movie[]})[],
+  relatedWriters:Writer[]
 }

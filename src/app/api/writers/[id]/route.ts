@@ -22,18 +22,45 @@ export async function GET(req: NextRequest, { params }: Props) {
             }
           },
         },
+        writerRelations1:{include:{writer2:true}},
+       
       },
+     
     });
    
     if (!writerData) return NextResponse.json({ error: "Not found" }, { status: 404 });
-    const result = {
-      ...writerData,
-      books: writerData.books.map((bw) => ({
-        ...bw.book,
-        movies:bw.book.bookMovies.map((bm)=>bm.movie)
-      }))
+    const relatedWriters = [
+      ...writerData.writerRelations1.map(rel => rel.writer2),
       
+    ];
+    const { writerRelations1, books: _, ...basicWriterFields } = writerData;
+    const result = {
+      ...basicWriterFields,
+      relatedWriters: relatedWriters,
+     books: writerData.books.map((bw) => {
+    // Extract the movie data from the join table (bookMovies)
+    const flattenedMovies = bw.book.bookMovies.map((bm) => bm.movie);
+
+    // Create a new book object
+    return {
+      id: bw.book.id,
+      title: bw.book.title,
+      genre:bw.book.genre,
+      summary: bw.book.summary, 
+      slug: bw.book.slug,
+     published_at:bw.book.published_at,
+      cover_url :bw.book.cover_url,
+      rating:bw.book.rating,
+      min_price:bw.book.min_price,
+      is_the_best:bw.book.is_the_best,
+      pdf_url:bw.book.pdf_url,
+      movies: flattenedMovies,
     };
+    
+  }),
+  
+};
+
   
     return NextResponse.json(result);
   } catch (error) {

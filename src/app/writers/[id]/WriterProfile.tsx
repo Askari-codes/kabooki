@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 import { Box, Container, Flex, Heading } from "@radix-ui/themes";
@@ -8,9 +9,13 @@ import { WriterWithBooks } from "../../../../prisma/types";
 
 export interface Props {
  writerWithBooks:WriterWithBooks
+ relatedWriters:Writer[]
 }
 
-const WriterProfile = ({writerWithBooks }: Props) => {
+
+const WriterProfile = ({writerWithBooks,relatedWriters }: Props) => {
+  
+  
   return (
     <Container>
       <Flex align={"start"} justify="between">
@@ -55,7 +60,7 @@ const WriterProfile = ({writerWithBooks }: Props) => {
             <Heading className="">
               {writerWithBooks.name} {writerWithBooks.last_name}
             </Heading>
-            <TextWithLinks books={writerWithBooks.books} description={writerWithBooks.description} />
+            <TextWithLinks writers={relatedWriters} books={writerWithBooks.books} description={writerWithBooks.description} />
           </Flex>
         </Box>
       </Flex>

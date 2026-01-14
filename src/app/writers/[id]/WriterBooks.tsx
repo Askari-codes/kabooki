@@ -15,6 +15,7 @@ const WriterBooks = ({ writerInformation }: Props) => {
   const bestBooks:Book[] = writerInformation.books.filter((book) => book.is_the_best);
   const otherBooks:Book[] = writerInformation.books.filter((book) => book.is_the_best === false);
   const freeBooks:Book[] = writerInformation.books.filter((book) => book.min_price === 0);
+  
 
   return (
     <Container>
