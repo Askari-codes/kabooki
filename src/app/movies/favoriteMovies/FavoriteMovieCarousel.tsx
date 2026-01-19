@@ -8,7 +8,7 @@ interface Props {
 }
 
 const FavoriteMovieCarousel = ({favoriteMovies}:Props) => {
-  console.log(favoriteMovies);
+ 
   
   return (
     <Section style={{ padding: "20px 0" }}>

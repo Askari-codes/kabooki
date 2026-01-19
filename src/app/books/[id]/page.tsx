@@ -1,6 +1,6 @@
 import {  Container,} from "@radix-ui/themes";
-import {  BooksWriters, Writer, Movie, Book,  } from "@prisma/client";
-import { RelatedBookExtended } from "../../../../prisma/types";
+import {  BooksWriters, Writer, Movie, Book, Director,  } from "@prisma/client";
+import { MoviesDirector, MoviesWithDirectors, MovieWithDirectors, RelatedBookExtended } from "../../../../prisma/types";
 import { BookWithWriters} from "../../../../prisma/types";
 import axios from "axios";
 import BookProfile from "./BookProfile";
@@ -17,9 +17,13 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
  
  
  const relatedBooks:RelatedBookExtended[] = bookWithWriters.relatedFrom.map((book)=>(book))
- const movies = bookWithWriters.bookMovies
+ const moviesWithDirectors:MoviesDirector= bookWithWriters.bookMovies
+ const movies:Movie[] = moviesWithDirectors.map(({director,...movie})=>movie)
 
- console.log(bookWithWriters);
+ const director:Director = moviesWithDirectors[0].director
+ 
+
+ console.log('movies ',moviesWithDirectors);
  
  
 
@@ -30,9 +34,9 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
       {relatedBooks.length !== 0 && (
         <RelatedBooks writerSlug="" relatedBooks={relatedBooks} sourceBook={bookWithWriters} />
       )}
-      {movies.length !== 0 && (
+      {/* {movies.length !== 0 && (
         <MovieCarousel movies={movies} title="Related movies" />
-      )}
+      )} */}
     </Container>
   );
 };

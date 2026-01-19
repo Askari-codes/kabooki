@@ -27,7 +27,7 @@ export async function GET(
         },
         bookMovies: {
           include: {
-            movie: true,
+            movie: {include:{directors:{include:{director:true}}}},
           },
         },
         relatedFrom: {
@@ -49,7 +49,10 @@ export async function GET(
     : null,
 
   // 2. Movie flattening
-  bookMovies: book.bookMovies.map((m) => m.movie),
+  bookMovies: book.bookMovies.map((bm) => ({
+    ...bm.movie,
+    directors: bm.movie.directors[0].director,
+  })),
 
   // 3. UPDATED: Related books flattening
   relatedFrom: book.relatedFrom.map((item) => {

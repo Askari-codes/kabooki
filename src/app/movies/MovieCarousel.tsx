@@ -2,14 +2,15 @@
 import { Heading, Section } from "@radix-ui/themes";
 import "swiper/css";
 import MovieSwiper from "./MovieSwiper";
-import { Movie } from "@prisma/client";
+import { Director, Movie } from "@prisma/client";
 
 interface Props {
   movies: Movie[];
   title: string;
+   director:Director
 }
 
-const MovieCarousel = ({ movies, title }: Props) => {
+const MovieCarousel = ({ movies, title,director }: Props) => {
   return (
     <Section style={{ padding: "20px 0" }}>
       {movies.length ? (
@@ -19,7 +20,7 @@ const MovieCarousel = ({ movies, title }: Props) => {
       ) : (
         ""
       )}
-      <MovieSwiper movies={movies} />
+      <MovieSwiper movies={movies} director={director} />
     </Section>
   );
 };

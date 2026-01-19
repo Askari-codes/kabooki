@@ -1,5 +1,5 @@
 'use client'
-import { Movie } from '@prisma/client'
+import { Director, Movie } from '@prisma/client'
 import React from 'react'
 import { chunkArray } from '../utilities/services'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,9 +9,10 @@ import MovieCard from './MovieCard';
 
 interface Props{
     movies:Movie[]
+    director:Director
 }
 
-const MovieSwiper = ({movies}:Props) => {
+const MovieSwiper = ({movies,director}:Props) => {
   const chunkedMovies =  chunkArray(movies,10)
   const fristArray = chunkedMovies[0]
   
@@ -33,7 +34,7 @@ const MovieSwiper = ({movies}:Props) => {
         >
           {fristArray.map((movie) => (
             <SwiperSlide className="p-5 " key={movie.id}>
-             <MovieCard movie={movie}/>
+             <MovieCard director={director} movie={movie}/>
             </SwiperSlide>
           ))}
         </Swiper>

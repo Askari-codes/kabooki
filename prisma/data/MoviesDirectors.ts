@@ -419,5 +419,9 @@ export const moviesDirectors = [
     movie_id: 100,
     director_id: 12,
   },
+  {
+     movie_id: 101,
+    director_id: 74,
+  }
 ];
 

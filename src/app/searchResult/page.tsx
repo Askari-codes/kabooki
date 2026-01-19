@@ -32,8 +32,7 @@ const SearchResultWrapper = async ({ searchParams }: SearchResultProps) => {
     searchResultData = await fetchSearchData(query);
   }
 
-  console.log('Received query in SearchResult:', query);
-  console.log('Fetched searchResultData:', searchResultData);
+ 
 
   return (
     <SearchResult searchResult={searchResultData}/>

@@ -22,7 +22,7 @@ const WriterPage = async ({ params }: Props) => {
     return b.movies
   })
 const relatedWriters:Writer[]= writerInformation.relatedWriters
-console.log('related Writers',relatedWriters);
+
 
 
  

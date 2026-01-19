@@ -12,7 +12,7 @@ interface Props{
 
 const SearchResult = ({searchResult}:Props) => {
   const {writers,books,movies,directors}=searchResult
-  console.log('my writers are',writers);
+ 
   
     
     const isDataExist:boolean|undefined = 

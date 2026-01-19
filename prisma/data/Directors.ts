@@ -730,5 +730,16 @@ export const directors = [
     country: "UK",
     slug: "danny-boyle",
   },
+  {
+  id: 74,
+  name: "Francisco",
+  last_name: "Lombardi",
+  description:
+    "Francisco José Lombardi is a Peruvian film director and producer, best known for adapting major Latin American literary works to cinema, including 'The City and the Dogs', based on the novel by Mario Vargas Llosa.",
+  picture_url: "francisco-lombardi",
+  country: "Peru",
+  slug: "francisco-lombardi",
+}
+
 ];
 

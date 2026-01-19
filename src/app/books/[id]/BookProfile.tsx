@@ -31,7 +31,7 @@ const writers:Writer[] = [writer]
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
           alt={bookWithWriters.title}
-          src={`/books/${bookWithWriters.writer.slug}/${bookWithWriters.cover_url}`}
+          src={`/books/${bookWithWriters.writer!.slug}/${bookWithWriters.cover_url}`}
         />
         {!bookWithWriters.min_price?<Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${bookWithWriters.pdf_url}`}> Download</Link></Button>:null}
        </Flex>

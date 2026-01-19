@@ -2,17 +2,16 @@ import { Box, Flex, AspectRatio, Text, Badge } from "@radix-ui/themes";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { Movie } from "@prisma/client";
+import { Director, Movie } from "@prisma/client";
 import StarRating from "../components/StarRating";
 
 interface Props {
-  movie: Movie;
+  movie: Movie
+  director:Director
 }
 
-const MovieCard = ({ movie }: Props) => {
-  useEffect(() => {
-    console.log("movie poster", movie.poster);
-  }, []);
+const MovieCard = ({ movie,director }: Props) => {
+ 
 
   return (
     <Flex
@@ -34,7 +33,7 @@ const MovieCard = ({ movie }: Props) => {
           <Image
             width={300}
             height={200}
-            src={movie.poster}
+            src={`/movies/${director.slug}/${movie.poster}.jpg`}
             alt={movie.title}
             style={{
               objectFit: "cover",
