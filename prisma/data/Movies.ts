@@ -9,6 +9,7 @@ export const movies = [
     poster: "the-godfather",
     slug: "the-godfather",
     stream: "Paramount+",
+    directorId:1
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const movies = [
     poster: "the-godfather-part-ii",
     slug: "the-godfather-part-ii",
     stream: "Paramount+",
+    directorId:1
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ export const movies = [
     poster: "citizen-kane",
     slug: "citizen-kane",
     stream: "HBO Max",
+    directorId:2
   },
   {
     id: 4,
@@ -42,6 +45,7 @@ export const movies = [
     poster: "the-shawshank-redemption",
     slug: "the-shawshank-redemption",
     stream: "Netflix",
+    directorId:3
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ export const movies = [
     poster: "schindlers-list",
     slug: "schindlers-list",
     stream: "Peacock",
+    directorId:4
   },
   {
     id: 6,
@@ -64,6 +69,7 @@ export const movies = [
     poster: "pulp-fiction",
     slug: "pulp-fiction",
     stream: "Netflix",
+    directorId:5
   },
   {
     id: 7,
@@ -75,6 +81,7 @@ export const movies = [
     poster: "2001-a-space-odyssey",
     slug: "2001-a-space-odyssey",
     stream: "HBO Max",
+    directorId:6
   },
   {
     id: 8,
@@ -86,6 +93,7 @@ export const movies = [
     poster: "casablanca",
     slug: "casablanca",
     stream: "HBO Max",
+    directorId:7
   },
   {
     id: 9,
@@ -97,6 +105,7 @@ export const movies = [
     poster: "apocalypse-now",
     slug: "apocalypse-now",
     stream: "Amazon Prime Video",
+    directorId:1
   },
   {
     id: 10,
@@ -108,6 +117,7 @@ export const movies = [
     poster: "12-angry-men",
     slug: "12-angry-men",
     stream: "Amazon Prime Video",
+    directorId:8
   },
   {
     id: 11,
@@ -119,6 +129,7 @@ export const movies = [
     poster: "lawrence-of-arabia",
     slug: "lawrence-of-arabia",
     stream: "Amazon Prime Video",
+    directorId:9
   },
   {
     id: 12,
@@ -130,6 +141,7 @@ export const movies = [
     poster: "psycho",
     slug: "psycho",
     stream: "Peacock",
+    directorId:10
   },
   {
     id: 13,
@@ -141,6 +153,7 @@ export const movies = [
     poster: "the-lord-of-the-rings-the-return-of-the-king",
     slug: "the-lord-of-the-rings-the-return-of-the-king",
     stream: "HBO Max",
+    directorId:11
   },
   {
     id: 14,
@@ -152,6 +165,7 @@ export const movies = [
     poster: "fight-club",
     slug: "fight-club",
     stream: "Hulu",
+    directorId:12
   },
   {
     id: 15,
@@ -163,6 +177,7 @@ export const movies = [
     poster: "star-wars-episode-iv-a-new-hope",
     slug: "star-wars-episode-iv-a-new-hope",
     stream: "Disney+",
+    directorId:13
   },
   {
     id: 16,
@@ -174,6 +189,8 @@ export const movies = [
     poster: "one-flew-over-the-cuckoos-nest",
     slug: "one-flew-over-the-cuckoos-nest",
     stream: "Netflix",
+    directorId:14
+
   },
   {
     id: 17,
@@ -185,6 +202,7 @@ export const movies = [
     poster: "goodfellas",
     slug: "goodfellas",
     stream: "HBO Max",
+    directorId:15
   },
   {
     id: 18,
@@ -196,6 +214,7 @@ export const movies = [
     poster: "vertigo",
     slug: "vertigo",
     stream: "Peacock",
+    directorId:10
   },
   {
     id: 19,
@@ -207,6 +226,7 @@ export const movies = [
     poster: "the-silence-of-the-lambs",
     slug: "the-silence-of-the-lambs",
     stream: "Amazon Prime Video",
+    directorId:16
   },
   {
     id: 20,
@@ -218,6 +238,7 @@ export const movies = [
     poster: "se7en",
     slug: "se7en",
     stream: "Netflix",
+    directorId:12
   },
   {
     id: 21,
@@ -229,6 +250,7 @@ export const movies = [
     poster: "city-lights",
     slug: "city-lights",
     stream: "Amazon Prime Video",
+    directorId:17
   },
   {
     id: 22,
@@ -240,6 +262,7 @@ export const movies = [
     poster: "the-matrix",
     slug: "the-matrix",
     stream: "HBO Max",
+    directorId:18
   },
   {
     id: 23,
@@ -251,6 +274,7 @@ export const movies = [
     poster: "its-a-wonderful-life",
     slug: "its-a-wonderful-life",
     stream: "Amazon Prime Video",
+    directorId:20
   },
   {
     id: 24,
@@ -262,6 +286,7 @@ export const movies = [
     poster: "parasite",
     slug: "parasite",
     stream: "Hulu",
+    directorId:21
   },
   {
     id: 25,
@@ -273,6 +298,7 @@ export const movies = [
     poster: "sunset-boulevard",
     slug: "sunset-boulevard",
     stream: "Amazon Prime Video",
+    directorId:22
   },
   {
     id: 26,
@@ -285,6 +311,7 @@ export const movies = [
     poster: "dr-strangelove",
     slug: "dr-strangelove",
     stream: "HBO Max",
+    directorId:6
   },
   {
     id: 27,
@@ -296,6 +323,8 @@ export const movies = [
     poster: "whiplash",
     slug: "whiplash",
     stream: "Amazon Prime Video",
+    directorId:23
+
   },
   {
     id: 28,
@@ -307,6 +336,7 @@ export const movies = [
     poster: "spirited-away",
     slug: "spirited-away",
     stream: "HBO Max",
+    directorId:24
   },
   {
     id: 29,
@@ -318,6 +348,7 @@ export const movies = [
     poster: "the-pianist",
     slug: "the-pianist",
     stream: "Amazon Prime Video",
+    directorId:25
   },
   {
     id: 30,
@@ -329,6 +360,7 @@ export const movies = [
     poster: "gladiator",
     slug: "gladiator",
     stream: "Netflix",
+    directorId:26
   },
   {
     id: 31,
@@ -340,6 +372,7 @@ export const movies = [
     poster: "the-lion-king",
     slug: "the-lion-king",
     stream: "Disney+",
+    directorId:27
   },
   {
     id: 32,
@@ -351,6 +384,7 @@ export const movies = [
     poster: "american-history-x",
     slug: "american-history-x",
     stream: "Amazon Prime Video",
+    directorId:29
   },
   {
     id: 33,
@@ -362,6 +396,7 @@ export const movies = [
     poster: "the-prestige",
     slug: "the-prestige",
     stream: "HBO Max",
+    directorId:30
   },
   {
     id: 34,
@@ -373,6 +408,7 @@ export const movies = [
     poster: "grave-of-the-fireflies",
     slug: "grave-of-the-fireflies",
     stream: "Hulu",
+    directorId:31
   },
   {
     id: 35,
@@ -384,6 +420,7 @@ export const movies = [
     poster: "harakiri",
     slug: "harakiri",
     stream: "Criterion Channel",
+    directorId:32
   },
   {
     id: 36,
@@ -395,6 +432,7 @@ export const movies = [
     poster: "the-usual-suspects",
     slug: "the-usual-suspects",
     stream: "Amazon Prime Video",
+    directorId:33
   },
   {
     id: 37,
@@ -406,6 +444,8 @@ export const movies = [
     poster: "the-departed",
     slug: "the-departed",
     stream: "HBO Max",
+    directorId:15
+
   },
   {
     id: 38,
@@ -417,6 +457,8 @@ export const movies = [
     poster: "the-lives-of-others",
     slug: "the-lives-of-others",
     stream: "Amazon Prime Video",
+    directorId:34
+
   },
   {
     id: 39,
@@ -428,6 +470,7 @@ export const movies = [
     poster: "oldboy",
     slug: "oldboy",
     stream: "Netflix",
+    directorId:35
   },
   {
     id: 40,
@@ -439,6 +482,7 @@ export const movies = [
     poster: "cinema-paradiso",
     slug: "cinema-paradiso",
     stream: "Amazon Prime Video",
+    directorId:36
   },
   {
     id: 41,
@@ -450,6 +494,7 @@ export const movies = [
     poster: "amelie",
     slug: "amelie",
     stream: "HBO Max",
+    directorId:37
   },
   {
     id: 42,
@@ -461,6 +506,7 @@ export const movies = [
     poster: "the-hunt",
     slug: "the-hunt",
     stream: "Amazon Prime Video",
+    directorId:38
   },
   {
     id: 43,
@@ -472,6 +518,7 @@ export const movies = [
     poster: "pans-labyrinth",
     slug: "pans-labyrinth",
     stream: "Netflix",
+    directorId:39
   },
   {
     id: 44,
@@ -483,6 +530,7 @@ export const movies = [
     poster: "the-intouchables",
     slug: "the-intouchables",
     stream: "Amazon Prime Video",
+    directorId:40
   },
   {
     id: 45,
@@ -494,6 +542,7 @@ export const movies = [
     poster: "requiem-for-a-dream",
     slug: "requiem-for-a-dream",
     stream: "HBO Max",
+    directorId:42
   },
   {
     id: 46,
@@ -505,6 +554,7 @@ export const movies = [
     poster: "prisoners",
     slug: "prisoners",
     stream: "HBO Max",
+    directorId:43
   },
   {
     id: 47,
@@ -516,6 +566,7 @@ export const movies = [
     poster: "once-upon-a-time-in-the-west",
     slug: "once-upon-a-time-in-the-west",
     stream: "Paramount+",
+    directorId:44
   },
   {
     id: 48,
@@ -527,6 +578,7 @@ export const movies = [
     poster: "your-name",
     slug: "your-name",
     stream: "Crunchyroll",
+    directorId:45
   },
   {
     id: 49,
@@ -538,6 +590,7 @@ export const movies = [
     poster: "there-will-be-blood",
     slug: "there-will-be-blood",
     stream: "Paramount+",
+    directorId:46
   },
   {
     id: 50,
@@ -549,6 +602,7 @@ export const movies = [
     poster: "toy-story",
     slug: "toy-story",
     stream: "Disney+",
+    directorId:47
   },
   {
     id: 51,
@@ -560,6 +614,7 @@ export const movies = [
     poster: "a-clockwork-orange",
     slug: "a-clockwork-orange",
     stream: "HBO Max",
+    directorId:6
   },
   {
     id: 52,
@@ -571,6 +626,7 @@ export const movies = [
     poster: "the-good-the-bad-and-the-ugly",
     slug: "the-good-the-bad-and-the-ugly",
     stream: "Amazon Prime Video",
+    directorId:44
   },
   {
     id: 53,
@@ -582,6 +638,7 @@ export const movies = [
     poster: "alien",
     slug: "alien",
     stream: "HBO Max",
+    directorId:26
   },
   {
     id: 54,
@@ -593,6 +650,7 @@ export const movies = [
     poster: "django-unchained",
     slug: "django-unchained",
     stream: "Netflix",
+    directorId:5
   },
   {
     id: 55,
@@ -604,6 +662,7 @@ export const movies = [
     poster: "braveheart",
     slug: "braveheart",
     stream: "Paramount+",
+    directorId:48
   },
   {
     id: 56,
@@ -615,6 +674,7 @@ export const movies = [
     poster: "the-shining",
     slug: "the-shining",
     stream: "HBO Max",
+    directorId:6
   },
   {
     id: 57,
@@ -626,6 +686,7 @@ export const movies = [
     poster: "paths-of-glory",
     slug: "paths-of-glory",
     stream: "Amazon Prime Video",
+    directorId:6
   },
   {
     id: 58,
@@ -637,6 +698,7 @@ export const movies = [
     poster: "the-great-dictator",
     slug: "the-great-dictator",
     stream: "Criterion Channel",
+    directorId:17
   },
   {
     id: 59,
@@ -648,6 +710,7 @@ export const movies = [
     poster: "blade-runner",
     slug: "blade-runner",
     stream: "HBO Max",
+    directorId:26
   },
   {
     id: 60,
@@ -659,6 +722,7 @@ export const movies = [
     poster: "the-seventh-seal",
     slug: "the-seventh-seal",
     stream: "Amazon Prime Video",
+    directorId:49
   },
   {
     id: 61,
@@ -670,6 +734,7 @@ export const movies = [
     poster: "wall-e",
     slug: "wall-e",
     stream: "Disney+",
+    directorId:50
   },
   {
     id: 62,
@@ -681,6 +746,7 @@ export const movies = [
     poster: "the-grand-budapest-hotel",
     slug: "the-grand-budapest-hotel",
     stream: "Disney+",
+    directorId:51
   },
   {
     id: 63,
@@ -692,6 +758,7 @@ export const movies = [
     poster: "inception",
     slug: "inception",
     stream: "Netflix",
+    directorId:30
   },
   {
     id: 64,
@@ -703,6 +770,7 @@ export const movies = [
     poster: "forrest-gump",
     slug: "forrest-gump",
     stream: "Paramount+",
+    directorId:52
   },
   {
     id: 65,
@@ -714,6 +782,7 @@ export const movies = [
     poster: "joker",
     slug: "joker",
     stream: "HBO Max",
+    directorId:53
   },
   {
     id: 66,
@@ -725,6 +794,7 @@ export const movies = [
     poster: "rashomon",
     slug: "rashomon",
     stream: "Criterion Channel",
+    directorId:54
   },
   {
     id: 67,
@@ -736,6 +806,7 @@ export const movies = [
     poster: "ikiru",
     slug: "ikiru",
     stream: "Criterion Channel",
+    directorId:54
   },
   {
     id: 68,
@@ -747,6 +818,7 @@ export const movies = [
     poster: "leon-the-professional",
     slug: "leon-the-professional",
     stream: "Amazon Prime Video",
+    directorId:55
   },
   {
     id: 69,
@@ -758,6 +830,7 @@ export const movies = [
     poster: "inglourious-basterds",
     slug: "inglourious-basterds",
     stream: "Netflix",
+    directorId:5
   },
   {
     id: 70,
@@ -769,6 +842,7 @@ export const movies = [
     poster: "la-la-land",
     slug: "la-la-land",
     stream: "Netflix",
+    directorId:23
   },
   {
     id: 71,
@@ -780,6 +854,7 @@ export const movies = [
     poster: "the-wolf-of-wall-street",
     slug: "the-wolf-of-wall-street",
     stream: "Netflix",
+    directorId:15
   },
   {
     id: 72,
@@ -791,6 +866,7 @@ export const movies = [
     poster: "titanic",
     slug: "titanic",
     stream: "Disney+",
+    directorId:56
   },
   {
     id: 73,
@@ -802,6 +878,7 @@ export const movies = [
     poster: "the-truman-show",
     slug: "the-truman-show",
     stream: "Paramount+",
+    directorId:57
   },
   {
     id: 74,
@@ -813,6 +890,7 @@ export const movies = [
     poster: "bicycle-thieves",
     slug: "bicycle-thieves",
     stream: "Criterion Channel",
+    directorId:58
   },
   {
     id: 75,
@@ -824,6 +902,7 @@ export const movies = [
     poster: "the-apartment",
     slug: "the-apartment",
     stream: "Amazon Prime Video",
+    directorId:27
   },
   {
     id: 76,
@@ -835,6 +914,7 @@ export const movies = [
     poster: "singin-in-the-rain",
     slug: "singin-in-the-rain",
     stream: "HBO Max",
+    directorId:59
   },
   {
     id: 77,
@@ -846,6 +926,7 @@ export const movies = [
     poster: "heat",
     slug: "heat",
     stream: "Netflix",
+    directorId:61
   },
   {
     id: 78,
@@ -857,6 +938,7 @@ export const movies = [
     poster: "the-maltese-falcon",
     slug: "the-maltese-falcon",
     stream: "HBO Max",
+    directorId:62
   },
   {
     id: 79,
@@ -868,6 +950,7 @@ export const movies = [
     poster: "fargo",
     slug: "fargo",
     stream: "Hulu",
+    directorId:63
   },
   {
     id: 80,
@@ -879,6 +962,7 @@ export const movies = [
     poster: "persona",
     slug: "persona",
     stream: "Criterion Channel",
+    directorId:49
   },
   {
     id: 81,
@@ -890,6 +974,7 @@ export const movies = [
     poster: "double-indemnity",
     slug: "double-indemnity",
     stream: "Amazon Prime Video",
+    directorId:22
   },
   {
     id: 82,
@@ -901,6 +986,7 @@ export const movies = [
     poster: "the-handmaiden",
     slug: "the-handmaiden",
     stream: "Amazon Prime Video",
+    directorId:35
   },
   {
     id: 83,
@@ -912,6 +998,7 @@ export const movies = [
     poster: "network",
     slug: "network",
     stream: "HBO Max",
+    directorId:8
   },
   {
     id: 84,
@@ -923,6 +1010,7 @@ export const movies = [
     poster: "a-separation",
     slug: "a-separation",
     stream: "Netflix",
+    directorId:65
   },
   {
     id: 85,
@@ -934,6 +1022,7 @@ export const movies = [
     poster: "manchester-by-the-sea",
     slug: "manchester-by-the-sea",
     stream: "Amazon Prime Video",
+    directorId:66
   },
   {
     id: 86,
@@ -945,6 +1034,8 @@ export const movies = [
     poster: "the-big-lebowski",
     slug: "the-big-lebowski",
     stream: "Peacock",
+    directorId:63
+    
   },
   {
     id: 87,
@@ -956,6 +1047,7 @@ export const movies = [
     poster: "barry-lyndon",
     slug: "barry-lyndon",
     stream: "HBO Max",
+    directorId:6
   },
   {
     id: 88,
@@ -967,6 +1059,7 @@ export const movies = [
     poster: "arrival",
     slug: "arrival",
     stream: "Paramount+",
+    directorId:43
   },
   {
     id: 89,
@@ -978,6 +1071,7 @@ export const movies = [
     poster: "gone-with-the-wind",
     slug: "gone-with-the-wind",
     stream: "HBO Max",
+    directorId:8
   },
   {
     id: 90,
@@ -989,6 +1083,7 @@ export const movies = [
     poster: "the-bridge-on-the-river-kwai",
     slug: "the-bridge-on-the-river-kwai",
     stream: "Amazon Prime Video",
+    directorId:9
   },
   {
     id: 91,
@@ -1000,6 +1095,7 @@ export const movies = [
     poster: "the-best-years-of-our-lives",
     slug: "the-best-years-of-our-lives",
     stream: "Amazon Prime Video",
+    directorId:68
   },
   {
     id: 92,
@@ -1011,6 +1107,7 @@ export const movies = [
     poster: "her",
     slug: "her",
     stream: "Netflix",
+    directorId:69
   },
   {
     id: 93,
@@ -1022,6 +1119,7 @@ export const movies = [
     poster: "the-elephant-man",
     slug: "the-elephant-man",
     stream: "Amazon Prime Video",
+    directorId:70
   },
   {
     id: 94,
@@ -1033,6 +1131,7 @@ export const movies = [
     poster: "my-neighbor-totoro",
     slug: "my-neighbor-totoro",
     stream: "Netflix",
+    directorId:24
   },
   {
     id: 95,
@@ -1044,6 +1143,7 @@ export const movies = [
     poster: "come-and-see",
     slug: "come-and-see",
     stream: "Criterion Channel",
+    directorId:71
   },
   {
     id: 96,
@@ -1055,6 +1155,7 @@ export const movies = [
     poster: "roma",
     slug: "roma",
     stream: "Netflix",
+    directorId:72
   },
   {
     id: 97,
@@ -1066,6 +1167,7 @@ export const movies = [
     poster: "dune",
     slug: "dune-2021",
     stream: "HBO Max",
+    directorId:43
   },
   {
     id: 98,
@@ -1077,6 +1179,7 @@ export const movies = [
     poster: "slumdog-millionaire",
     slug: "slumdog-millionaire",
     stream: "Amazon Prime Video",
+    directorId:73
   },
   {
     id: 99,
@@ -1088,6 +1191,7 @@ export const movies = [
     poster: "the-irishman",
     slug: "the-irishman",
     stream: "Netflix",
+    directorId:15
   },
   {
     id: 100,
@@ -1099,6 +1203,7 @@ export const movies = [
     poster: "the-social-network",
     slug: "the-social-network",
     stream: "Hulu",
+    directorId:12
   },
   {
     id: 101,
@@ -1109,7 +1214,9 @@ export const movies = [
     summary: 'A group of young cadets at a Peruvian military academy form an inner circle to escape boredom and the strict rules — but a robbery leads to a murder, exposing brutality, corruption and class tension. The film is based on Mario Vargas Llosa’s novel The Time of the Hero.',
     poster: '/movies/the-city-and-the-dogs.jpg',
     slug: 'the-city-and-the-dogs',
-    stream: ''
+    stream: '',
+    directorId:74
+
   },
   {
     id: 102,

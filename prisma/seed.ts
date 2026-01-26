@@ -16,16 +16,36 @@ import {
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log(Object.keys(prisma).filter(k => !k.startsWith('$')).sort());
+
   await prisma.book.deleteMany();
   await prisma.relatedBook.deleteMany
   await prisma.booksWriters.deleteMany()
   await prisma.relatedWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
-  await prisma.moviesDirectors.deleteMany();
+  // await prisma.moviesDirectors.deleteMany();
   await prisma.genre.deleteMany();
   await prisma.director.deleteMany();
   await prisma.movie.deleteMany();
   await prisma.writer.deleteMany();
+  
+   async function insertDirector() {
+    for (const director of directors) {
+      await prisma.director.create({
+        data: {
+          id: director.id,
+          name: director.name,
+          last_name: director.last_name,
+          description: director.description,
+          picture_url: director.picture_url,
+          country: director.country,
+          slug: director.slug,
+        },
+      });
+    }
+  }
+
+  await insertDirector();
 
   async function insertMovie() {
     for (const movie of movies) {
@@ -42,6 +62,7 @@ async function main() {
           poster: movie.poster,
           slug: movie.slug,
           stream: movie.stream,
+         directorId:movie.directorId
         },
       });
     }
@@ -125,23 +146,7 @@ async function main() {
 
   await insertWriter();
 
-  async function insertDirector() {
-    for (const director of directors) {
-      await prisma.director.create({
-        data: {
-          id: director.id,
-          name: director.name,
-          last_name: director.last_name,
-          description: director.description,
-          picture_url: director.picture_url,
-          country: director.country,
-          slug: director.slug,
-        },
-      });
-    }
-  }
-
-  await insertDirector();
+ 
 
   async function insertGenre() {
     for (const genre of genres) {
@@ -182,18 +187,18 @@ async function main() {
 
   insertRelatedWriters()
 
-  async function insertMovieDirector() {
-    for (const moviesDirector of moviesDirectors) {
-      await prisma.moviesDirectors.create({
-        data: {
-          movie_id: moviesDirector.movie_id,
-          director_id: moviesDirector.director_id,
-        },
-      });
-    }
-  }
+  // async function insertMovieDirector() {
+  //   for (const moviesDirector of moviesDirectors) {
+  //     await prisma.moviesDirectors.create({
+  //       data: {
+  //         movie_id: moviesDirector.movie_id,
+  //         director_id: moviesDirector.director_id,
+  //       },
+  //     });
+  //   }
+  // }
 
-  await insertMovieDirector();
+  // await insertMovieDirector();
 
   async function insertMovieGenre() {
     for (const moviesGenre of moviesGenres) {

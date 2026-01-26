@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 import { error } from "console";
 import { directors } from "../../../../../prisma/data/Directors";
-import { MovieWithDirectors } from "../../../../../prisma/types";
+import { MovieWithDirector } from "../../../../../prisma/types";
 
 
 export async function GET(req:NextRequest,{params}:{params:{id:string}}){
@@ -11,23 +11,13 @@ try {
    
     const movie = await prisma.movie.findUnique({
         where:{id},
-        include:{directors:{include:{director:{include:{movies:{include:{movie:true}}}}}}
-            
-        }
+        include:{director:{include:{movies:true}}}
     })
     if(!movie){
         return NextResponse.json({error:'there is no such a movie'},{status:404})
     }
-        const flattenedMovie:MovieWithDirectors ={
-            ...movie,
-           directors:{
-            ...movie.directors[0].director,
-            movies:movie.directors[0].director.movies.map((m)=>m.movie
-        )
-           }
-        }
-        
-    return NextResponse.json(flattenedMovie)
+       
+    return NextResponse.json(movie)
 
 
 } catch (error) {

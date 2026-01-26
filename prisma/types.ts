@@ -1,4 +1,4 @@
-import { Book, BooksWriters, Director, Movie, Writer } from "@prisma/client";
+import { Book, BooksWriters, Director, Movie, Prisma, Writer } from "@prisma/client";
 
 export type RelatedBookExtended = Book & {
   writer: Writer;
@@ -26,15 +26,15 @@ export type WriterWithBooks = Writer &{
   relatedWriters:Writer[]
 }
 
-export type MovieWithDirectors = Movie&{
-  directors:Director&{
-    movies:Movie[]
-  }
-}
+export type MovieWithDirector = Prisma.MovieGetPayload<{
+  include: { director: { include: { movies: true } } };
+}>;
+export type DirectorWithMovies= Prisma.DirectorGetPayload<{
+  include:{movies:true}
+}>
+
 export type MoviesDirector = Movie&({
   director:Director
 })[]
-export type MoviesWithDirectors = MovieWithDirectors[]
-export type DirectorWithMovies =Director&{
-  movies:Movie[]
-}
+// export type MoviesWithDirectors = MovieWithDirectors[]
+

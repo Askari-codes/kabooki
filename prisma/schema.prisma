@@ -46,7 +46,8 @@ model Movie {
   poster               String
   slug                 String               @unique
   stream               String
-  directors            MoviesDirectors[]
+  directorId           Int?
+  director             Director?             @relation(fields: [directorId], references: [id], onDelete: Restrict)
   user_favorite_movies UserFavoriteMovies[]
   MovieGenre           MoviesGenres[]
   bookMovies           BookMovies[]  
@@ -96,14 +97,7 @@ model MoviesGenres {
   @@id([movie_id, genre_id])
 }
 
-model MoviesDirectors {
-  movie       Movie    @relation(fields: [movie_id], references: [id])
-  movie_id    Int
-  director    Director @relation(fields: [director_id], references: [id])
-  director_id Int
 
-  @@id([movie_id, director_id])
-}
 
 model Director {
   id          Int               @id @default(autoincrement())
@@ -113,7 +107,7 @@ model Director {
   picture_url String?           @db.VarChar(255)
   country     String
   slug        String            @unique(map: "Director_slug_key") @db.VarChar(255)
-  movies      MoviesDirectors[]
+  movies      Movie[]
 }
 
 model Writer {

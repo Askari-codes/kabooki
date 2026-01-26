@@ -1,6 +1,6 @@
 import {  Container,} from "@radix-ui/themes";
 import {  BooksWriters, Writer, Movie, Book, Director,  } from "@prisma/client";
-import { MoviesDirector, MoviesWithDirectors, MovieWithDirectors, RelatedBookExtended } from "../../../../prisma/types";
+import { MoviesDirector, MoviesWithDirectors, MovieWithDirectors, newType, RelatedBookExtended } from "../../../../prisma/types";
 import { BookWithWriters} from "../../../../prisma/types";
 import axios from "axios";
 import BookProfile from "./BookProfile";
@@ -18,7 +18,7 @@ const BookPage = async ({ params }: { params: { id: string } }) => {
  
  const relatedBooks:RelatedBookExtended[] = bookWithWriters.relatedFrom.map((book)=>(book))
  const moviesWithDirectors:MoviesDirector= bookWithWriters.bookMovies
- const movies:Movie[] = moviesWithDirectors.map(({director,...movie})=>movie)
+ const movies:newType= moviesWithDirectors.map(({director,...movie})=>movie)
 
  const director:Director = moviesWithDirectors[0].director
  

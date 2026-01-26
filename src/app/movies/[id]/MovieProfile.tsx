@@ -5,17 +5,16 @@ import Seprator from "@/app/components/Seprator";
 import Image from "next/image";
 import TextWithLinks from '@/app/components/TextWithLinks';
 import { Director, Movie } from '@prisma/client';
-import { MovieWithDirectors } from '../../../../prisma/types';
+import { MovieWithDirector} from '../../../../prisma/types';
 
 interface Props{
-    movie:MovieWithDirectors
-    director:Director
+    movie:MovieWithDirector
 }
 
-const MovieProfile = ({movie,director}:Props) => {
+const MovieProfile = ({movie}:Props) => {
 
   useEffect(()=>{
-    console.log(`/movies/${director.slug}/${movie.poster}`)
+    console.log(`/movies/${movie.director!.slug}/${movie.poster}`)
   },[])
   return (
    <Container>
@@ -27,7 +26,7 @@ const MovieProfile = ({movie,director}:Props) => {
           height={400}
           style={{ width: 400, height: 400, objectFit: "cover" }}
           alt={movie.title}
-          src={`/movies/${director.slug}/${movie.poster}.jpg`}
+          src={`/movies/${movie.director!.slug}/${movie.poster}.jpg`}
         />
         {/* {!bookWithWriters.min_price?<Button  variant="solid"><Link className="cursor-pointer text-white"  href={`${bookWithWriters.pdf_url}`}> Download</Link></Button>:null} */}
        </Flex>
