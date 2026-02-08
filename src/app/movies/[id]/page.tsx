@@ -2,7 +2,6 @@ import React from "react";
 import MovieProfile from "./MovieProfile";
 import axios from "axios";
 import {
-  DirectorWithMovies,
   MovieWithDirector,
 } from "../../../../prisma/types";
 import BestMovies from "./BestMovies";
@@ -15,12 +14,12 @@ const MoviePage = async ({ params }: Props) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies/${movieId}`,
   );
   const movieWithDirector:MovieWithDirector = movieInformation.data
-  const directorWithMovies:DirectorWithMovies|null = movieWithDirector.director!
+  console.log('director with...',movieWithDirector)
 
   return (
     <>
       <MovieProfile movie={movieWithDirector} />
-      <BestMovies directorWithMovies={directorWithMovies}/>
+      <BestMovies movieId={movieId} movieWithDirector={movieWithDirector}/>
     
     </>
   );

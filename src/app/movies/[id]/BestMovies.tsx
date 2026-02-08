@@ -1,19 +1,27 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import { Container } from '@radix-ui/themes'
 import { Director, Movie } from '@prisma/client'
 import MovieCarousel from '../MovieCarousel'
-import { DirectorWithMovies } from '../../../../prisma/types'
+import {  MovieCardPayload, MovieWithDirector } from '../../../../prisma/types'
 interface Props{
-   directorWithMovies:DirectorWithMovies
+   movieWithDirector:MovieWithDirector
+   movieId:number
 }
 
-const BestMovies = ({directorWithMovies}:Props) => {
-  const {movies,...director} =directorWithMovies
+const BestMovies = ({movieWithDirector,movieId}:Props) => {
   
+  
+  const bestMovies:MovieCardPayload[] = movieWithDirector.director!.movies.filter((m:Movie)=>m.id!=movieId)
+
+  useEffect(()=>{
+    console.log('movies',bestMovies)
+    console.log('director',bestMovies)
+  },[])
   
   return (
     <Container>
-        <MovieCarousel director={director} movies={movies} title={`Best ${director.name} ${director.last_name} movies`}/>
+        <MovieCarousel  movies={bestMovies} title={`Best ${movieWithDirector.director!.name} ${movieWithDirector.director!.last_name} movies`}/>
     </Container>
   )
 }

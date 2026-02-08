@@ -4,15 +4,16 @@ import React from 'react'
 import { chunkArray } from '../utilities/services'
 import { Swiper, SwiperSlide } from "swiper/react";
 import MovieCard from './MovieCard';
+import {MovieCardPayload, MovieWithDirector } from '../../../prisma/types';
 
 
 
 interface Props{
-    movies:Movie[]
-    director:Director
+    movies:MovieWithDirector[]|MovieCardPayload[]
+   
 }
 
-const MovieSwiper = ({movies,director}:Props) => {
+const MovieSwiper = ({movies}:Props) => {
   const chunkedMovies =  chunkArray(movies,10)
   const fristArray = chunkedMovies[0]
   
@@ -34,7 +35,7 @@ const MovieSwiper = ({movies,director}:Props) => {
         >
           {fristArray.map((movie) => (
             <SwiperSlide className="p-5 " key={movie.id}>
-             <MovieCard director={director} movie={movie}/>
+             <MovieCard  movie={movie}/>
             </SwiperSlide>
           ))}
         </Swiper>

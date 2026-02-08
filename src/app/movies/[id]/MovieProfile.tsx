@@ -13,9 +13,7 @@ interface Props{
 
 const MovieProfile = ({movie}:Props) => {
 
-  useEffect(()=>{
-    console.log(`/movies/${movie.director!.slug}/${movie.poster}`)
-  },[])
+ 
   return (
    <Container>
     <Flex>

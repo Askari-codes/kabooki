@@ -1227,7 +1227,10 @@ export const movies = [
     summary: 'Captain Pantaleón Pantoja, a disciplined army officer, is ordered to create a secret brothel for soldiers in remote jungle outposts — a bureaucratic, absurd and darkly comic mission. Based on Mario Vargas Llosa’s novel ‘Pantaleón y las visitadoras’.',
     poster: '/movies/captain-pantoja-and-the-special-services.jpg',
     slug: 'captain-pantoja-and-the-special-services',
-    stream: ''
+    stream: '',
+    directorId:74
+    
+
   },
   {
     id: 103,
@@ -1238,7 +1241,8 @@ export const movies = [
     summary: 'An offbeat romantic comedy about a young man working at a radio station who falls in love with his aunt — a love that spirals into chaos when their relationship becomes part of the radio soap opera he writes for. This film adapts Mario Vargas Llosa’s novel ‘Aunt Julia and the Scriptwriter’.',
     poster: '/movies/tune-in-tomorrow.jpg',
     slug: 'tune-in-tomorrow',
-    stream: ''
+    stream: '',
+    directorId:75
   },
   {
     id: 104,
@@ -1249,7 +1253,8 @@ export const movies = [
     summary: 'A dramatic political thriller exploring the last days of a brutal dictatorship — a woman returns to her homeland to confront her past under the regime of a tyrannical ruler. The film is based on Mario Vargas Llosa’s novel of the same name.',
     poster: '/movies/the-feast-of-the-goat.jpg',
     slug: 'the-feast-of-the-goat',
-    stream: ''
+    stream: '',
+    directorId:76
   }
 ];
 

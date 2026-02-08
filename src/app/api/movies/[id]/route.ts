@@ -11,7 +11,7 @@ try {
    
     const movie = await prisma.movie.findUnique({
         where:{id},
-        include:{director:{include:{movies:true}}}
+        include:{director:{include:{movies:{include:{director:true}}}}}
     })
     if(!movie){
         return NextResponse.json({error:'there is no such a movie'},{status:404})

@@ -739,6 +739,26 @@ export const directors = [
   picture_url: "francisco-lombardi",
   country: "Peru",
   slug: "francisco-lombardi",
+},
+{
+  id: 75,
+  name: "Jon",
+  last_name: "Amiel",
+  description:
+    "Jon Amiel is a British film director known for directing films such as 'Entrapment', 'The Core', 'Copycat', and 'Sommersby'. His work often spans thriller and drama genres with a strong focus on character and suspense.",
+  picture_url: "jon-amiel",
+  country: "UK",
+  slug: "jon-amiel",
+},
+{
+  id: 76,
+  name: "Luis",
+  last_name: "Llosa",
+  description:
+    "Luis Llosa is a Peruvian film director, producer, and screenwriter, best known for directing adventure and action films such as 'Anaconda' and 'The Specialist'. He has worked extensively in international cinema, particularly in Hollywood productions during the 1990s.",
+  picture_url: "luis-llosa",
+  country: "Peru",
+  slug: "luis-llosa",
 }
 
 ];

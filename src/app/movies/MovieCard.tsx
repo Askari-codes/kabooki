@@ -4,13 +4,18 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { Director, Movie } from "@prisma/client";
 import StarRating from "../components/StarRating";
+import {  MovieCardPayload, MovieWithDirector } from "../../../prisma/types";
 
 interface Props {
-  movie: Movie
-  director:Director
+  movie: MovieWithDirector|MovieCardPayload
+  
 }
 
-const MovieCard = ({ movie,director }: Props) => {
+const MovieCard = ({ movie }: Props) => {
+  // useEffect(()=>{
+  //   console.log(`/movies/${movie.director?.slug}/${movie.poster}.jpg`)
+  //   console.log(movie)
+  // },[])
  
 
   return (
@@ -33,7 +38,7 @@ const MovieCard = ({ movie,director }: Props) => {
           <Image
             width={300}
             height={200}
-            src={`/movies/${director.slug}/${movie.poster}.jpg`}
+            src={`/movies/${movie.director?.slug}/${movie.poster}.jpg`}
             alt={movie.title}
             style={{
               objectFit: "cover",

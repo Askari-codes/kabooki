@@ -22,19 +22,50 @@ export type BookWithWriters = Book & {
 };
 
 export type WriterWithBooks = Writer &{
-  books:(Book&{movies:Movie[]})[],
+  books:(Book&{movies:MovieWithDirector[]})[],
   relatedWriters:Writer[]
 }
 
 export type MovieWithDirector = Prisma.MovieGetPayload<{
-  include: { director: { include: { movies: true } } };
+  include: { director: { include: { movies:{include:{director:true}} } } };
 }>;
-export type DirectorWithMovies= Prisma.DirectorGetPayload<{
-  include:{movies:true}
-}>
+export type MovieCardPayload = Prisma.MovieGetPayload<{
+  select: {
+    id: true;
+    title: true;
+    poster: true;
+    rating: true;
+    director: { select: { slug: true } };
+  };
+}>;
+export type WriterData = Prisma.WriterGetPayload<{
+  include: {
+    books: {
+      include: {
+        book: {
+          include: {
+            bookMovies: {
+              include: {
+                movie: {
+                  include: {
+                    director: { include: { movies: true } };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    writerRelations1: { include: { writer2: true } };
+  };
+}>;
+
+
 
 export type MoviesDirector = Movie&({
   director:Director
 })[]
+
 // export type MoviesWithDirectors = MovieWithDirectors[]
 

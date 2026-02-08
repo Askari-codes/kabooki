@@ -23,10 +23,9 @@ async function main() {
   await prisma.booksWriters.deleteMany()
   await prisma.relatedWriters.deleteMany()
   await prisma.moviesGenres.deleteMany();
-  // await prisma.moviesDirectors.deleteMany();
   await prisma.genre.deleteMany();
-  await prisma.director.deleteMany();
   await prisma.movie.deleteMany();
+  await prisma.director.deleteMany();
   await prisma.writer.deleteMany();
   
    async function insertDirector() {

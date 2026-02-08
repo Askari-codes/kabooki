@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
+import { MovieWithDirector,WriterData } from "../../../../../prisma/types";
 
 interface Props {
   params: { id: string };
@@ -12,21 +13,29 @@ export async function GET(req: NextRequest, { params }: Props) {
     throw new Error("Invalid writer ID");
   }
   try {
-    const writerData = await prisma.writer.findUnique({
-      where: { id },
+    const writerData: WriterData | null = await prisma.writer.findUnique({
+  where: { id },
+  include: {
+    books: {
       include: {
-        books: {
+        book: {
           include: {
-            book:{
-              include:{bookMovies:{include:{movie:true}}}
-            }
+            bookMovies: {
+              include: {
+                movie: {
+                  include: {
+                    director: { include: { movies: true } },
+                  },
+                },
+              },
+            },
           },
         },
-        writerRelations1:{include:{writer2:true}},
-       
       },
-     
-    });
+    },
+    writerRelations1: { include: { writer2: true } },
+  },
+});
    
     if (!writerData) return NextResponse.json({ error: "Not found" }, { status: 404 });
     const relatedWriters = [
@@ -39,7 +48,7 @@ export async function GET(req: NextRequest, { params }: Props) {
       relatedWriters: relatedWriters,
      books: writerData.books.map((bw) => {
     // Extract the movie data from the join table (bookMovies)
-    const flattenedMovies = bw.book.bookMovies.map((bm) => bm.movie);
+    const flattenedMovies:MovieWithDirector[] = bw.book.bookMovies.map((bm) => bm.movie);
 
     // Create a new book object
     return {
@@ -60,7 +69,6 @@ export async function GET(req: NextRequest, { params }: Props) {
   }),
   
 };
-
   
     return NextResponse.json(result);
   } catch (error) {
