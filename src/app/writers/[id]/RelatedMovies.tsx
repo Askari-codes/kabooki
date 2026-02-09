@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect } from "react";
 import { Container } from "@radix-ui/themes";
-import { Movie, Writer } from "@prisma/client";
 import MovieCarousel from "@/app/movies/MovieCarousel";
 import Seprator from "@/app/components/Seprator";
 import { MovieWithDirector } from "../../../../prisma/types";
@@ -11,9 +10,9 @@ interface Props {
 }
 
 const RelatedMovies = ({ MoviesWithDirector, writerName }: Props) => {
-  useEffect(()=>{
-    console.log(MoviesWithDirector)
-  },[])
+  // useEffect(()=>{
+  //   console.log(MoviesWithDirector)
+  // },[])
   return (
     <Container className="font-serif">
       <MovieCarousel

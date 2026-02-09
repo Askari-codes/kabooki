@@ -12,10 +12,10 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
-  // useEffect(()=>{
-  //   console.log(`/movies/${movie.director?.slug}/${movie.poster}.jpg`)
-  //   console.log(movie)
-  // },[])
+  useEffect(()=>{
+    console.log(`/movies/${movie.director?.slug}/${movie.poster}`)
+    console.log(movie)
+  },[])
  
 
   return (
@@ -38,7 +38,7 @@ const MovieCard = ({ movie }: Props) => {
           <Image
             width={300}
             height={200}
-            src={`/movies/${movie.director?.slug}/${movie.poster}.jpg`}
+            src={`/movies/${movie.director!.slug}/${movie.poster}.jpg`}
             alt={movie.title}
             style={{
               objectFit: "cover",
