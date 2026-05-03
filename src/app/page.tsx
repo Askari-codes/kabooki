@@ -33,7 +33,7 @@ export default async function Home() {
     <Container>
       <NavbarWrapper />
       <WriterSection writers={writers} />
-      <MovieSection movies={movies} />
+      {/* <MovieSection movies={movies} /> */}
       {/* <BookSection books={books}/> */}
     </Container>
   );

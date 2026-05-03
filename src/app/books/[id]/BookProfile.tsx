@@ -14,8 +14,8 @@ export interface Props {
 const BookProfile = ({ bookWithWriters }: Props) => {
   
 const books:Book[]= bookWithWriters.writer!.books.filter((b)=>b.id!==bookWithWriters.id)
-const writer:Writer = bookWithWriters.writer!  
-const writers:Writer[] = [writer]
+const writer:Writer = bookWithWriters.writer!
+const writers:Writer[] = [writer, ...bookWithWriters.writer!.relatedWriters]
 
 
 

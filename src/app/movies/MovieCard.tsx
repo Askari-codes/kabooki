@@ -1,8 +1,7 @@
-import { Box, Flex, AspectRatio, Text, Badge } from "@radix-ui/themes";
+import {Flex, AspectRatio, Text, Badge } from "@radix-ui/themes";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { Director, Movie } from "@prisma/client";
 import StarRating from "../components/StarRating";
 import {  MovieCardPayload, MovieWithDirector } from "../../../prisma/types";
 
@@ -12,10 +11,6 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
-  useEffect(()=>{
-    console.log(`/movies/${movie.director?.slug}/${movie.poster}`)
-    console.log(movie)
-  },[])
  
 
   return (

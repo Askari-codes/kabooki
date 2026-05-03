@@ -21,13 +21,16 @@ export async function GET(
                     book: true,
                   },
                 },
+                writerRelations1: {
+                  include: { writer2: true },
+                },
               },
             },
           },
         },
         bookMovies: {
           include: {
-            movie: {include:{directors:{include:{director:true}}}},
+            movie: {include:{director:true}},
           },
         },
         relatedFrom: {
@@ -45,13 +48,14 @@ export async function GET(
     ? {
         ...book.writers[0].writer,
         books: book.writers[0].writer.books.map((b) => b.book),
+        relatedWriters: book.writers[0].writer.writerRelations1.map((r) => r.writer2),
       }
     : null,
 
   // 2. Movie flattening
   bookMovies: book.bookMovies.map((bm) => ({
     ...bm.movie,
-    directors: bm.movie.directors[0].director,
+    director: bm.movie.director,
   })),
 
   // 3. UPDATED: Related books flattening
