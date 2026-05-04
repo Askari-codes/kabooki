@@ -107,7 +107,8 @@ model Director {
   picture_url String?           @db.VarChar(255)
   country     String
   slug        String            @unique(map: "Director_slug_key") @db.VarChar(255)
-  movies      Movie[]
+  movies               Movie[]
+  user_favorite_directors UserFavoriteDirectors[]
 }
 
 model Writer {
@@ -122,10 +123,11 @@ model Writer {
   books      BooksWriters[]
 
   // Reverse relation to RelatedWriters for writer1
-  writerRelations1 RelatedWriters[] @relation("WriterRelationsFromWriter1")
+  writerRelations1      RelatedWriters[]       @relation("WriterRelationsFromWriter1")
 
   // Reverse relation to RelatedWriters for writer2
-  writerRelations2 RelatedWriters[] @relation("WriterRelationsFromWriter2")
+  writerRelations2      RelatedWriters[]       @relation("WriterRelationsFromWriter2")
+  user_favorite_writers UserFavoriteWriters[]
 }
 
 model RelatedWriters {
@@ -161,13 +163,26 @@ model Host {
 }
 
 model User {
-  id                     Int                    @id @default(autoincrement())
-  user_name              String                 @unique()
-  email                  String
-  image                  String?
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  username    String   @unique @db.VarChar(50)
+  email       String   @unique @db.VarChar(255)
+  password    String   @db.VarChar(255)
+  avatar      String?  @db.VarChar(255)
+  bio         String?  @db.Text
+  location    String?  @db.VarChar(100)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  followers             Follow[]              @relation("Following")
+  following             Follow[]              @relation("Follower")
   user_favorite_books    UserFavoriteBooks[]
   user_favorite_podcasts UserFavoritePodcasts[]
   user_favorite_movies   UserFavoriteMovies[]
+  user_favorite_writers  UserFavoriteWriters[]
+  user_favorite_directors UserFavoriteDirectors[]
+
+  @@map("users")
 }
 
 model UserFavoriteBooks {
@@ -202,4 +217,43 @@ model UserFavoriteMovies {
   movie_id Int
   user     User    @relation(fields: [user_id], references: [id])
   movie    Movie   @relation(fields: [movie_id], references: [id])
+}
+model UserFavoriteWriters {
+  id        Int     @id @default(autoincrement())
+  rating    Float?
+  comment   String? @db.Text
+  user_id   Int
+  writer_id Int
+
+  user      User    @relation(fields: [user_id],   references: [id], onDelete: Cascade)
+  writer    Writer  @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, writer_id])
+  @@map("user_favorite_writers")
+}
+
+model UserFavoriteDirectors {
+  id          Int     @id @default(autoincrement())
+  rating      Float?
+  comment     String? @db.Text
+  user_id     Int
+  director_id Int
+
+  user        User     @relation(fields: [user_id],     references: [id], onDelete: Cascade)
+  director    Director @relation(fields: [director_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, director_id])
+  @@map("user_favorite_directors")
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+
+  follower    User     @relation("Follower",  fields: [followerId],  references: [id], onDelete: Cascade)
+  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
