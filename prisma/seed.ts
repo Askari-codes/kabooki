@@ -10,7 +10,11 @@ import {
   booksWriters,
   relatedWriters,
   bookMovies,
-  bookRelatedToOtherBooks
+  bookRelatedToOtherBooks,
+  users,
+  userFavoriteBooks,
+  userFavoriteWriters,
+  userFavoriteMovies,
 } from "./data/Data";
 
 const prisma = new PrismaClient();
@@ -18,6 +22,13 @@ const prisma = new PrismaClient();
 async function main() {
   console.log(Object.keys(prisma).filter(k => !k.startsWith('$')).sort());
 
+  await prisma.follow.deleteMany();
+  await prisma.userFavoriteBooks.deleteMany();
+  await prisma.userFavoriteMovies.deleteMany();
+  await prisma.userFavoritePodcasts.deleteMany();
+  await prisma.userFavoriteWriters.deleteMany();
+  await prisma.userFavoriteDirectors.deleteMany();
+  await prisma.user.deleteMany();
   await prisma.book.deleteMany();
   await prisma.relatedBook.deleteMany
   await prisma.booksWriters.deleteMany()
@@ -185,6 +196,79 @@ async function main() {
   }
 
   insertRelatedWriters()
+
+  async function insertUsers() {
+    for (const user of users) {
+      await prisma.user.upsert({
+        where: { username: user.username },
+        update: {},
+        create: {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          avatar: user.avatar,
+          bio: user.bio,
+          location: user.location,
+        },
+      });
+    }
+  }
+
+  await insertUsers();
+
+  async function insertUserFavoriteBooks() {
+    for (const item of userFavoriteBooks) {
+      await prisma.userFavoriteBooks.upsert({
+        where: { user_Id_book_Id: { user_Id: item.user_Id, book_Id: item.book_Id } },
+        update: {},
+        create: {
+          id: item.id,
+          user_Id: item.user_Id,
+          book_Id: item.book_Id,
+          rating: item.rating,
+          comment: item.comment,
+        },
+      });
+    }
+  }
+
+  await insertUserFavoriteBooks();
+
+  async function insertUserFavoriteWriters() {
+    for (const item of userFavoriteWriters) {
+      await prisma.userFavoriteWriters.upsert({
+        where: { user_id_writer_id: { user_id: item.user_id, writer_id: item.writer_id } },
+        update: {},
+        create: {
+          id: item.id,
+          user_id: item.user_id,
+          writer_id: item.writer_id,
+          rating: item.rating,
+          comment: item.comment,
+        },
+      });
+    }
+  }
+
+  await insertUserFavoriteWriters();
+
+  async function insertUserFavoriteMovies() {
+    for (const item of userFavoriteMovies) {
+      await prisma.userFavoriteMovies.create({
+        data: {
+          id: item.id,
+          user_id: item.user_id,
+          movie_id: item.movie_id,
+          rating: item.rating,
+          comment: item.comment,
+        },
+      });
+    }
+  }
+
+  await insertUserFavoriteMovies();
 
   // async function insertMovieDirector() {
   //   for (const moviesDirector of moviesDirectors) {

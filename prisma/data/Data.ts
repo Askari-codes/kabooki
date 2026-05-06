@@ -9,6 +9,10 @@ import { booksWriters } from "./BooksWriters";
 import { relatedWriters } from "./RelatedWriters";
 import { bookMovies } from "./Bookmovies";
 import { bookRelatedToOtherBooks } from "./bookRelatedToOtherBooks";
+import { users } from "./Users";
+import { userFavoriteBooks } from "./UserFavoriteBooks";
+import { userFavoriteWriters } from "./UserFavoriteWriters";
+import { userFavoriteMovies } from "./UserFavoriteMovies";
 export {
   directors,
   writers,
@@ -20,5 +24,9 @@ export {
   booksWriters,
   relatedWriters,
   bookMovies,
-  bookRelatedToOtherBooks
+  bookRelatedToOtherBooks,
+  users,
+  userFavoriteBooks,
+  userFavoriteWriters,
+  userFavoriteMovies,
 };

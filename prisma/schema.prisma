@@ -182,7 +182,7 @@ model User {
   user_favorite_writers  UserFavoriteWriters[]
   user_favorite_directors UserFavoriteDirectors[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model UserFavoriteBooks {
@@ -255,5 +255,5 @@ model Follow {
   following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
-  @@map("follows")
+  @@map("follow")
 }
