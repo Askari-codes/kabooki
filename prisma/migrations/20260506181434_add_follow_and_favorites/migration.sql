@@ -12,10 +12,10 @@
 
 */
 -- DropIndex
-DROP INDEX `User_user_name_key` ON `user`;
+DROP INDEX `User_user_name_key` ON `User`;
 
 -- AlterTable
-ALTER TABLE `user` DROP COLUMN `image`,
+ALTER TABLE `User` DROP COLUMN `image`,
     DROP COLUMN `user_name`,
     ADD COLUMN `avatar` VARCHAR(255) NULL,
     ADD COLUMN `bio` TEXT NULL,
@@ -62,25 +62,25 @@ CREATE TABLE `follow` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateIndex
-CREATE UNIQUE INDEX `user_username_key` ON `user`(`username`);
+CREATE UNIQUE INDEX `user_username_key` ON `User`(`username`);
 
 -- CreateIndex
-CREATE UNIQUE INDEX `user_email_key` ON `user`(`email`);
+CREATE UNIQUE INDEX `user_email_key` ON `User`(`email`);
 
 -- AddForeignKey
-ALTER TABLE `user_favorite_writers` ADD CONSTRAINT `user_favorite_writers_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `user_favorite_writers` ADD CONSTRAINT `user_favorite_writers_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `user_favorite_writers` ADD CONSTRAINT `user_favorite_writers_writer_id_fkey` FOREIGN KEY (`writer_id`) REFERENCES `Writer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `user_favorite_directors` ADD CONSTRAINT `user_favorite_directors_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `user_favorite_directors` ADD CONSTRAINT `user_favorite_directors_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `user_favorite_directors` ADD CONSTRAINT `user_favorite_directors_director_id_fkey` FOREIGN KEY (`director_id`) REFERENCES `Director`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `follow` ADD CONSTRAINT `follow_followerId_fkey` FOREIGN KEY (`followerId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `follow` ADD CONSTRAINT `follow_followerId_fkey` FOREIGN KEY (`followerId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `follow` ADD CONSTRAINT `follow_followingId_fkey` FOREIGN KEY (`followingId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `follow` ADD CONSTRAINT `follow_followingId_fkey` FOREIGN KEY (`followingId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

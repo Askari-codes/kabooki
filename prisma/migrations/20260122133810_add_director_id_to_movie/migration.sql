@@ -5,16 +5,16 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `moviesdirectors` DROP FOREIGN KEY `MoviesDirectors_director_id_fkey`;
+ALTER TABLE `MoviesDirectors` DROP FOREIGN KEY `MoviesDirectors_director_id_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `moviesdirectors` DROP FOREIGN KEY `MoviesDirectors_movie_id_fkey`;
+ALTER TABLE `MoviesDirectors` DROP FOREIGN KEY `MoviesDirectors_movie_id_fkey`;
 
 -- AlterTable
-ALTER TABLE `movie` ADD COLUMN `directorId` INTEGER NULL;
+ALTER TABLE `Movie` ADD COLUMN `directorId` INTEGER NULL;
 
 -- DropTable
-DROP TABLE `moviesdirectors`;
+DROP TABLE `MoviesDirectors`;
 
 -- AddForeignKey
 ALTER TABLE `Movie` ADD CONSTRAINT `Movie_directorId_fkey` FOREIGN KEY (`directorId`) REFERENCES `Director`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
