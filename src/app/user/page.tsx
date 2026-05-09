@@ -1,7 +1,6 @@
 import * as Separator from "@radix-ui/react-separator";
 import { Avatar, Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
-import { FavoriteBook, FavoriteMovie, FavoritePodcast } from "../../../models/models";
 import FavoriteBookCarousel from "../books/FavoriteBooks/FavoriteBookCarousel";
 import { PlusIcon } from "@radix-ui/react-icons";
 import FavoriteMovieCarousel from "../movies/favoriteMovies/FavoriteMovieCarousel";
@@ -9,20 +8,20 @@ import FavoriePodcastCarousel from "../podcasts/FavoritePodcast/FavoriePodcastCa
 
 
 const UsersPage = async () => {
-  const favoriteBookResponse = await axios.get<FavoriteBook[]>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteBooks`
-  );
-  const foavoriteBooks: FavoriteBook[] = favoriteBookResponse.data;
+  // const favoriteBookResponse = await axios.get<FavoriteBook[]>(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteBooks`
+  // );
+  // const foavoriteBooks: FavoriteBook[] = favoriteBookResponse.data;
 
-  const favoriteMoviesResponse = await axios.get<FavoriteMovie[]>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteMovies`
-  );
-  const favoriteMovies = favoriteMoviesResponse.data;
+  // const favoriteMoviesResponse = await axios.get<FavoriteMovie[]>(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoriteMovies`
+  // );
+  // const favoriteMovies = favoriteMoviesResponse.data;
 
-  const favoritePodcastsResponse = await axios.get<FavoritePodcast[]>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoritePodcasts`
-  )
-  const favoritePodcasts = favoritePodcastsResponse.data;
+  // const favoritePodcastsResponse = await axios.get<FavoritePodcast[]>(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/favoritePodcasts`
+  // )
+  // const favoritePodcasts = favoritePodcastsResponse.data;
   
   
  
@@ -94,12 +93,12 @@ const UsersPage = async () => {
           height: "1px",
         }}
       />
-      <FavoriteBookCarousel
+      {/* <FavoriteBookCarousel
         favoriteBooks={foavoriteBooks}
         title="Favorite Books"
       />
       <FavoriteMovieCarousel favoriteMovies={favoriteMovies} />
-      <FavoriePodcastCarousel favoritePodcasts={favoritePodcasts}/>
+      <FavoriePodcastCarousel favoritePodcasts={favoritePodcasts}/> */}
     </Container>
   );
 };
