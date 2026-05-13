@@ -1,0 +1,647 @@
+openapi: 3.0.3
+info:
+  title: Kabooki API
+  version: 1.0.0
+  description: REST API for the Kabooki books, movies, writers, and podcasts platform.
+
+servers:
+  - url: /api
+
+tags:
+  - name: Auth
+  - name: Users
+  - name: Books
+  - name: Movies
+  - name: Writers
+  - name: Podcasts
+  - name: Search
+  - name: Relations
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:       { type: integer }
+        name:     { type: string }
+        username: { type: string }
+        email:    { type: string }
+        avatar:   { type: string, nullable: true }
+        bio:      { type: string, nullable: true }
+        location: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    Director:
+      type: object
+      properties:
+        id:         { type: integer }
+        name:       { type: string }
+        last_name:  { type: string }
+        picture_url: { type: string, nullable: true }
+        slug:       { type: string }
+
+    Movie:
+      type: object
+      properties:
+        id:       { type: integer }
+        title:    { type: string }
+        poster:   { type: string, nullable: true }
+        slug:     { type: string }
+        director: { $ref: '#/components/schemas/Director', nullable: true }
+
+    Writer:
+      type: object
+      properties:
+        id:          { type: integer }
+        name:        { type: string }
+        last_name:   { type: string }
+        picture_url: { type: string, nullable: true }
+        slug:        { type: string }
+        description: { type: string, nullable: true }
+
+    Book:
+      type: object
+      properties:
+        id:           { type: integer }
+        title:        { type: string }
+        cover_url:    { type: string, nullable: true }
+        slug:         { type: string }
+        genre:        { type: string, nullable: true }
+        summary:      { type: string, nullable: true }
+        published_at: { type: string, nullable: true }
+        rating:       { type: number, nullable: true }
+        min_price:    { type: number, nullable: true }
+        is_the_best:  { type: boolean, nullable: true }
+        pdf_url:      { type: string, nullable: true }
+        writer:       { $ref: '#/components/schemas/Writer', nullable: true }
+
+    Podcast:
+      type: object
+      properties:
+        id:   { type: integer }
+        slug: { type: string }
+        host: { $ref: '#/components/schemas/Writer', nullable: true }
+
+    OrbitItem:
+      type: object
+      properties:
+        id:       { type: integer }
+        type:     { type: string, enum: [book, movie, writer, director] }
+        title:    { type: string }
+        imageUrl: { type: string, nullable: true }
+        rating:   { type: number, nullable: true }
+        comment:  { type: string, nullable: true }
+        slug:     { type: string }
+
+    UserProfile:
+      type: object
+      properties:
+        id:             { type: integer }
+        name:           { type: string }
+        username:       { type: string }
+        avatar:         { type: string, nullable: true }
+        bio:            { type: string, nullable: true }
+        location:       { type: string, nullable: true }
+        followerCount:  { type: integer }
+        followingCount: { type: integer }
+        isFollowing:    { type: boolean }
+        isOwn:          { type: boolean }
+        orbitItems:
+          type: array
+          items: { $ref: '#/components/schemas/OrbitItem' }
+
+    SearchResults:
+      type: object
+      properties:
+        writers:
+          type: array
+          items: { $ref: '#/components/schemas/Writer' }
+        books:
+          type: array
+          items: { $ref: '#/components/schemas/Book' }
+        directors:
+          type: array
+          items: { $ref: '#/components/schemas/Director' }
+        movies:
+          type: array
+          items: { $ref: '#/components/schemas/Movie' }
+
+paths:
+
+  # ── Auth ──────────────────────────────────────────────────────────────────
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Log in
+      description: Authenticates a user and sets a `token` httpOnly cookie (7-day TTL).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:    { type: string, format: email, example: user@example.com }
+                password: { type: string, example: secret123 }
+      responses:
+        '200':
+          description: Login successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: token=eyJ...; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400':
+          description: Missing email or password
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Log out
+      description: Clears the `token` cookie.
+      responses:
+        '200':
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean, example: true }
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      description: Returns the authenticated user from the JWT cookie.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Authenticated user
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '401':
+          description: Not authenticated or invalid token
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: User no longer exists
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ── Users ─────────────────────────────────────────────────────────────────
+
+  /user:
+    post:
+      tags: [Users]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, username, email, password]
+              properties:
+                name:     { type: string, example: Jane Doe }
+                username: { type: string, example: janedoe }
+                email:    { type: string, format: email, example: jane@example.com }
+                password: { type: string, example: secret123 }
+                avatar:   { type: string, nullable: true }
+                bio:      { type: string, nullable: true }
+                location: { type: string, nullable: true }
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400':
+          description: Missing required fields
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '409':
+          description: Email or username already exists
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    get:
+      tags: [Users]
+      summary: List user favorite books (dev endpoint)
+      responses:
+        '200':
+          description: Array of UserFavoriteBook records with embedded book
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /user/{username}:
+    get:
+      tags: [Users]
+      summary: Get user profile
+      description: Returns public profile with orbit items (favorite books, movies, writers, directors).
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema: { type: string }
+          example: janedoe
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserProfile' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ── Books ─────────────────────────────────────────────────────────────────
+
+  /books:
+    get:
+      tags: [Books]
+      summary: List books
+      description: Returns the first 5 books with their writer.
+      responses:
+        '200':
+          description: Array of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Book' }
+
+  /books/{id}:
+    get:
+      tags: [Books]
+      summary: Get book detail
+      description: Returns a book with writers, associated movies (with director), and related books.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Book detail
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/Book' }
+                  - type: object
+                    properties:
+                      writer:
+                        allOf:
+                          - { $ref: '#/components/schemas/Writer' }
+                          - type: object
+                            properties:
+                              books:
+                                type: array
+                                items: { $ref: '#/components/schemas/Book' }
+                              relatedWriters:
+                                type: array
+                                items: { $ref: '#/components/schemas/Writer' }
+                      bookMovies:
+                        type: array
+                        items: { $ref: '#/components/schemas/Movie' }
+                      relatedFrom:
+                        type: array
+                        items: { $ref: '#/components/schemas/Book' }
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ── Movies ────────────────────────────────────────────────────────────────
+
+  /movies:
+    get:
+      tags: [Movies]
+      summary: List all movies
+      responses:
+        '200':
+          description: Array of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Movie' }
+
+  /movies/{id}:
+    get:
+      tags: [Movies]
+      summary: Get movie detail
+      description: Returns a movie with its director and the director's other movies.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Movie detail
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/Movie' }
+                  - type: object
+                    properties:
+                      director:
+                        allOf:
+                          - { $ref: '#/components/schemas/Director' }
+                          - type: object
+                            properties:
+                              movies:
+                                type: array
+                                items: { $ref: '#/components/schemas/Movie' }
+        '404':
+          description: Movie not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ── Writers ───────────────────────────────────────────────────────────────
+
+  /writers:
+    get:
+      tags: [Writers]
+      summary: List all writers
+      responses:
+        '200':
+          description: Array of writers
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Writer' }
+
+  /writers/{id}:
+    get:
+      tags: [Writers]
+      summary: Get writer detail
+      description: Returns a writer with their books (including associated movies) and related writers.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Writer detail
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/Writer' }
+                  - type: object
+                    properties:
+                      books:
+                        type: array
+                        items:
+                          allOf:
+                            - { $ref: '#/components/schemas/Book' }
+                            - type: object
+                              properties:
+                                movies:
+                                  type: array
+                                  items: { $ref: '#/components/schemas/Movie' }
+                      relatedWriters:
+                        type: array
+                        items: { $ref: '#/components/schemas/Writer' }
+        '404':
+          description: Writer not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+    put:
+      tags: [Writers]
+      summary: Update writer description
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [description]
+              properties:
+                description: { type: string }
+      responses:
+        '200':
+          description: Updated writer
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Writer' }
+        '400':
+          description: Invalid writer ID
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ── Podcasts ──────────────────────────────────────────────────────────────
+
+  /podcasts:
+    get:
+      tags: [Podcasts]
+      summary: List podcasts
+      description: Returns the first 5 podcasts with their host.
+      responses:
+        '200':
+          description: Array of podcasts
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Podcast' }
+
+  /podcasts/{slug}:
+    get:
+      tags: [Podcasts]
+      summary: Get podcast detail
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema: { type: string }
+          example: my-podcast-episode
+      responses:
+        '200':
+          description: Podcast detail with host
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Podcast' }
+
+  # ── Search ────────────────────────────────────────────────────────────────
+
+  /search:
+    post:
+      tags: [Search]
+      summary: Search across all entities
+      description: Full-text search over writers, books, directors, and movies by name/title.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string, example: Dostoevsky }
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SearchResults' }
+
+  # ── Relations ─────────────────────────────────────────────────────────────
+
+  /bookMovies/{id}:
+    get:
+      tags: [Relations]
+      summary: Get movies for a book
+      description: Returns all movies adapted from the given book ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Array of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Movie' }
+
+  /bookWriters/{id}:
+    get:
+      tags: [Relations]
+      summary: Get writer for a book
+      description: Returns the first BooksWriters join record (with writer) for the given book ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: BooksWriters record with embedded writer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  writer: { $ref: '#/components/schemas/Writer' }
+
+  /moviesDirectors:
+    get:
+      tags: [Relations]
+      summary: List all MoviesDirectors join records
+      responses:
+        '200':
+          description: Array of MoviesDirectors records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    movie_id:    { type: integer }
+                    director_id: { type: integer }
+
+  /relatedBooks/{id}:
+    get:
+      tags: [Relations]
+      summary: Get related books for a book
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Array of related books
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Book' }
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /relatedWriters/{id}:
+    get:
+      tags: [Relations]
+      summary: Get related writer IDs for a writer
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+          example: 1
+      responses:
+        '200':
+          description: Array of related writer IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { type: integer }
+                example: [2, 5, 9]
