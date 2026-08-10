@@ -1,17 +1,23 @@
-import {  NextResponse } from "next/server"
+import {  NextRequest, NextResponse } from "next/server"
 import prisma from '../../../../prisma/client'
 
 
-export async function GET (){
+export async function GET (req: NextRequest){
 try {
+    const limitParam = req.nextUrl.searchParams.get("limit")
+    const take = limitParam ? Number(limitParam) : 5
     const books = await prisma.book.findMany({
-        take:5,
+        take,
         include:{
-            writer:true
+            writers:{
+                include:{
+                    writer:true
+                }
+            }
         },
     })
 return NextResponse.json(books)
 } catch (error) {
-    NextResponse.json(error)
+    return NextResponse.json(error)
 }
 }

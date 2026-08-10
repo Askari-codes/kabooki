@@ -2,14 +2,16 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import type { Book, Writer } from "@prisma/client";
+import type { Book, Movie, Writer } from "@prisma/client";
 
 type LinkMap = Record<string, string>;
 
 interface TextWithLinksProps {
   books: Book[];
   writers?: Writer[];
+  movies?: Movie[];
   description: string | null;
+  linkClassName?: string;
 }
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -23,8 +25,14 @@ const buildRegex = (keys: string[]) => {
   return new RegExp(`(^|[^\\p{L}\\p{N}_])(${pattern})(?=[^\\p{L}\\p{N}_]|$)`, "gu");
 };
 
-export default function TextWithLinks({ books, writers, description }: TextWithLinksProps) {
-  
+export default function TextWithLinks({
+  books,
+  writers,
+  movies,
+  description,
+  linkClassName = "text-blue-600 font-medium",
+}: TextWithLinksProps) {
+
   const links: LinkMap = React.useMemo(() => {
     const map: LinkMap = {};
     for (const b of books) map[b.title] = `/books/${b.id}`;
@@ -33,9 +41,11 @@ export default function TextWithLinks({ books, writers, description }: TextWithL
       const fullName = `${w.name} ${w.last_name}`; // <-- your fields
       map[fullName] = `/writers/${w.id}`;
     }
+    if (movies)
+    for (const m of movies) map[m.title] = `/movies/${m.id}`;
 
     return map;
-  }, [books, writers]);
+  }, [books, writers, movies]);
 
   const regex = React.useMemo(() => buildRegex(Object.keys(links)), [links]);
 
@@ -75,7 +85,7 @@ export default function TextWithLinks({ books, writers, description }: TextWithL
           href={links[text]}
           target=""
           rel="noopener noreferrer"
-          className="text-blue-600 font-medium"
+          className={linkClassName}
         >
           {text}
         </Link>

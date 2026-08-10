@@ -24,7 +24,7 @@ const FavoriteBooksOrbit = ({ avatarSrc, avatarAlt, books }: Props) => {
 
   return (
     <div
-      className="relative rounded-full "
+      className="relative rounded-full  shadow-inner ring-1 ring-[#e8dfd0]"
       style={{ width: CONTAINER_SIZE, height: CONTAINER_SIZE }}
     >
       <div
@@ -51,7 +51,7 @@ const FavoriteBooksOrbit = ({ avatarSrc, avatarAlt, books }: Props) => {
         {satellites.map((book) => (
           <div
             key={book.title}
-            className="overflow-hidden rounded-full border-4 border-white shadow-sm"
+            className="overflow-hidden rounded-4xl  shadow-sm"
             style={{ width: SATELLITE_SIZE, height: SATELLITE_SIZE }}
           >
             <Image
@@ -59,7 +59,7 @@ const FavoriteBooksOrbit = ({ avatarSrc, avatarAlt, books }: Props) => {
               alt={book.title}
               width={SATELLITE_SIZE}
               height={SATELLITE_SIZE}
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              style={{ objectFit: "cover", height: "100%", width: "75%"}}
             />
           </div>
         ))}
@@ -75,7 +75,7 @@ const FavoriteBooksOrbit = ({ avatarSrc, avatarAlt, books }: Props) => {
         return (
           <div
             key={book.title}
-            className="absolute w-[140px] text-center font-serif text-sm leading-tight text-[#4a3b2c]"
+            className="absolute w-[140px] text-center font-serif text-sm leading-tight text-[#2f2418]"
             style={{
               left: x,
               top: y + SATELLITE_SIZE / 2 + 8,
