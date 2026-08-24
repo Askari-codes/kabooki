@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flex } from "@radix-ui/themes";
 import FavoriteOrbit, { OrbitItem } from "./FavoriteOrbit";
+import { useCategory } from "./CategoryContext";
 
 interface OrbitGroup {
   label: string;
@@ -17,8 +17,8 @@ interface Props {
 }
 
 const OrbitSwitcher = ({ avatarSrc, avatarAlt, orbits }: Props) => {
-  const [index, setIndex] = useState(0);
-  const active = orbits[index];
+  const { category, setCategory } = useCategory();
+  const active = orbits.find((orbit) => orbit.label === category) ?? orbits[0];
 
   return (
     <Flex direction="column" align="center" gap="4">
@@ -36,14 +36,14 @@ const OrbitSwitcher = ({ avatarSrc, avatarAlt, orbits }: Props) => {
 
       {orbits.length > 1 && (
         <Flex gap="2" align="center">
-          {orbits.map((orbit, i) => (
+          {orbits.map((orbit) => (
             <button
               key={orbit.label}
               type="button"
-              onClick={() => setIndex(i)}
+              onClick={() => setCategory(orbit.label)}
               className="cursor-pointer rounded-full border px-3 py-1 text-sm font-medium transition-colors"
               style={
-                i === index
+                orbit.label === active.label
                   ? { backgroundColor: "#7c4a24", borderColor: "#7c4a24", color: "#ffffff" }
                   : { backgroundColor: "transparent", borderColor: "#e8dfd0", color: "#2f2418" }
               }

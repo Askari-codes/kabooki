@@ -4,23 +4,12 @@ import MovieSection from "./movies/MovieSection";
 import { Book, Movie, Writer } from "@prisma/client";
 import NavbarWrapper from "./navigation/NavbarWrapper";
 import BookSection from "./books/BookSection";
+import { safeFetchJson } from "./utilities/services";
 
 export default async function Home() {
-  const rwitersResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/`,
-    {
-      cache: "no-cache",
-    }
-  );
-  const writers: Writer[] = await rwitersResponse.json();
+  const writers = await safeFetchJson<Writer>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers/`);
+  const movies = await safeFetchJson<Movie>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movies`);
 
-  const moviesResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movies`,
-  {
-    cache:"no-cache"
-  }
-)
-  const movies:Movie[] =await moviesResponse.json()
-  
   // const booksResponse = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/books`,
   //   {

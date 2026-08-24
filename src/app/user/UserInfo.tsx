@@ -1,10 +1,14 @@
+"use client";
+
 import { ReactNode } from "react";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import type { Book, Movie, Writer } from "@prisma/client";
 import TextWithLinks from "../components/TextWithLinks";
+import { useCategory } from "./CategoryContext";
 
 interface Props {
-  about: string;
+  aboutBooks: string;
+  aboutMovies: string;
   sharing: string;
   books: Book[];
   writers: Writer[];
@@ -20,7 +24,10 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
   </Box>
 );
 
-const UserInfo = ({ about, sharing, books, writers, movies }: Props) => {
+const UserInfo = ({ aboutBooks, aboutMovies, sharing, books, writers, movies }: Props) => {
+  const { category } = useCategory();
+  const about = category === "Movies" ? aboutMovies : aboutBooks;
+
   return (
     <Box className="rounded-2xl bg-white p-6 text-[#2f2418] shadow-sm">
       <Flex direction="column" gap="4">

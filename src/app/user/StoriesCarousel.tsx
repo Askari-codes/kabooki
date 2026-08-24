@@ -4,21 +4,48 @@ import { useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button, Dialog, Flex, Select, Text, TextArea, TextField } from "@radix-ui/themes";
+import { ChatBubbleIcon, HeartFilledIcon, HeartIcon, Share2Icon } from "@radix-ui/react-icons";
+import { useCategory } from "./CategoryContext";
 
-type EntryType = "Story" | "Critique";
+type EntryType = "Story" | "Review" | "Critique";
+
+interface Comment {
+  id: string;
+  author: string;
+  text: string;
+}
 
 interface Entry {
   id: string;
   type: EntryType;
+  category: string;
   title: string;
   content: string;
   relatedTitle?: string;
+  likes: number;
+  likedByMe: boolean;
+  comments: Comment[];
+  sharedByMe: boolean;
 }
 
-const initialEntries: Entry[] = [
+const TYPE_OPTIONS_BY_CATEGORY: Record<string, EntryType[]> = {
+  Books: ["Story", "Review", "Critique"],
+  Movies: ["Review", "Critique"],
+};
+
+const TYPE_BADGE_STYLES: Record<EntryType, { backgroundColor: string; color: string }> = {
+  Story: { backgroundColor: "#f3ece0", color: "#7c4a24" },
+  Review: { backgroundColor: "#f5e9c8", color: "#8a6d1f" },
+  Critique: { backgroundColor: "#efe3d3", color: "#5c3418" },
+};
+
+type SeedEntry = Omit<Entry, "likes" | "likedByMe" | "comments" | "sharedByMe">;
+
+const seedEntries: SeedEntry[] = [
   {
     id: "seed-1",
     type: "Critique",
+    category: "Books",
     title: "Solitude never gets old",
     content:
       "Every reread of One Hundred Years of Solitude turns up something I missed. The Buendía family feels less like fiction and more like a memory I inherited, and every time I return to Macondo I notice I've become a slightly different reader than the one who left it.\n\n" +
@@ -34,6 +61,7 @@ const initialEntries: Entry[] = [
   {
     id: "seed-2",
     type: "Story",
+    category: "Books",
     title: "Reading Aura on a rainy night",
     content:
       "Started Aura at 11pm thinking I'd read a chapter. Finished it in one sitting with all the lights on. Fuentes knows exactly how long to hold a sentence.",
@@ -42,6 +70,7 @@ const initialEntries: Entry[] = [
   {
     id: "seed-3",
     type: "Critique",
+    category: "Books",
     title: "A dictator you can't look away from",
     content:
       "The Feast of the Goat shouldn't be as readable as it is given the subject matter. Vargas Llosa makes Trujillo's Dominican Republic suffocating without ever feeling like a history lecture.",
@@ -50,6 +79,7 @@ const initialEntries: Entry[] = [
   {
     id: "seed-4",
     type: "Story",
+    category: "Books",
     title: "Missed my stop reading Blindness",
     content:
       "Was on the train, three chapters into Blindness, and completely missed my station. Saramago's unpunctuated dialogue does something to your sense of time — I looked up and twenty minutes were just gone.",
@@ -58,6 +88,7 @@ const initialEntries: Entry[] = [
   {
     id: "seed-5",
     type: "Critique",
+    category: "Movies",
     title: "Still the best courtroom film, period",
     content:
       "Rewatched 12 Angry Men for the tenth time and it still holds up better than almost anything made since. One room, twelve chairs, and somehow it never drags for a second.",
@@ -65,25 +96,112 @@ const initialEntries: Entry[] = [
   },
   {
     id: "seed-6",
-    type: "Story",
+    type: "Review",
+    category: "Movies",
     title: "A Godfather marathon that ruined my weekend plans",
     content:
       "Told myself I'd just watch the first half of The Godfather before dinner. Six hours and both films later, I ordered food at midnight and don't regret it at all.",
     relatedTitle: "The Godfather",
   },
+  {
+    id: "seed-7",
+    type: "Critique",
+    category: "Movies",
+    title: "The verdict was never really the point",
+    content:
+      "Pulp Fiction gets called a crime film but it's really just three short stories wearing a trench coat. Tarantino scrambles the timeline and somehow that makes the violence feel more like consequence and less like plot.",
+    relatedTitle: "Pulp Fiction",
+  },
 ];
 
+const SAMPLE_LIKES: Record<string, number> = {
+  "seed-1": 24,
+  "seed-2": 9,
+  "seed-3": 15,
+  "seed-4": 7,
+  "seed-5": 18,
+  "seed-6": 11,
+  "seed-7": 13,
+};
+
+const SAMPLE_COMMENTS: Record<string, Comment[]> = {
+  "seed-1": [
+    { id: "c1", author: "Elena R.", text: "This is exactly why I recommend it to everyone with a highlighter in hand." },
+    { id: "c2", author: "Marcus T.", text: "The ending still wrecks me too, every single time." },
+  ],
+  "seed-6": [
+    { id: "c3", author: "Priya K.", text: "Did the same thing over New Year's. Zero regrets." },
+  ],
+};
+
+const initialEntries: Entry[] = seedEntries.map((entry) => ({
+  ...entry,
+  likes: SAMPLE_LIKES[entry.id] ?? 0,
+  likedByMe: false,
+  comments: SAMPLE_COMMENTS[entry.id] ?? [],
+  sharedByMe: false,
+}));
+
 const StoriesCarousel = () => {
+  const { category } = useCategory();
   const [entries, setEntries] = useState<Entry[]>(initialEntries);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<EntryType>("Story");
+  const [entryCategory, setEntryCategory] = useState(category);
   const [title, setTitle] = useState("");
   const [relatedTitle, setRelatedTitle] = useState("");
   const [content, setContent] = useState("");
-  const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null);
+  const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
+  const [commentDraft, setCommentDraft] = useState("");
+
+  const visibleEntries = entries.filter((entry) => entry.category === category);
+  const typeOptions = TYPE_OPTIONS_BY_CATEGORY[entryCategory] ?? [];
+  const selectedEntry = entries.find((entry) => entry.id === selectedEntryId) ?? null;
+
+  const toggleLike = (id: string) => {
+    setEntries((prev) =>
+      prev.map((entry) =>
+        entry.id === id
+          ? { ...entry, likedByMe: !entry.likedByMe, likes: entry.likes + (entry.likedByMe ? -1 : 1) }
+          : entry,
+      ),
+    );
+  };
+
+  const toggleShare = (id: string) => {
+    setEntries((prev) =>
+      prev.map((entry) => (entry.id === id ? { ...entry, sharedByMe: !entry.sharedByMe } : entry)),
+    );
+  };
+
+  const openEntry = (id: string) => {
+    setCommentDraft("");
+    setSelectedEntryId(id);
+  };
+
+  const addComment = (id: string) => {
+    if (!commentDraft.trim()) return;
+    setEntries((prev) =>
+      prev.map((entry) =>
+        entry.id === id
+          ? {
+              ...entry,
+              comments: [...entry.comments, { id: crypto.randomUUID(), author: "You", text: commentDraft.trim() }],
+            }
+          : entry,
+      ),
+    );
+    setCommentDraft("");
+  };
+
+  const selectEntryCategory = (nextCategory: string) => {
+    setEntryCategory(nextCategory);
+    const allowedTypes = TYPE_OPTIONS_BY_CATEGORY[nextCategory] ?? [];
+    if (!allowedTypes.includes(type)) setType(allowedTypes[0]);
+  };
 
   const resetForm = () => {
-    setType("Story");
+    setType(TYPE_OPTIONS_BY_CATEGORY[category]?.[0] ?? "Story");
     setTitle("");
     setRelatedTitle("");
     setContent("");
@@ -96,9 +214,14 @@ const StoriesCarousel = () => {
       {
         id: crypto.randomUUID(),
         type,
+        category: entryCategory,
         title: title.trim(),
         content: content.trim(),
         relatedTitle: relatedTitle.trim() || undefined,
+        likes: 0,
+        likedByMe: false,
+        comments: [],
+        sharedByMe: false,
       },
     ]);
     resetForm();
@@ -108,16 +231,37 @@ const StoriesCarousel = () => {
   return (
     <div>
       <Flex justify="between" align="center" mb="4">
-        <h2 className="font-serif text-xl font-bold text-[#2f2418]">Stories &amp; Critiques</h2>
-        <Dialog.Root open={open} onOpenChange={setOpen}>
-          <Dialog.Trigger>
+        <h2 className="font-serif text-xl font-bold text-[#2f2418]">
+          {category} Stories &amp; Critiques
+        </h2>
+        <Dialog.Root
+          open={open}
+          onOpenChange={(v) => {
+            setOpen(v);
+            if (v) selectEntryCategory(category);
+          }}
+        >
+          {/* <Dialog.Trigger>
             <Button size="2" color="brown" style={{ cursor: "pointer" }}>
               + Share
             </Button>
-          </Dialog.Trigger>
+          </Dialog.Trigger> */}
           <Dialog.Content maxWidth="450px">
             <Dialog.Title>Share a story or critique</Dialog.Title>
             <Flex direction="column" gap="3" mt="3">
+              <label>
+                <Text as="div" size="2" weight="medium" mb="1">
+                  Category
+                </Text>
+                <Select.Root value={entryCategory} onValueChange={selectEntryCategory}>
+                  <Select.Trigger style={{ width: "100%" }} />
+                  <Select.Content>
+                    <Select.Item value="Books">Books</Select.Item>
+                    <Select.Item value="Movies">Movies</Select.Item>
+                  </Select.Content>
+                </Select.Root>
+              </label>
+
               <label>
                 <Text as="div" size="2" weight="medium" mb="1">
                   Type
@@ -125,8 +269,11 @@ const StoriesCarousel = () => {
                 <Select.Root value={type} onValueChange={(v) => setType(v as EntryType)}>
                   <Select.Trigger style={{ width: "100%" }} />
                   <Select.Content>
-                    <Select.Item value="Story">Story</Select.Item>
-                    <Select.Item value="Critique">Critique</Select.Item>
+                    {typeOptions.map((option) => (
+                      <Select.Item key={option} value={option}>
+                        {option}
+                      </Select.Item>
+                    ))}
                   </Select.Content>
                 </Select.Root>
               </label>
@@ -155,7 +302,7 @@ const StoriesCarousel = () => {
 
               <label>
                 <Text as="div" size="2" weight="medium" mb="1">
-                  {type === "Story" ? "Your story" : "Your critique"}
+                  Your {type.toLowerCase()}
                 </Text>
                 <TextArea
                   value={content}
@@ -180,12 +327,13 @@ const StoriesCarousel = () => {
         </Dialog.Root>
       </Flex>
 
-      {entries.length === 0 ? (
+      {visibleEntries.length === 0 ? (
         <Text size="2" color="gray">
-          Nothing shared yet.
+          No {category.toLowerCase()} stories or critiques shared yet.
         </Text>
       ) : (
         <Swiper
+          key={category}
           spaceBetween={20}
           slidesPerView={1}
           breakpoints={{
@@ -194,46 +342,72 @@ const StoriesCarousel = () => {
             1280: { slidesPerView: 3 },
           }}
         >
-          {entries.map((entry) => (
+          {visibleEntries.map((entry) => (
             <SwiperSlide key={entry.id} className="!h-auto pb-2">
-              <button
-                type="button"
-                onClick={() => setSelectedEntry(entry)}
-                className="flex h-full w-full flex-col rounded-xl border border-[#e8dfd0] bg-white p-4 text-left shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md"
-                style={{ cursor: "pointer" }}
-              >
-                <span
-                  className="mb-2 w-fit rounded-full px-2 py-0.5 text-xs font-semibold"
-                  style={
-                    entry.type === "Story"
-                      ? { backgroundColor: "#f3ece0", color: "#7c4a24" }
-                      : { backgroundColor: "#efe3d3", color: "#5c3418" }
-                  }
+              <div className="flex h-full w-full flex-col rounded-xl border border-[#e8dfd0] bg-white p-4 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openEntry(entry.id)}
+                  onKeyDown={(e) => e.key === "Enter" && openEntry(entry.id)}
+                  className="flex flex-1 flex-col text-left"
+                  style={{ cursor: "pointer" }}
                 >
-                  {entry.type}
-                </span>
-                <p className="font-serif text-base font-bold text-[#2f2418]">{entry.title}</p>
-                {entry.relatedTitle && (
-                  <p className="mb-2 text-xs text-[#a08d6e]">on {entry.relatedTitle}</p>
-                )}
-                <p className="line-clamp-3 text-sm leading-relaxed text-[#2f2418]">{entry.content}</p>
-              </button>
+                  <span
+                    className="mb-2 w-fit rounded-full px-2 py-0.5 text-xs font-semibold"
+                    style={TYPE_BADGE_STYLES[entry.type]}
+                  >
+                    {entry.type}
+                  </span>
+                  <p className="font-serif text-base font-bold text-[#2f2418]">{entry.title}</p>
+                  {entry.relatedTitle && (
+                    <p className="mb-2 text-xs text-[#a08d6e]">on {entry.relatedTitle}</p>
+                  )}
+                  <p className="line-clamp-3 text-sm leading-relaxed text-[#2f2418]">{entry.content}</p>
+                </div>
+
+                <Flex align="center" gap="4" mt="3" pt="3" style={{ borderTop: "1px solid #e8dfd0" }}>
+                  <button
+                    type="button"
+                    onClick={() => toggleLike(entry.id)}
+                    className="flex items-center gap-1 text-sm"
+                    style={{ cursor: "pointer", color: entry.likedByMe ? "#b23b3b" : "#a08d6e" }}
+                  >
+                    {entry.likedByMe ? <HeartFilledIcon /> : <HeartIcon />}
+                    {entry.likes}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openEntry(entry.id)}
+                    className="flex items-center gap-1 text-sm text-[#a08d6e]"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <ChatBubbleIcon />
+                    {entry.comments.length}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => toggleShare(entry.id)}
+                    className="ml-auto flex items-center gap-1 text-sm"
+                    style={{ cursor: "pointer", color: entry.sharedByMe ? "#7c4a24" : "#a08d6e" }}
+                  >
+                    <Share2Icon />
+                    {entry.sharedByMe ? "Shared" : "Share"}
+                  </button>
+                </Flex>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
       )}
 
-      <Dialog.Root open={selectedEntry !== null} onOpenChange={(v) => !v && setSelectedEntry(null)}>
+      <Dialog.Root open={selectedEntry !== null} onOpenChange={(v) => !v && setSelectedEntryId(null)}>
         <Dialog.Content maxWidth="800px">
           {selectedEntry && (
             <>
               <span
                 className="mb-2 w-fit rounded-full px-2 py-0.5 text-xs font-semibold"
-                style={
-                  selectedEntry.type === "Story"
-                    ? { backgroundColor: "#f3ece0", color: "#7c4a24" }
-                    : { backgroundColor: "#efe3d3", color: "#5c3418" }
-                }
+                style={TYPE_BADGE_STYLES[selectedEntry.type]}
               >
                 {selectedEntry.type}
               </span>
@@ -246,6 +420,58 @@ const StoriesCarousel = () => {
               <p className="whitespace-pre-wrap text-sm leading-relaxed text-[#2f2418]">
                 {selectedEntry.content}
               </p>
+
+              <Flex align="center" gap="4" mt="4" pt="3" style={{ borderTop: "1px solid #e8dfd0" }}>
+                <button
+                  type="button"
+                  onClick={() => toggleLike(selectedEntry.id)}
+                  className="flex items-center gap-1 text-sm"
+                  style={{ cursor: "pointer", color: selectedEntry.likedByMe ? "#b23b3b" : "#a08d6e" }}
+                >
+                  {selectedEntry.likedByMe ? <HeartFilledIcon /> : <HeartIcon />}
+                  {selectedEntry.likes} {selectedEntry.likes === 1 ? "like" : "likes"}
+                </button>
+                <Flex align="center" gap="1" className="text-sm" style={{ color: "#a08d6e" }}>
+                  <ChatBubbleIcon />
+                  {selectedEntry.comments.length} {selectedEntry.comments.length === 1 ? "comment" : "comments"}
+                </Flex>
+                <button
+                  type="button"
+                  onClick={() => toggleShare(selectedEntry.id)}
+                  className="ml-auto flex items-center gap-1 text-sm"
+                  style={{ cursor: "pointer", color: selectedEntry.sharedByMe ? "#7c4a24" : "#a08d6e" }}
+                >
+                  <Share2Icon />
+                  {selectedEntry.sharedByMe ? "Shared to your page" : "Share to your page"}
+                </button>
+              </Flex>
+
+              <Flex direction="column" gap="3" mt="4">
+                {selectedEntry.comments.map((comment) => (
+                  <Flex key={comment.id} direction="column" className="rounded-lg bg-[#faf6ee] p-3">
+                    <Text size="2" weight="bold" className="text-[#2f2418]">
+                      {comment.author}
+                    </Text>
+                    <Text size="2" className="text-[#2f2418]">
+                      {comment.text}
+                    </Text>
+                  </Flex>
+                ))}
+
+                <Flex gap="2">
+                  <TextField.Root
+                    style={{ flex: 1 }}
+                    value={commentDraft}
+                    onChange={(e) => setCommentDraft(e.target.value)}
+                    placeholder="Add a comment..."
+                    onKeyDown={(e) => e.key === "Enter" && addComment(selectedEntry.id)}
+                  />
+                  <Button color="brown" style={{ cursor: "pointer" }} onClick={() => addComment(selectedEntry.id)}>
+                    Post
+                  </Button>
+                </Flex>
+              </Flex>
+
               <Flex justify="end" mt="4">
                 <Dialog.Close>
                   <Button variant="soft" color="gray" style={{ cursor: "pointer" }}>

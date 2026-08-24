@@ -2,9 +2,12 @@ import { Container, Grid } from "@radix-ui/themes";
 import OrbitSwitcher from "./OrbitSwitcher";
 import UserProfileHeader from "./UserProfileHeader";
 import UserInfo from "./UserInfo";
-import FavoriteItemsCarousel from "./FavoriteItemsCarousel";
+import CategoryCarousels from "./CategoryCarousels";
+import { CategoryProvider } from "./CategoryContext";
 import StoriesCarousel from "./StoriesCarousel";
 import Seprator from "../components/Seprator";
+import { safeFetchJson } from "../utilities/services";
+import type { Book, Movie, Writer } from "@prisma/client";
 
 // First 5 are shown in the orbit; the rest go in the carousel below it, so
 // the two never show the same book.
@@ -60,49 +63,54 @@ const watchlistMovies = [
 
 const UsersPage = async () => {
   const [books, writers, movies] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/books?limit=500`, { cache: "no-cache" }).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers`, { cache: "no-cache" }).then((r) => r.json()),
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movies`, { cache: "no-cache" }).then((r) => r.json()),
+    safeFetchJson<Book>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/books?limit=500`),
+    safeFetchJson<Writer>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/writers`),
+    safeFetchJson<Movie>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movies`),
   ]);
 
   return (
     <Container size="4" className="bg-[#faf6ee] py-10">
-      <Grid columns="60% 40%" gap="8" align="start">
-        <OrbitSwitcher
-          avatarSrc="/users/Mohammad_askari.png"
-          avatarAlt="Mohammad Askari"
-          orbits={[
-            { label: "Books", items: favoriteBooks },
-            { label: "Movies", items: favoriteMovies },
-          ]}
-        />
-        <Grid rows="auto 1fr" gap="4" className="h-[600px]">
-          <UserProfileHeader
-            name="Mohammad Askari"
-            username="@mohammad.askari"
+      <CategoryProvider defaultCategory="Books">
+        <Grid columns="60% 40%" gap="8" align="start">
+          <OrbitSwitcher
             avatarSrc="/users/Mohammad_askari.png"
-            location="Tehran, Iran"
-            joinedAt="2024-01-15T00:00:00Z"
-            followersCount={128}
-            followingCount={54}
+            avatarAlt="Mohammad Askari"
+            orbits={[
+              { label: "Books", items: favoriteBooks },
+              { label: "Movies", items: favoriteMovies },
+            ]}
           />
-          <UserInfo
-            about="I read mostly tragedies and Latin American fiction. Leaf Storm is what got me hooked on Gabriel Garcia Marquez, and I still reread Mario Vargas Llosa whenever I need to be reminded why I love this stuff."
-            sharing="Book reviews, favorite quotes, and the occasional film I think pairs well with what I'm reading, like The Godfather."
-            books={books}
-            writers={writers}
-            movies={movies}
-          />
+          <Grid rows="auto 1fr" gap="4" className="h-[600px]">
+            <UserProfileHeader
+              name="Mohammad Askari"
+              username="@mohammad.askari"
+              avatarSrc="/users/Mohammad_askari.png"
+              location="Tehran, Iran"
+              joinedAt="2024-01-15T00:00:00Z"
+              followersCount={128}
+              followingCount={54}
+            />
+            <UserInfo
+              aboutBooks="I read mostly tragedies and Latin American fiction. Leaf Storm is what got me hooked on Gabriel Garcia Marquez, and I still reread Mario Vargas Llosa whenever I need to be reminded why I love this stuff."
+              aboutMovies="I'm partial to slow-burn dramas and anything Coppola touched in the '70s. The Godfather is the film I've rewatched more than any other, and 12 Angry Men is the one I come back to whenever I want to remember what a screenplay can do with a single room."
+              sharing="Book reviews, favorite quotes, and the occasional film I think pairs well with what I'm reading, like The Godfather."
+              books={books}
+              writers={writers}
+              movies={movies}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-<Seprator  />
-      <div className="mt-10 flex flex-col gap-10">
-        <FavoriteItemsCarousel title="More Favorite Books" items={moreFavoriteBooks} />
-        <FavoriteItemsCarousel title="Reading List" items={watchlistBooks} />
-        <FavoriteItemsCarousel title="More Favorite Movies" items={moreFavoriteMovies} />
-        <FavoriteItemsCarousel title="Watchlist" items={watchlistMovies} />
-        <StoriesCarousel />
-      </div>
+        <Seprator />
+        <div className="mt-10 flex flex-col gap-10">
+          <CategoryCarousels
+            moreFavoriteBooks={moreFavoriteBooks}
+            watchlistBooks={watchlistBooks}
+            moreFavoriteMovies={moreFavoriteMovies}
+            watchlistMovies={watchlistMovies}
+          />
+          <StoriesCarousel />
+        </div>
+      </CategoryProvider>
     </Container>
   );
 };
