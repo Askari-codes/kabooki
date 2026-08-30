@@ -14,6 +14,7 @@ export default {
       },
       animation: {
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
+        "scroll-down": "scroll-down calc(var(--duration)*1s) linear infinite",
       },
       keyframes: {
         orbit: {
@@ -25,6 +26,10 @@ export default {
             transform:
               "translate(-50%, -50%) rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg))",
           },
+        },
+        "scroll-down": {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0%)" },
         },
       },
     },
