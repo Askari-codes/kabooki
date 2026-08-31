@@ -10,23 +10,29 @@ export async function POST(req: NextRequest) {
   try {
     const writers = await prisma.writer.findMany({
       where: {
-        OR: [{ name: { contains: query } }, { last_name: { contains: query } }],
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { last_name: { contains: query, mode: "insensitive" } },
+        ],
       },
     });
     const books = await prisma.book.findMany({
       where: {
-        title: {contains:query},
+        title: { contains: query, mode: "insensitive" },
       },
     });
 
     const directors = await prisma.director.findMany({
       where: {
-        OR: [{ name: { contains: query } }, { last_name: { contains: query } }],
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { last_name: { contains: query, mode: "insensitive" } },
+        ],
       },
     });
     const movies = await prisma.movie.findMany({
       where: {
-        title: {contains:query},
+        title: { contains: query, mode: "insensitive" },
       },
     });
 
