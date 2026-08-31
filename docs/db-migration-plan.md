@@ -16,7 +16,9 @@
 
 This is an engine change (MySQL to PostgreSQL). However, Prisma abstracts the schema and the codebase contains no raw SQL queries (verified by grep for `queryRaw` / `executeRaw`). That means AWS Schema Conversion Tool (SCT) and Database Migration Service (DMS) are unnecessary overhead here. Use a Prisma-native migration instead.
 
-### Phase A: Move to PostgreSQL locally first (no AWS yet)
+### Phase A: Move to PostgreSQL locally first (no AWS yet) — DONE
+
+Delivered on branch `SCRUM-25`.
 
 1. Create a new branch.
 2. Update `docker/docker-compose.yaml` to run `postgres:16` instead of (or alongside) the MySQL service.
@@ -29,22 +31,30 @@ This is an engine change (MySQL to PostgreSQL). However, Prisma abstracts the sc
 6. Run `npx prisma migrate dev --name init`, then `npx prisma generate`, then `npx prisma db seed`.
 7. Run the app against local PostgreSQL and fix anything that breaks. Commit.
 
-### Phase B: Move the data
+Also done during Phase A:
 
-- **Static / seed content** (Book, Movie, Writer, Director, Host, Podcast, Genre, and their join tables): do not migrate this. Run `npx prisma db seed` against the new database.
-- **Real user data** (User, UserFavoriteBooks, UserFavoriteMovies, UserFavoriteWriters, UserFavoriteDirectors, UserFavoritePodcasts, Follow): migrate the actual rows. Two options:
-  - A Node script using two Prisma clients (MySQL source, PostgreSQL target) that copies each table in foreign-key dependency order, preserving IDs.
-  - `pgloader`, run once: `pgloader mysql://maskari:kabooki@localhost/kabooki postgresql://USER:PASS@HOST/kabooki`. It handles type coercion automatically.
-- After any ID-preserving inserts, reset the sequence for every table that has an autoincrement id, for example:
-  ```sql
-  SELECT setval(pg_get_serial_sequence('"users"', 'id'), COALESCE(MAX(id), 1)) FROM "users";
-  ```
+- `src/app/api/search/route.ts`: added `mode: "insensitive"` to the `contains` filters. PostgreSQL `LIKE` is case-sensitive; the previous MySQL collation was not.
+- `prisma/seed.ts`: after seeding, realign the identity sequences. The seed inserts rows with explicit `id` values, which leaves each table's sequence at its initial value; on PostgreSQL the next auto-generated id then collides with seeded rows and the first real signup fails. The seed now runs `setval(pg_get_serial_sequence(...), MAX(id))` for every affected table.
 
-### Phase C: Provision RDS and cut over
+Two pre-existing bugs were found and left untouched (they exist on `main`, unrelated to the engine change): `src/app/api/user/route.ts` uses `prisma.userFavoriteBook` (should be `userFavoriteBooks`), and `searchResult/SearchResult.tsx` renders `<BookSection/>` without its required `books` prop.
+
+### Phase B: Move the data — SKIPPED
+
+Verified against the running MySQL container before deciding:
+
+- **Static / seed content** (Book, Movie, Writer, Director, Host, Podcast, Genre, and their join tables) is fully reproduced by `npx prisma db seed` — the seed files are the source of truth, nothing to copy from MySQL.
+- **Favorites**: MySQL held 12 book / 12 movie / 11 writer favorites, which is exactly what the seed inserts. No runtime-created favorites, no follows.
+- **Users**: MySQL had 5 rows — the 3 demo users from the seed plus 2 genuine signups (`johndoe`, `norana`) with real bcrypt hashes.
+
+The only data not covered by the seed was those 2 user accounts. The decision was to **not migrate them** — re-register any account that is still wanted. No migration script, `pgloader` run, or manual copy was performed.
+
+If a real production MySQL database with meaningful user data appears later, revisit this: copy the dynamic tables (User, UserFavoriteBooks, UserFavoriteMovies, UserFavoriteWriters, UserFavoriteDirectors, UserFavoritePodcasts, Follow) with a two-client Node script or `pgloader`, in foreign-key order, preserving IDs, then re-run the sequence realignment.
+
+### Phase C: Provision RDS and cut over — TODO
 
 1. Provision the RDS PostgreSQL instance (settings in section 3).
 2. Update `.env`: `DATABASE_URL="postgresql://USER:PASS@ENDPOINT:5432/kabooki?sslmode=require"`.
-3. Run `npx prisma migrate deploy`, then seed, then load the user data.
+3. Run `npx prisma migrate deploy`, then `npx prisma db seed`. There is no separate user data to load (Phase B was skipped).
 4. Smoke test the app against RDS.
 5. Cut the app over. Keep the MySQL container and a dump until the new database is proven.
 
