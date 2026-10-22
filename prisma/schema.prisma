@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -14,28 +14,30 @@ model Book {
   published_at        DateTime
   summary             String?             @db.Text
   cover_url           String?             @db.VarChar(255)
-  writers             BooksWriters[]             
+  writers             BooksWriters[]
   slug                String              @unique(map: "Book_slug_key") @db.VarChar(255)
   rating              Int
   min_price           Float
-  is_the_best         Boolean             @default(false)    
+  is_the_best         Boolean             @default(false)
   pdf_url             String?
   user_favorite_books UserFavoriteBooks[]
-  bookMovies          BookMovies[] 
-   relatedFrom         RelatedBook[]       @relation("BookRelatedFrom")
+  bookMovies          BookMovies[]
+  relatedFrom         RelatedBook[]       @relation("BookRelatedFrom")
   relatedTo           RelatedBook[]       @relation("BookRelatedTo")
 }
+
 model RelatedBook {
-  id            Int   @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   bookId        Int
   relatedBookId Int
 
-  book          Book @relation("BookRelatedFrom", fields: [bookId], references: [id], onDelete: Cascade)
-  relatedBook   Book @relation("BookRelatedTo", fields: [relatedBookId], references: [id], onDelete: Cascade)
+  book        Book @relation("BookRelatedFrom", fields: [bookId], references: [id], onDelete: Cascade)
+  relatedBook Book @relation("BookRelatedTo", fields: [relatedBookId], references: [id], onDelete: Cascade)
 
   @@unique([bookId, relatedBookId])
 }
+
 model Movie {
   id                   Int                  @id @default(autoincrement())
   title                String
@@ -47,40 +49,38 @@ model Movie {
   slug                 String               @unique
   stream               String
   directorId           Int?
-  director             Director?             @relation(fields: [directorId], references: [id], onDelete: Restrict)
+  director             Director?            @relation(fields: [directorId], references: [id], onDelete: Restrict)
   user_favorite_movies UserFavoriteMovies[]
   MovieGenre           MoviesGenres[]
-  bookMovies           BookMovies[]  
+  bookMovies           BookMovies[]
 }
 
 model BookMovies {
-  id        Int      @id @default(autoincrement())
-  book_id   Int
-  movie_id  Int
+  id       Int @id @default(autoincrement())
+  book_id  Int
+  movie_id Int
 
-  
-  book   Book  @relation(fields: [book_id], references: [id], onDelete: Cascade)
-  movie  Movie @relation(fields: [movie_id], references: [id], onDelete: Cascade)
+  book  Book  @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movie_id], references: [id], onDelete: Cascade)
 
-  @@unique([book_id, movie_id]) 
+  @@unique([book_id, movie_id])
 }
 
 model Podcast {
-  id                     Int                    @id @default(autoincrement())
-  title                  String                 @db.VarChar(255)
-  genre                  String                 @db.VarChar(100)
-  published_at           DateTime
-  summary                String?                @db.Text
-  cover_url              String?                @db.VarChar(255)
-  host_id                Int
-  host                   Host                   @relation(fields: [host_id], references: [id], onDelete: Cascade)
-  slug                   String                 @unique(map: "Podcast_slug_key") @db.VarChar(255)
-  rating                 Int
-  min_price              Decimal
-  
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  genre        String   @db.VarChar(100)
+  published_at DateTime
+  summary      String?  @db.Text
+  cover_url    String?  @db.VarChar(255)
+  host_id      Int
+  host         Host     @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  slug         String   @unique(map: "Podcast_slug_key") @db.VarChar(255)
+  rating       Int
+  min_price    Decimal  @db.Decimal(10, 2)
+
   user_favorite_podcasts UserFavoritePodcasts[]
 }
-
 
 model Genre {
   id           Int            @id @default(autoincrement())
@@ -97,47 +97,44 @@ model MoviesGenres {
   @@id([movie_id, genre_id])
 }
 
-
-
 model Director {
-  id          Int               @id @default(autoincrement())
-  name        String            @db.VarChar(255)
-  last_name   String            @db.VarChar(255)
-  description String?           @db.Text
-  picture_url String?           @db.VarChar(255)
-  country     String
-  slug        String            @unique(map: "Director_slug_key") @db.VarChar(255)
-  movies               Movie[]
+  id                      Int                     @id @default(autoincrement())
+  name                    String                  @db.VarChar(255)
+  last_name               String                  @db.VarChar(255)
+  description             String?                 @db.Text
+  picture_url             String?                 @db.VarChar(255)
+  country                 String
+  slug                    String                  @unique(map: "Director_slug_key") @db.VarChar(255)
+  movies                  Movie[]
   user_favorite_directors UserFavoriteDirectors[]
 }
 
 model Writer {
-  id          Int     @id @default(autoincrement())
-  name        String  @db.VarChar(255)
-  last_name   String  @db.VarChar(255)
-  description String? @db.Text
-  picture_url String? @db.VarChar(255)
+  id          Int            @id @default(autoincrement())
+  name        String         @db.VarChar(255)
+  last_name   String         @db.VarChar(255)
+  description String?        @db.Text
+  picture_url String?        @db.VarChar(255)
   country     String
-  slug        String  @unique(map: "Writer_slug_key") @db.VarChar(255)
-  nobelist    Boolean @default(false)
-  books      BooksWriters[]
+  slug        String         @unique(map: "Writer_slug_key") @db.VarChar(255)
+  nobelist    Boolean        @default(false)
+  books       BooksWriters[]
 
   // Reverse relation to RelatedWriters for writer1
-  writerRelations1      RelatedWriters[]       @relation("WriterRelationsFromWriter1")
+  writerRelations1 RelatedWriters[] @relation("WriterRelationsFromWriter1")
 
   // Reverse relation to RelatedWriters for writer2
-  writerRelations2      RelatedWriters[]       @relation("WriterRelationsFromWriter2")
+  writerRelations2      RelatedWriters[]      @relation("WriterRelationsFromWriter2")
   user_favorite_writers UserFavoriteWriters[]
 }
 
 model RelatedWriters {
-  id           Int     @id @default(autoincrement())
-  writer_id_1    Int
-  writer_id_2    Int
- 
+  id          Int @id @default(autoincrement())
+  writer_id_1 Int
+  writer_id_2 Int
 
-  writer1      Writer  @relation("WriterRelationsFromWriter1", fields: [writer_id_1], references: [id])
-  writer2      Writer  @relation("WriterRelationsFromWriter2", fields: [writer_id_2], references: [id])
+  writer1 Writer @relation("WriterRelationsFromWriter1", fields: [writer_id_1], references: [id])
+  writer2 Writer @relation("WriterRelationsFromWriter2", fields: [writer_id_2], references: [id])
 
   @@unique([writer_id_1, writer_id_2]) // Ensure no duplicate relationships
 }
@@ -145,8 +142,8 @@ model RelatedWriters {
 model BooksWriters {
   book_id   Int
   writer_id Int
-  book      Book    @relation(fields: [book_id], references: [id], onDelete: Cascade)
-  writer    Writer  @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+  book      Book   @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  writer    Writer @relation(fields: [writer_id], references: [id], onDelete: Cascade)
 
   @@id([book_id, writer_id])
 }
@@ -163,26 +160,26 @@ model Host {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(100)
-  username    String   @unique @db.VarChar(50)
-  email       String   @unique @db.VarChar(255)
-  password    String   @db.VarChar(255)
-  avatar      String?  @db.VarChar(255)
-  bio         String?  @db.Text
-  location    String?  @db.VarChar(100)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  username  String   @unique @db.VarChar(50)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  avatar    String?  @db.VarChar(255)
+  bio       String?  @db.Text
+  location  String?  @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  followers             Follow[]              @relation("Following")
-  following             Follow[]              @relation("Follower")
-  user_favorite_books    UserFavoriteBooks[]
-  user_favorite_podcasts UserFavoritePodcasts[]
-  user_favorite_movies   UserFavoriteMovies[]
-  user_favorite_writers  UserFavoriteWriters[]
+  followers               Follow[]                @relation("Following")
+  following               Follow[]                @relation("Follower")
+  user_favorite_books     UserFavoriteBooks[]
+  user_favorite_podcasts  UserFavoritePodcasts[]
+  user_favorite_movies    UserFavoriteMovies[]
+  user_favorite_writers   UserFavoriteWriters[]
   user_favorite_directors UserFavoriteDirectors[]
 
-  @@map("user")
+  @@map("users")
 }
 
 model UserFavoriteBooks {
@@ -218,6 +215,7 @@ model UserFavoriteMovies {
   user     User    @relation(fields: [user_id], references: [id])
   movie    Movie   @relation(fields: [movie_id], references: [id])
 }
+
 model UserFavoriteWriters {
   id        Int     @id @default(autoincrement())
   rating    Float?
@@ -225,8 +223,8 @@ model UserFavoriteWriters {
   user_id   Int
   writer_id Int
 
-  user      User    @relation(fields: [user_id],   references: [id], onDelete: Cascade)
-  writer    Writer  @relation(fields: [writer_id], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  writer Writer @relation(fields: [writer_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, writer_id])
   @@map("user_favorite_writers")
@@ -239,20 +237,20 @@ model UserFavoriteDirectors {
   user_id     Int
   director_id Int
 
-  user        User     @relation(fields: [user_id],     references: [id], onDelete: Cascade)
-  director    Director @relation(fields: [director_id], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  director Director @relation(fields: [director_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, director_id])
   @@map("user_favorite_directors")
 }
 
 model Follow {
-  id          Int      @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
   followerId  Int
   followingId Int
 
-  follower    User     @relation("Follower",  fields: [followerId],  references: [id], onDelete: Cascade)
-  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+  follower  User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
   @@map("follow")

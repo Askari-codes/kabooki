@@ -295,6 +295,29 @@ async function main() {
   }
 
   await insertMovieGenre();
+
+  // Rows above are inserted with explicit `id` values, which does not advance
+  // PostgreSQL's identity sequences. Realign each sequence so the next
+  // auto-generated id does not collide with seeded data.
+  const tablesWithIdSequence = [
+    "Director",
+    "Movie",
+    "Book",
+    "Genre",
+    "users",
+    "UserFavoriteBooks",
+    "user_favorite_writers",
+    "UserFavoriteMovies",
+  ];
+  for (const table of tablesWithIdSequence) {
+    await prisma.$executeRawUnsafe(
+      `SELECT setval(
+         pg_get_serial_sequence('"${table}"', 'id'),
+         (SELECT COALESCE(MAX(id), 1) FROM "${table}"),
+         (SELECT COUNT(*) > 0 FROM "${table}")
+       )`
+    );
+  }
 }
 
 main()
