@@ -9,6 +9,7 @@ import Seprator from "../components/Seprator";
 import { safeFetchJson } from "../utilities/services";
 import type { Book, Movie, Writer } from "@prisma/client";
 
+
 // First 5 are shown in the orbit; the rest go in the carousel below it, so
 // the two never show the same book.
 const favoriteBooksPool = [

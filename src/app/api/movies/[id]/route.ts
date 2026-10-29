@@ -5,22 +5,23 @@ import { directors } from "../../../../../prisma/data/Directors";
 import { MovieWithDirector } from "../../../../../prisma/types";
 
 
-export async function GET(req:NextRequest,{params}:{params:{id:string}}){
-const id = Number(params.id)
-try {
-   
-    const movie = await prisma.movie.findUnique({
-        where:{id},
-        include:{director:{include:{movies:{include:{director:true}}}}}
-    })
-    if(!movie){
-        return NextResponse.json({error:'there is no such a movie'},{status:404})
-    }
+export async function GET(req:NextRequest, props:{params: Promise<{id:string}>}) {
+    const params = await props.params;
+    const id = Number(params.id)
+    try {
        
-    return NextResponse.json(movie)
+        const movie = await prisma.movie.findUnique({
+            where:{id},
+            include:{director:{include:{movies:{include:{director:true}}}}}
+        })
+        if(!movie){
+            return NextResponse.json({error:'there is no such a movie'},{status:404})
+        }
+           
+        return NextResponse.json(movie)
 
 
-} catch (error) {
-    NextResponse.json({error:'server error'},{status:500})
-}
+    } catch (error) {
+        NextResponse.json({error:'server error'},{status:500})
+    }
 }

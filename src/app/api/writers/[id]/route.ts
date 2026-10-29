@@ -3,10 +3,11 @@ import prisma from "../../../../../prisma/client";
 import { MovieWithDirector,WriterData } from "../../../../../prisma/types";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export async function GET(req: NextRequest, { params }: Props) {
+export async function GET(req: NextRequest, props: Props) {
+  const params = await props.params;
   const id = Number(params.id);
 
   if (!id) {
@@ -76,7 +77,8 @@ export async function GET(req: NextRequest, { params }: Props) {
   }
 }
 
-export async function PUT(req: NextRequest, { params }: Props) {
+export async function PUT(req: NextRequest, props: Props) {
+  const params = await props.params;
   const id = Number(params.id);
   if (!id) {
     return NextResponse.json({ error: "Invalid writer ID" }, { status: 400 });

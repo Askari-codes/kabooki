@@ -1,6 +1,7 @@
 import axios from "axios";
 import SearchResult from "./SearchResult";
 
+
 interface ResolvedSearchParams {
   query?: string  
   

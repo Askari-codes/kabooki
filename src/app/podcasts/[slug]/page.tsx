@@ -5,17 +5,19 @@ import React from 'react'
 import { PodcastWithHost } from '../../../../models/models';
 import NotFound from './not-found';
 
+
 interface Props{
-    params:{slug:string}
+    params: Promise<{slug:string}>
 }
 
-const PadcastProfile = async({params}:Props) => {
-    const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/podcasts/${params.slug}`
-      );
-      const podcast: PodcastWithHost = response.data;
-    
-      if (!podcast) return NotFound();
+const PadcastProfile = async (props:Props) => {
+  const params = await props.params;
+  const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/podcasts/${params.slug}`
+    );
+  const podcast: PodcastWithHost = response.data;
+
+  if (!podcast) return NotFound();
   return (
     <Box
       style={{

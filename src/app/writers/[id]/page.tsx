@@ -6,11 +6,14 @@ import WriterBooks from "./WriterBooks";
 import RelatedWriters from "./RelatedWriters";
 import RelatedMovies from "./RelatedMovies";
 import { MovieWithDirector, WriterWithBooks } from "../../../../prisma/types";
+
+
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-const WriterPage = async ({ params }: Props) => {
+const WriterPage = async (props: Props) => {
+  const params = await props.params;
   const id = Number(params.id);
 
   const writerResponse = await axios.get(
@@ -20,13 +23,13 @@ const WriterPage = async ({ params }: Props) => {
   const books:Book[]=writerInformation.books
   const relatedMovies:MovieWithDirector[] =   writerInformation.books.flatMap((b) => b.movies);
   console.log('writer Information is ',relatedMovies)
-const relatedWriters:Writer[]= writerInformation.relatedWriters
+  const relatedWriters:Writer[]= writerInformation.relatedWriters
 
 
 
 
- 
-  
+
+
 
   return (
     <Container>
