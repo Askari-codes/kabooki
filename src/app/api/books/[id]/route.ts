@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 import { bookMovies } from "../../../../../prisma/data/Bookmovies";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = Number(params.id);
 
   try {

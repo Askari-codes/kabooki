@@ -3,6 +3,7 @@ import MovieSection from './MovieSection'
 import { Container } from '@radix-ui/themes'
 import { Movie } from '@prisma/client'
 
+
 const page = async()  => {
   
   return (

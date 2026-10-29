@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const bookId = Number(params.id);
   try {
     const bookMovies = await prisma.bookMovies.findMany({

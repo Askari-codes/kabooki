@@ -8,24 +8,26 @@ import BestBooks from "./BestBooks";
 import MovieCarousel from "@/app/movies/MovieCarousel";
 import RelatedBooks from "./RelatedBooks";
 
-const BookPage = async ({ params }: { params: { id: string } }) => {
+
+const BookPage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   const bookId = Number(params.id);
   const bookResponse = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/${bookId}`
   );
- const bookWithWriters:BookWithWriters=bookResponse.data
- 
- 
- const relatedBooks:RelatedBookExtended[] = bookWithWriters.relatedFrom.map((book)=>(book))
- const moviesWithDirectors:MoviesDirector= bookWithWriters.bookMovies
-//  const movies:newType= moviesWithDirectors.map(({director,...movie})=>movie)
+  const bookWithWriters:BookWithWriters=bookResponse.data
 
- const director = moviesWithDirectors[0]?.director ?? null
- 
 
- console.log('movies ',moviesWithDirectors);
- 
- 
+  const relatedBooks:RelatedBookExtended[] = bookWithWriters.relatedFrom.map((book)=>(book))
+  const moviesWithDirectors:MoviesDirector= bookWithWriters.bookMovies
+  //  const movies:newType= moviesWithDirectors.map(({director,...movie})=>movie)
+
+  const director = moviesWithDirectors[0]?.director ?? null
+
+
+  console.log('movies ',moviesWithDirectors);
+
+
 
   return (
     <Container>
